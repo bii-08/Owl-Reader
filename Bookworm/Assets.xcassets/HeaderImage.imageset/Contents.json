@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "silver_framed_eyeglasses_on_book_page-scopio-fd00df5b-a1e5-443b-a04f-9d7b893c0491.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
