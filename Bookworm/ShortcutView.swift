@@ -45,6 +45,7 @@ struct ShortcutView: View {
     }
 }
 
+
 #Preview {
     ShortcutView(webPageTitle: "investopedia", favicon: URL(string: "https://www.investopedia.com/favicon.ico"), action: {})
 }
