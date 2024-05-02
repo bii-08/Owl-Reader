@@ -1,0 +1,84 @@
+{
+    "status": "ok",
+    "totalResults": 10,
+    "articles": [
+        {
+            "source": {
+                "id": "bbc-news",
+                "name": "BBC News"
+            },
+            "author": "BBC News",
+            "title": "BBC Gaza reporter: My struggle to keep family safe while covering the war",
+            "description": "BBC Arabic‘s Adnan El-Bursh covered the conflict as he and his family were displaced multiple times.",
+            "url": "https://www.bbc.co.uk/news/world-middle-east-68906903",
+            "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/977D/production/_133218783_razan_hug.jpg",
+            "publishedAt": "2024-04-29T00:37:17.7663039Z",
+            "content": "For about three months, Adnan El-Bursh reported on the war in Gaza while living in a tent, eating one meal a day, and struggling to keep his wife and five children safe. The BBC Arabic reporter share… [+11175 chars]"
+        },
+        {
+            "source": {
+                "id": "bbc-news",
+                "name": "BBC News"
+            },
+            "author": "BBC News",
+            "title": "'Invisible in our own country': Being Muslim in Modi's India",
+            "description": "Since Narendra Modi's BJP took power in 2014, India's 200 million Muslims have faced turmoil.",
+            "url": "https://www.bbc.co.uk/news/world-asia-india-68498675",
+            "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/26DB/production/_133174990_mediaitem133174989.jpg",
+            "publishedAt": "2024-04-28T23:37:13.4069011Z",
+            "content": "Rahmani30 now mentors 850 students - girls and boys - in three cities, including Patna, Bihar's capital. Chosen students live in the school's rented buildings and cram for national entrance exams in … [+169 chars]"
+        },
+        {
+            "source": {
+                "id": "bbc-news",
+                "name": "BBC News"
+            },
+            "author": "BBC News",
+            "title": "Titanic pocket watch sells in Wiltshire for £900,000",
+            "description": "The original owner of the watch, businessman John Jacob Astor, 47, went down with the ship in 1912.",
+            "url": "https://www.bbc.co.uk/news/articles/clw01vxnpyzo",
+            "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/d450/live/c903fbb0-04c3-11ef-bee9-6125e244a4cd.jpg",
+            "publishedAt": "2024-04-28T23:07:19.1253693Z",
+            "content": "The watch and the brown leather violin bag belonged to two people who became enshrined in Titanic folklore.\r\nMr Astor, 47, went down with the ship, after putting his young wife Madeleine into a lifeb… [+686 chars]"
+        },
+        {
+            "source": {
+                "id": "bbc-news",
+                "name": "BBC News"
+            },
+            "author": "BBC News",
+            "title": "Prince Harry to return to UK for Invictus Games anniversary",
+            "description": "The Duke of Sussex was last seen in the UK in February for a brief visit to see his father, King Charles.",
+            "url": "https://www.bbc.co.uk/news/uk-68915897",
+            "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/11B38/production/_133240527_gettyimages-1682210741.jpg",
+            "publishedAt": "2024-04-28T22:37:16.594108Z",
+            "content": "The Duke of Sussex will return to the UK in just over a week for a ceremony marking the 10th anniversary of the Invictus Games. \r\nPrince Harry will attend the thanksgiving service at St Paul's Cathed… [+3412 chars]"
+        },
+        {
+            "source": {
+                "id": "bbc-news",
+                "name": "BBC News"
+            },
+            "author": "BBC News",
+            "title": "Hoads Wood: The Bluebell woodland turned 'desolate wasteland'",
+            "description": "Campaigners say a petition calling for officials to clean-up the woods has hit 6,500 signatures.",
+            "url": "https://www.bbc.co.uk/news/articles/czq5nd45p8zo",
+            "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/6c8a/live/fa58ea10-0548-11ef-b9d8-4f52aebe147d.jpg",
+            "publishedAt": "2024-04-28T17:07:18.9234407Z",
+            "content": "A spokesman for Ashford Borough Council said to date it had been unable to establish that the issues have crossed the threshold of a statutory nuisance but that it continued to \"liaise with the relev… [+577 chars]"
+        },
+        {
+            "source": {
+                "id": "bbc-news",
+                "name": "BBC News"
+            },
+            "author": "BBC News",
+            "title": "Situation on frontline has worsened, Ukraine army chief says",
+            "description": "Oleksandr Syrskyi says Ukrainian forces have withdrawn from positions in eastern Donetsk.",
+            "url": "https://www.bbc.co.uk/news/world-europe-68916317",
+            "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/6D6E/production/_133241082_mediaitem133241081.jpg",
+            "publishedAt": "2024-04-28T16:22:15.7045325Z",
+            "content": "Ukraine's commander-in-chief has said the situation on the frontline has worsened in the face of multiple Russian attacks.\r\nOleksandr Syrskyi said Ukrainian forces had withdrawn from positions in the… [+2690 chars]"
+        }
+    ]
+}

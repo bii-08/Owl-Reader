@@ -6,12 +6,16 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Link: Identifiable, Hashable {
     var id: URL {
         self.url
     }
     var url: URL
-    var favicon: URL?
+    var favicon: UIImage?
     var webPageTitle: String
 }
+
+
+
