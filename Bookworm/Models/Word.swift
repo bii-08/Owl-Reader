@@ -10,10 +10,10 @@ import Foundation
 // MARK: - Word
 struct Word: Codable {
     let word: String
-    let results: [Result]
-    let syllables: Syllables
-    let pronunciation: Pronunciation
-    let frequency: Double
+    let results: [Result]?
+//    let syllables: Syllables?
+    let pronunciation: Pronunciation?
+    let frequency: Double?
 }
 
 // MARK: - Pronunciation
@@ -23,16 +23,16 @@ struct Pronunciation: Codable {
 
 // MARK: - Result
 struct Result: Codable, Hashable {
-    let definition: String
-    let partOfSpeech: String
-    let synonyms: [String]
-    let similarTo: [String]
+    let definition: String?
+    let partOfSpeech: String?
+    let synonyms: [String]?
+    let similarTo: [String]?
     let examples: [String]?
     let derivation: [String]?
 }
 
 // MARK: - Syllables
-struct Syllables: Codable {
-    let count: Int
-    let list: [String]
-}
+//struct Syllables: Codable {
+//    let count: Int
+//    let list: [String]
+//}

@@ -9,25 +9,25 @@ import Foundation
 
 @MainActor
 class DefinitionVM: ObservableObject {
-    private let webService: WebServiceDelegate
+    private let dictionaryService: DictionaryService
     @Published var word: Word?
     var selectedWord: String
     
-    init(selectedWord: String, webService: WebServiceDelegate = MockdataForWord()) {
+    // NOTE: Replace MockdataForWord() with WebService() to fetch data from real API
+    init(selectedWord: String, dictionaryService: DictionaryService = DictionaryService()) {
         self.selectedWord = selectedWord
-        self.webService = webService
+        self.dictionaryService = dictionaryService
         
         Task {
             await fetchWord()
         }
     }
     
-    
     // FUNCTION: for fetching word from dictionary api
         func fetchWord() async {
-            if let targetWord: Word = await webService.downloadData(fromURL: "https://wordsapiv1.p.mashape.com/words/\(String(describing: selectedWord))") {
+            if let targetWord: Word = await dictionaryService.downloadWord(word: selectedWord) {
                 word = targetWord
-//                print(word as Any)
+                print(word as Any)
             }
         }
     

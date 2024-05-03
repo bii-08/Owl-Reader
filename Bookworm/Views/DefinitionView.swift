@@ -8,9 +8,11 @@
 import SwiftUI
 import AVFoundation
 
+
 struct DefinitionView: View {
     @State private var starTapped = false
     @StateObject var vm: DefinitionVM
+    let synthesizer = AVSpeechSynthesizer()
     
     var body: some View {
        
@@ -40,10 +42,12 @@ struct DefinitionView: View {
                         VStack(alignment: .leading) {
                             HStack {
                                 if let word = vm.word {
-                                    Text("[\(word.pronunciation.all)]")
-                                        .font(.custom("Helvetica", size: 19))
-                                        .foregroundColor(.secondary)
-                                        .padding(.horizontal)
+                                    if let pronunciation = word.pronunciation {
+                                        Text("[\(pronunciation.all)]")
+                                            .font(.custom("Helvetica", size: 19))
+                                            .foregroundColor(.secondary)
+                                            .padding(.horizontal)
+                                    }
                                 }
                                 Spacer()
                                 
@@ -55,9 +59,8 @@ struct DefinitionView: View {
                                     Button {
                                         if let word = vm.word {
                                             let utterance = AVSpeechUtterance(string: word.word)
-                                            utterance.voice = AVSpeechSynthesisVoice(language: "en-UK")
+                                            utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
                                             utterance.rate = 0.3
-                                            let synthesizer = AVSpeechSynthesizer()
                                             synthesizer.speak(utterance)
                                         }
                                     } label: {
@@ -77,7 +80,6 @@ struct DefinitionView: View {
                                             let utterance = AVSpeechUtterance(string: word.word)
                                             utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
                                             utterance.rate = 0.3
-                                            let synthesizer = AVSpeechSynthesizer()
                                             synthesizer.speak(utterance)
                                         }
                                     } label: {
@@ -92,65 +94,80 @@ struct DefinitionView: View {
                     
                     ScrollView {
                         if let word = vm.word {
-                            ForEach(word.results, id: \.self) { result in
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        
-                                        // Word function
-                                        HStack {
-                                            Text("\(vm.capitalizeFirstLetter(of: result.partOfSpeech))")
-                                                .font(.custom("Helvetica", size: 19))
-                                                .foregroundColor(.orange)
-                                            Spacer()
-                                        }
-                                        .padding(.vertical, 5)
-                                        
-                                        // Definitions
-                                        HStack {
-                                            Text("\(vm.capitalizeFirstLetter(of: result.definition))")
-                                                .font(.custom("Helvetica", size: 19))
-                                                .bold()
-                                            Spacer()
-                                        }
-                                        .padding(.vertical, 5)
-                                        
-                                        // Examples
-                                        if let examples = result.examples {
-                                            ForEach(examples, id: \.self) { example in
-                                                HStack {
-                                                    Text("\(vm.capitalizeFirstLetter(of: example)).")
+                            if let results = word.results {
+                                ForEach(results, id: \.self) { result in
+                                    HStack {
+                                        VStack(alignment: .leading) {
+                                            
+                                            // Word function
+                                            HStack {
+                                                if let partOfSpeech = result.partOfSpeech {
+                                                    Text("\(vm.capitalizeFirstLetter(of: partOfSpeech))")
                                                         .font(.custom("Helvetica", size: 19))
-                                                        .foregroundColor(.primary)
-                                                        .italic()
-                                                        .padding()
-                                                    Spacer()
+                                                        .foregroundColor(.orange)
+                                                }
+                                                
+                                                Spacer()
+                                            }
+                                            .padding(.vertical, 5)
+                                            
+                                            // Definitions
+                                            HStack {
+                                                if let definition = result.definition {
+                                                    Text("\(vm.capitalizeFirstLetter(of: definition))")
+                                                        .font(.custom("Helvetica", size: 19))
+                                                        .bold()
+                                                }
+                                                
+                                                Spacer()
+                                            }
+                                            .padding(.vertical, 5)
+                                            
+                                            // Examples
+                                            if let examples = result.examples {
+                                                ForEach(examples, id: \.self) { example in
+                                                    HStack {
+                                                        Text("\(vm.capitalizeFirstLetter(of: example)).")
+                                                            .font(.custom("Helvetica", size: 19))
+                                                            .foregroundColor(.primary)
+                                                            .italic()
+                                                            .padding()
+                                                        Spacer()
+                                                    }
                                                 }
                                             }
-                                        }
-                                        
-                                        // Synonyms
-                                        Text("Synonyms:")
-                                            .font(.custom("Helvetica", size: 19))
-                                            .underline()
-                                        ForEach(result.synonyms, id: \.self) { syn in
-                                            HStack {
-                                                Text(syn)
-                                                    .font(.custom("Helvetica", size: 18))
-                                                    .foregroundColor(.secondary)
+                                            
+                                            // Synonyms
+                                            if result.synonyms != nil {
+                                                Text("Synonyms:")
+                                                    .font(.custom("Helvetica", size: 19))
+                                                    .underline()
                                             }
+                                            
+                                            if let synonyms = result.synonyms {
+                                                ForEach(synonyms, id: \.self) { syn in
+                                                    HStack {
+                                                        Text(syn)
+                                                            .font(.custom("Helvetica", size: 18))
+                                                            .foregroundColor(.secondary)
+                                                    }
+                                                }
+                                            }
+                                            
+                                            
+                                           Spacer()
                                         }
+                                        .frame(width: 350)
+                                        .padding(8)
+                                        .background(.ultraThickMaterial)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .padding(.vertical, 5)
                                         
-                                       Spacer()
                                     }
-                                    .frame(width: 350)
-                                    .padding(8)
-                                    .background(.ultraThickMaterial)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    .padding(.vertical, 5)
-                                    
+                                    .padding(.horizontal)
                                 }
-                                .padding(.horizontal)
                             }
+                            
                         }
                     }
             }

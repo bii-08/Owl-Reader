@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftyJSON
+
 enum NetworkError: Error {
     case badRequest
     case badResponse
@@ -31,6 +33,48 @@ class WebService: WebServiceDelegate {
             guard let decodedResponse = try? JSONDecoder().decode(T.self, from: data) else { throw NetworkError.failedToDecodeResponse }
             
             return decodedResponse
+        } catch NetworkError.badURL {
+            print("There was an error creating the URL")
+        } catch NetworkError.badResponse {
+            print("Did not get a valid response")
+        } catch NetworkError.badStatus {
+            print("Did not get a 2xx status code from the response")
+        } catch NetworkError.failedToDecodeResponse {
+            print("Failed to decode response into the given type")
+        } catch {
+            print("An error occured downloading the data")
+        }
+        return nil
+    }
+}
+
+
+class DictionaryService {
+    func downloadWord<T: Codable>(word: String) async -> T? {
+        do {
+        // Define the headers for the request
+        let headers = [
+            "X-RapidAPI-Key": "ccb36aa56emsh90975b2ff570ae3p1b04e6jsnde054a8b3038",
+            "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com"
+        ]
+        // Define the URL for the request
+        let url = "https://wordsapiv1.p.rapidapi.com/words/\(word)"
+        guard let url = URL(string: url) else { throw NetworkError.badURL }
+        // Create a URL request and set its properties
+        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
+        request.httpMethod = "GET"
+            
+        request.allHTTPHeaderFields = headers
+        
+            // Perform the data task using async/await
+            let (data, response) = try await URLSession.shared.data(for: request)
+            print(JSON(data))
+            // Check the response status code (optional)
+            guard let httpResponse = response as? HTTPURLResponse  else { throw NetworkError.badResponse }
+            print(httpResponse)
+            guard let decodedResponse = try? JSONDecoder().decode(T.self, from: data) else { throw NetworkError.failedToDecodeResponse }
+            return decodedResponse
+
         } catch NetworkError.badURL {
             print("There was an error creating the URL")
         } catch NetworkError.badResponse {

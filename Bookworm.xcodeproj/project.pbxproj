@@ -30,6 +30,7 @@
 		789D8AB72BE3694F004E0EA5 /* Word.json in Resources */ = {isa = PBXBuildFile; fileRef = 789D8AB62BE3694F004E0EA5 /* Word.json */; };
 		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
 		789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */; };
+		789D8ABE2BE4B250004E0EA5 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 789D8ABD2BE4B250004E0EA5 /* SwiftyJSON */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				789D8ABE2BE4B250004E0EA5 /* SwiftyJSON in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +182,9 @@
 			dependencies = (
 			);
 			name = Bookworm;
+			packageProductDependencies = (
+				789D8ABD2BE4B250004E0EA5 /* SwiftyJSON */,
+			);
 			productName = Bookworm;
 			productReference = 785664C22BD66FBF008A9EF1 /* Bookworm.app */;
 			productType = "com.apple.product-type.application";
@@ -208,6 +213,9 @@
 				Base,
 			);
 			mainGroup = 785664B92BD66FBF008A9EF1;
+			packageReferences = (
+				789D8ABC2BE4B250004E0EA5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+			);
 			productRefGroup = 785664C32BD66FBF008A9EF1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -460,6 +468,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		789D8ABC2BE4B250004E0EA5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		789D8ABD2BE4B250004E0EA5 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 789D8ABC2BE4B250004E0EA5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 785664BA2BD66FBF008A9EF1 /* Project object */;
 }

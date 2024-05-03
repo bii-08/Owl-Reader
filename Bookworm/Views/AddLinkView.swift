@@ -15,7 +15,6 @@ struct AddLinkView: View {
     
     var photoPikerVM: PhotoPickerVM
     
-    
     @State var selectedPage: Link?
     var body: some View {
         ZStack {
@@ -103,6 +102,7 @@ struct AddLinkView: View {
                             
                             urlString = ""
                             webPageTitle = ""
+                            photoPikerVM.clear()
                            
                         } else {
                             print("invalid")

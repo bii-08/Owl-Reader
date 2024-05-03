@@ -21,7 +21,7 @@ class HomeVM: ObservableObject {
     @Published var showingEditingView = false
     init(webService: WebServiceDelegate = MocdataWebService()) {
         self.webService = webService
-        savedShortcuts = [Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia"), webPageTitle: "Investopidea"),
+        savedShortcuts = [Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia"), webPageTitle: "Investopideaaaaaaaaaaa"),
                              Link(url: URL(string: "https://www.apple.com")!, favicon: UIImage(named: "apple"), webPageTitle: "Apple"), Link(url: URL(string: "https://www.bbc.com")!, favicon: UIImage(named: "BBC news"), webPageTitle: "BBC News")]
         Task {
             await fetchHeadlines()

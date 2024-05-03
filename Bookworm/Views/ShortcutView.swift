@@ -36,6 +36,7 @@ struct ShortcutView: View {
                 Text("\(webPageTitle)")
                     .font(Font.custom("Avenir Next Condensed", size: 20))
                     .frame(width: 100)
+                    .lineLimit(1)
                     .foregroundColor(.primary.opacity(0.5))
                     .padding(5)
             }
