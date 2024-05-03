@@ -6,22 +6,26 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct DefinitionView: View {
-    var word: String
     @State private var starTapped = false
+    @StateObject var vm: DefinitionVM
+    
     var body: some View {
        
         ZStack {
             Color(.cyan.opacity(0.2)).ignoresSafeArea()
             VStack(alignment: .leading) {
-                    // selected word
+                    // Selected word
                     HStack {
-                        Text(word)
-                            .font(.title2)
+                        Text(vm.selectedWord)
+                            .font(.custom("Helvetica", size: 25))
                             .textCase(.lowercase)
                             .bold()
                             .padding(.horizontal)
+                            .padding(.vertical, 5)
+                        
                         Spacer()
                         Button {
                             starTapped.toggle()
@@ -32,81 +36,129 @@ struct DefinitionView: View {
                         .padding(.horizontal, 20)
                     }
                     
-                    
-                    // pronunciation
-                    HStack {
+                    // Pronunciation
                         VStack(alignment: .leading) {
                             HStack {
-                                Text("UK")
-                                    .foregroundColor(.secondary)
-                                Button {
-                                    
-                                } label: {
-                                    Image(systemName: "speaker.wave.3")
-                                        .foregroundColor(.cyan)
+                                if let word = vm.word {
+                                    Text("[\(word.pronunciation.all)]")
+                                        .font(.custom("Helvetica", size: 19))
+                                        .foregroundColor(.secondary)
+                                        .padding(.horizontal)
                                 }
+                                Spacer()
                                 
-                            }
-                            .padding(.horizontal)
-                            
-                            Text("[pronunciation]")
-                                .foregroundColor(.secondary)
-                                .padding(.horizontal)
-                        }
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("US")
-                                    .foregroundColor(.secondary)
-                                Button {
-                                    
-                                } label: {
-                                    Image(systemName: "speaker.wave.3")
-                                        .foregroundColor(.cyan)
+                                // British
+                                HStack(spacing: 2) {
+                                    Text("UK")
+                                        .font(.custom("Helvetica", size: 15))
+                                        .foregroundColor(.secondary)
+                                    Button {
+                                        if let word = vm.word {
+                                            let utterance = AVSpeechUtterance(string: word.word)
+                                            utterance.voice = AVSpeechSynthesisVoice(language: "en-UK")
+                                            utterance.rate = 0.3
+                                            let synthesizer = AVSpeechSynthesizer()
+                                            synthesizer.speak(utterance)
+                                        }
+                                    } label: {
+                                        Image(systemName: "speaker.wave.3")
+                                            .foregroundColor(.cyan)
+                                    }
                                 }
-                                
-                            }
-                            .padding(.horizontal)
-                            
-                            Text("[pronunciation]")
-                                .foregroundColor(.secondary)
                                 .padding(.horizontal)
+                                
+                                // American
+                                HStack(spacing: 2) {
+                                    Text("US")
+                                        .font(.custom("Helvetica", size: 15))
+                                        .foregroundColor(.secondary)
+                                    Button {
+                                        if let word = vm.word {
+                                            let utterance = AVSpeechUtterance(string: word.word)
+                                            utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+                                            utterance.rate = 0.3
+                                            let synthesizer = AVSpeechSynthesizer()
+                                            synthesizer.speak(utterance)
+                                        }
+                                    } label: {
+                                        Image(systemName: "speaker.wave.3")
+                                            .foregroundColor(.cyan)
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                            
                         }
-                    }
                     
                     ScrollView {
-                        // word type
-                        HStack {
-                            Text("Adjective")
+                        if let word = vm.word {
+                            ForEach(word.results, id: \.self) { result in
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        
+                                        // Word function
+                                        HStack {
+                                            Text("\(vm.capitalizeFirstLetter(of: result.partOfSpeech))")
+                                                .font(.custom("Helvetica", size: 19))
+                                                .foregroundColor(.orange)
+                                            Spacer()
+                                        }
+                                        .padding(.vertical, 5)
+                                        
+                                        // Definitions
+                                        HStack {
+                                            Text("\(vm.capitalizeFirstLetter(of: result.definition))")
+                                                .font(.custom("Helvetica", size: 19))
+                                                .bold()
+                                            Spacer()
+                                        }
+                                        .padding(.vertical, 5)
+                                        
+                                        // Examples
+                                        if let examples = result.examples {
+                                            ForEach(examples, id: \.self) { example in
+                                                HStack {
+                                                    Text("\(vm.capitalizeFirstLetter(of: example)).")
+                                                        .font(.custom("Helvetica", size: 19))
+                                                        .foregroundColor(.primary)
+                                                        .italic()
+                                                        .padding()
+                                                    Spacer()
+                                                }
+                                            }
+                                        }
+                                        
+                                        // Synonyms
+                                        Text("Synonyms:")
+                                            .font(.custom("Helvetica", size: 19))
+                                            .underline()
+                                        ForEach(result.synonyms, id: \.self) { syn in
+                                            HStack {
+                                                Text(syn)
+                                                    .font(.custom("Helvetica", size: 18))
+                                                    .foregroundColor(.secondary)
+                                            }
+                                        }
+                                        
+                                       Spacer()
+                                    }
+                                    .frame(width: 350)
+                                    .padding(8)
+                                    .background(.ultraThickMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .padding(.vertical, 5)
+                                    
+                                }
                                 .padding(.horizontal)
-                                .padding(.vertical, 5)
-                                .foregroundColor(.orange)
-                            Spacer()
+                            }
                         }
-                        
-                        // definition and example
-                        VStack(alignment: .leading) {
-                            Text("a computer programming language that is often used on the internet.")
-                                .padding(5)
-                            Text("He seemed dazed and incoherent, apperently from blood loss.")
-                                .foregroundColor(.secondary)
-                                .padding(5)
-                        }
-                        .frame(width: 350)
-                        .background(.gray.opacity(0.2))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding()
-                        
                     }
-                    
-                }
+            }
             .padding()
         }
-           
-        
     }
 }
     
-
 #Preview {
-    DefinitionView(word: "incoherent")
+    DefinitionView(vm: DefinitionVM(selectedWord: "incoherent"))
 }

@@ -10,9 +10,8 @@
 		781C5B0F2BDF2BAD00FB394B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B0E2BDF2BAD00FB394B /* AlertView.swift */; };
 		781C5B112BDF6A3000FB394B /* EditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B102BDF6A3000FB394B /* EditingView.swift */; };
 		781C5B142BE06EEB00FB394B /* Headlines.json in Resources */ = {isa = PBXBuildFile; fileRef = 781C5B132BE06EEB00FB394B /* Headlines.json */; };
-		781C5B162BE0732400FB394B /* HeadlinesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B152BE0732400FB394B /* HeadlinesService.swift */; };
-		781C5B182BE0733E00FB394B /* DictionaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B172BE0733E00FB394B /* DictionaryService.swift */; };
-		781C5B1A2BE075A700FB394B /* MockDataHeadlinesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B192BE075A700FB394B /* MockDataHeadlinesService.swift */; };
+		781C5B162BE0732400FB394B /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B152BE0732400FB394B /* WebService.swift */; };
+		781C5B1A2BE075A700FB394B /* MockDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B192BE075A700FB394B /* MockDataService.swift */; };
 		781C5B1D2BE0768600FB394B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B1C2BE0768600FB394B /* Extension.swift */; };
 		781C5B1F2BE078C700FB394B /* HeadlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B1E2BE078C700FB394B /* HeadlineView.swift */; };
 		781C5B212BE0791100FB394B /* Headline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B202BE0791100FB394B /* Headline.swift */; };
@@ -28,15 +27,17 @@
 		785664DE2BD88240008A9EF1 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664DD2BD88240008A9EF1 /* Link.swift */; };
 		785664E12BD88356008A9EF1 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E02BD88356008A9EF1 /* HomeVM.swift */; };
 		785664E32BD8E13B008A9EF1 /* AddLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E22BD8E13B008A9EF1 /* AddLinkView.swift */; };
+		789D8AB72BE3694F004E0EA5 /* Word.json in Resources */ = {isa = PBXBuildFile; fileRef = 789D8AB62BE3694F004E0EA5 /* Word.json */; };
+		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
+		789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		781C5B0E2BDF2BAD00FB394B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		781C5B102BDF6A3000FB394B /* EditingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingView.swift; sourceTree = "<group>"; };
 		781C5B132BE06EEB00FB394B /* Headlines.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Headlines.json; sourceTree = "<group>"; };
-		781C5B152BE0732400FB394B /* HeadlinesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlinesService.swift; sourceTree = "<group>"; };
-		781C5B172BE0733E00FB394B /* DictionaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryService.swift; sourceTree = "<group>"; };
-		781C5B192BE075A700FB394B /* MockDataHeadlinesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataHeadlinesService.swift; sourceTree = "<group>"; };
+		781C5B152BE0732400FB394B /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
+		781C5B192BE075A700FB394B /* MockDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataService.swift; sourceTree = "<group>"; };
 		781C5B1C2BE0768600FB394B /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		781C5B1E2BE078C700FB394B /* HeadlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadlineView.swift; sourceTree = "<group>"; };
 		781C5B202BE0791100FB394B /* Headline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Headline.swift; sourceTree = "<group>"; };
@@ -53,6 +54,9 @@
 		785664DD2BD88240008A9EF1 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		785664E02BD88356008A9EF1 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
 		785664E22BD8E13B008A9EF1 /* AddLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkView.swift; sourceTree = "<group>"; };
+		789D8AB62BE3694F004E0EA5 /* Word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Word.json; sourceTree = "<group>"; };
+		789D8AB82BE43959004E0EA5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,9 +73,8 @@
 		781C5B122BE0652D00FB394B /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				781C5B152BE0732400FB394B /* HeadlinesService.swift */,
-				781C5B192BE075A700FB394B /* MockDataHeadlinesService.swift */,
-				781C5B172BE0733E00FB394B /* DictionaryService.swift */,
+				781C5B152BE0732400FB394B /* WebService.swift */,
+				781C5B192BE075A700FB394B /* MockDataService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -144,7 +147,9 @@
 			children = (
 				785664DD2BD88240008A9EF1 /* Link.swift */,
 				781C5B202BE0791100FB394B /* Headline.swift */,
+				789D8AB82BE43959004E0EA5 /* Word.swift */,
 				781C5B132BE06EEB00FB394B /* Headlines.json */,
+				789D8AB62BE3694F004E0EA5 /* Word.json */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 			children = (
 				785664E02BD88356008A9EF1 /* HomeVM.swift */,
 				781C5B222BE1C3A300FB394B /* PhotoPickerVM.swift */,
+				789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -219,6 +225,7 @@
 				781C5B142BE06EEB00FB394B /* Headlines.json in Resources */,
 				785664CD2BD66FC1008A9EF1 /* Preview Assets.xcassets in Resources */,
 				785664CA2BD66FC1008A9EF1 /* Assets.xcassets in Resources */,
+				789D8AB72BE3694F004E0EA5 /* Word.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,18 +236,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				781C5B162BE0732400FB394B /* HeadlinesService.swift in Sources */,
+				781C5B162BE0732400FB394B /* WebService.swift in Sources */,
 				785664DA2BD871C1008A9EF1 /* ShortcutView.swift in Sources */,
 				785664D42BD6728A008A9EF1 /* WebView.swift in Sources */,
 				781C5B212BE0791100FB394B /* Headline.swift in Sources */,
 				781C5B0F2BDF2BAD00FB394B /* AlertView.swift in Sources */,
 				781C5B232BE1C3A300FB394B /* PhotoPickerVM.swift in Sources */,
 				785664E12BD88356008A9EF1 /* HomeVM.swift in Sources */,
-				781C5B1A2BE075A700FB394B /* MockDataHeadlinesService.swift in Sources */,
-				781C5B182BE0733E00FB394B /* DictionaryService.swift in Sources */,
+				781C5B1A2BE075A700FB394B /* MockDataService.swift in Sources */,
+				789D8AB92BE43959004E0EA5 /* Word.swift in Sources */,
 				785664C82BD66FBF008A9EF1 /* HomeView.swift in Sources */,
 				781C5B1F2BE078C700FB394B /* HeadlineView.swift in Sources */,
 				781C5B112BDF6A3000FB394B /* EditingView.swift in Sources */,
+				789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */,
 				781C5B1D2BE0768600FB394B /* Extension.swift in Sources */,
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
 				785664DE2BD88240008A9EF1 /* Link.swift in Sources */,

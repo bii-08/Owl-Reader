@@ -150,6 +150,19 @@ struct WebView: UIViewRepresentable, Equatable {
         Coordinator(self)
     }
     
+    // Method to filter a string to contain only letters
+        func filterToOnlyLetters(_ string: String) -> String {
+            // Define a CharacterSet for letters
+            let letters = CharacterSet.letters
+            
+            // Filter the string to retain only letters
+            let filteredString = string.filter { character in
+                return letters.contains(character.unicodeScalars.first!)
+            }
+            
+            return filteredString
+        }
+    
     
     class Coordinator: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         var parent: WebView
@@ -161,7 +174,12 @@ struct WebView: UIViewRepresentable, Equatable {
         // Make sure the Coordinator conforms to WKScriptMessageHandler
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
             if message.name == "wordSelected", let selectedWord = message.body as? String {
-                parent.onWordSelected(selectedWord)
+                
+                // Filter the selected word to contain only letters
+                let filteredWord = parent.filterToOnlyLetters(selectedWord)
+                
+                // Call the onWordSelected closure with the filtered word
+                parent.onWordSelected(filteredWord)
             }
         }
     }

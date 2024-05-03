@@ -70,7 +70,7 @@ class HomeVM: ObservableObject {
     // FUNCTION: for fetching data from real api
         func fetchHeadlines() async {
         headLines = [Headline]()
-            if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadHeadlines(fromURL: "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=c0054895dda142d5896f81665100a207&pageSize=10") {
+            if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=c0054895dda142d5896f81665100a207&pageSize=10") {
                 headLines = downloadedHeadlines.articles
             }
         }

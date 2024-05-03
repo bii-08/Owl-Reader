@@ -20,7 +20,6 @@ struct AlertView: View {
             VStack {
                 Text(title)
                     .font(Font.custom("DIN Condensed", size: 30))
-//                    .font(.title)
                     .bold()
                     .padding()
                     .foregroundColor(.primary)

@@ -15,12 +15,12 @@ enum NetworkError: Error {
     case failedToDecodeResponse
 }
 protocol WebServiceDelegate {
-    func downloadHeadlines<T: Codable>(fromURL: String) async -> T?
+    func downloadData<T: Codable>(fromURL: String) async -> T?
 }
 
 // For downloading data from the Internet
-class HeadlinesService: WebServiceDelegate {
-    func downloadHeadlines<T: Codable>(fromURL: String) async -> T? {
+class WebService: WebServiceDelegate {
+    func downloadData<T: Codable>(fromURL: String) async -> T? {
         do {
             guard let url = URL(string: fromURL) else { throw NetworkError.badURL }
             let (data, response) = try await URLSession.shared.data(from: url)
