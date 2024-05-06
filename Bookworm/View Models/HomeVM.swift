@@ -74,8 +74,5 @@ class HomeVM: ObservableObject {
                 headLines = downloadedHeadlines.articles
             }
         }
-    
-    
-    
 }
 

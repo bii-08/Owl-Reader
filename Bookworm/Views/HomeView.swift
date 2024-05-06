@@ -68,14 +68,17 @@ struct HomeView: View {
                                         }
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
-                                                DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                                DefinitionView(vm: DefinitionVM(selectedWord: word), shouldHavePicker: true)
                                                     .presentationBackground(.thinMaterial)
                                                     .presentationCornerRadius(15)
                                                     .presentationDetents([.height(300)])
                                             }
                                         }
+                                    }
+                                    .toolbar{
                                         navigationBarOnWebPage
                                     }
+                                    .edgesIgnoringSafeArea(.all)
                                 }
                             }
                         }
@@ -97,7 +100,6 @@ struct HomeView: View {
                                 HeadlineView(headline: vm.headLines[index]) {
                                     selectedHeadline = vm.headLines[index]
                                 }
-                               
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
@@ -110,20 +112,21 @@ struct HomeView: View {
                                     selectedWord = word
                                     showingDefinition = true
                                 }
+                                
                                 .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                     if let word = selectedWord {
-                                        DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                        DefinitionView(vm: DefinitionVM(selectedWord: word), shouldHavePicker: true)
                                             .presentationBackground(.thickMaterial)
                                             .presentationCornerRadius(15)
                                             .presentationDetents([.height(300)])
                                     }
                                 }
-                                
-                                navigationBarOnWebPage
-                                
                             }
+                            .toolbar{
+                                navigationBarOnWebPage
+                            }
+                            .edgesIgnoringSafeArea(.all)
                         }
-                      
                     }
                     // Shortcut section
                     VStack {
@@ -148,8 +151,8 @@ struct HomeView: View {
                                         Image(systemName: "plus.circle.fill")
                                             .scaleEffect(2)
                                             .foregroundColor(.red.opacity(0.8))
-                                            .frame(width: 70, height: 70)
-                                            .padding(10)
+                                            .frame(width: 80, height: 80)
+                                            .padding(9)
                                     }
                                     .background(.ultraThinMaterial)
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -168,7 +171,6 @@ struct HomeView: View {
                                         urlString = shortcut.url.absoluteString
                                         showingShortcutWebPage = true
                                     }
-                                    
                                 }
                             }
                             .navigationDestination(isPresented: $showingShortcutWebPage) {
@@ -179,18 +181,20 @@ struct HomeView: View {
                                             selectedWord = word
                                             showingDefinition = true
                                         }
+                                        
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
-                                                DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                                DefinitionView(vm: DefinitionVM(selectedWord: word), shouldHavePicker: true)
                                                     .presentationBackground(.thickMaterial)
                                                     .presentationCornerRadius(15)
                                                     .presentationDetents([.height(300)])
                                             }
                                         }
-                                        
-                                        navigationBarOnWebPage
-                                        
                                     }
+                                    .toolbar{
+                                        navigationBarOnWebPage
+                                    }
+                                    .edgesIgnoringSafeArea(.all)
                                 }
                             }
                         }
@@ -207,38 +211,53 @@ struct HomeView: View {
 
 extension HomeView {
     private var navigationBarOnWebPage: some View {
-        HStack(spacing: 50) {
-            // Go back button
-            Button {
-                if let webView = webView, webView.canGoBack {
-                    webView.goBack()
-                }
-            } label: {
-                Image(systemName: "arrow.left")
-            }
+        
+        ZStack {
             
-            // Go forward button
-            Button {
-                if let webView = webView, webView.canGoForward {
-                    webView.goForward()
+            HStack(spacing: 25) {
+                // Go back button
+                Button {
+                    if let webView = webView, webView.canGoBack {
+                        webView.goBack()
+                    }
+                    
+                } label: {
+                    Image(systemName: "arrowshape.turn.up.backward.fill")
+                        .tint(.orange.opacity(0.7))
                 }
-            } label: {
-                Image(systemName: "arrow.right")
-            }
-            
-            // Reload button
-            Button {
-                if let webView = webView {
-                    webView.reload()
+              
+                
+                // Go forward button
+                Button {
+                    
+                    if let webView = webView, webView.canGoForward {
+                        webView.goForward()
+                    }
+                } label: {
+                    Image(systemName: "arrowshape.turn.up.right.fill")
+                        .tint(.orange.opacity(0.7))
                 }
-            } label: {
-                Image(systemName: "arrow.counterclockwise")
+              
+                
+                // Reload button
+                Button {
+                    if let webView = webView {
+                        webView.reload()
+                    }
+                } label: {
+                    Image(systemName: "arrow.counterclockwise.circle.fill")
+                        .tint(.orange.opacity(0.7))
+                }
             }
         }
+        .frame(height: 50)
+
+        
     }
 }
 
 #Preview {
     HomeView()
         .environmentObject(HomeVM())
+        .environmentObject(WordBookVM())
 }

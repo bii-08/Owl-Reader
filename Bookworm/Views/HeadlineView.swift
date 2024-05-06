@@ -21,8 +21,10 @@ struct HeadlineView: View {
                 AsyncImage(url: URL(string: headline.urlToImage)) { image in
                     image.image?.resizable()
                         .scaledToFill()
-                        .frame(maxWidth: .infinity, maxHeight: 230)
+                        .frame(maxWidth: 380, maxHeight: 230)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .shadow(radius: 5)
+                        
                 }
                 Text(headline.title)
                     .font(.title3)
@@ -32,7 +34,6 @@ struct HeadlineView: View {
                     .padding()
             }
         }
-        
     }
 }
 

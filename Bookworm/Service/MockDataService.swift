@@ -15,8 +15,8 @@ class MocdataWebService: WebServiceDelegate {
     }
 }
 
-class MockdataForWord: WebServiceDelegate {
-    func downloadData<T: Codable>(fromURL: String) async -> T? {
+class MockdataForWord: DictionaryServiceDelegate {
+    func downloadWord<T: Codable>(word: String) async -> T?{
         let mockWord = Bundle.main.decode(Word.self, from: "Word.json")
         return mockWord as? T
     }

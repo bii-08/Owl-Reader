@@ -9,14 +9,15 @@ import SwiftUI
 import WebKit
 
 struct WebView: UIViewRepresentable, Equatable {
+    
     static func == (lhs: WebView, rhs: WebView) -> Bool {
         lhs.url == rhs.url
     }
     
     let url: URL?
     @Binding var webView: WKWebView?
-    var onWordSelected: (String) -> Void
     
+    var onWordSelected: (String) -> Void
 
     func makeUIView(context: Context) -> WKWebView {
         let config = WKWebViewConfiguration()
@@ -108,7 +109,6 @@ struct WebView: UIViewRepresentable, Equatable {
             }
         }
         
-        
         // Function to wrap the range in a span element with a background color
         function wrapRangeInSpan(range, color) {
             // Create a span element
@@ -144,6 +144,7 @@ struct WebView: UIViewRepresentable, Equatable {
         guard let myURL = url else { return }
         let request = URLRequest(url: myURL)
         uiView.load(request)
+
     }
     
     func makeCoordinator() -> Coordinator {
@@ -170,6 +171,7 @@ struct WebView: UIViewRepresentable, Equatable {
         init(_ parent: WebView) {
             self.parent = parent
         }
+        
         
         // Make sure the Coordinator conforms to WKScriptMessageHandler
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

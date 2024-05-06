@@ -20,6 +20,10 @@ protocol WebServiceDelegate {
     func downloadData<T: Codable>(fromURL: String) async -> T?
 }
 
+protocol DictionaryServiceDelegate {
+    func downloadWord<T: Codable>(word: String) async -> T?
+}
+
 // For downloading data from the Internet
 class WebService: WebServiceDelegate {
     func downloadData<T: Codable>(fromURL: String) async -> T? {
@@ -48,8 +52,7 @@ class WebService: WebServiceDelegate {
     }
 }
 
-
-class DictionaryService {
+class DictionaryService: DictionaryServiceDelegate {
     func downloadWord<T: Codable>(word: String) async -> T? {
         do {
         // Define the headers for the request

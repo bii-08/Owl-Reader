@@ -8,7 +8,11 @@
 import Foundation
 
 // MARK: - Word
-struct Word: Codable {
+struct Word: Codable , Hashable {
+    static func == (lhs: Word, rhs: Word) -> Bool {
+        lhs.word == rhs.word
+    }
+    
     let word: String
     let results: [Result]?
 //    let syllables: Syllables?
@@ -17,7 +21,7 @@ struct Word: Codable {
 }
 
 // MARK: - Pronunciation
-struct Pronunciation: Codable {
+struct Pronunciation: Codable, Hashable {
     let all: String
 }
 

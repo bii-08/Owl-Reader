@@ -20,12 +20,15 @@ struct AddLinkView: View {
         ZStack {
             Color("background").ignoresSafeArea()
             VStack {
+
+                //Shortcut List
                 HStack {
                     Text("Shortcut list")
                         .font(Font.custom("DIN Condensed", size: 25))
                     Spacer()
                 }
                 .padding(.horizontal)
+                
                 // Web pages list
                 List(vm.savedShortcuts, id: \.self) { page in
                     Text(page.webPageTitle)
@@ -58,15 +61,21 @@ struct AddLinkView: View {
                 })
                 .listStyle(.plain)
                 
-                HStack {
-                    Text("Add new shortcut")
-                        .font(Font.custom("DIN Condensed", size: 25))
+                
+                // Add new shortcut Section
+                VStack {
                     Spacer()
+                    HStack {
+                        Text("Add new shortcut")
+                            .font(Font.custom("DIN Condensed", size: 25))
+                        Spacer()
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
                 // Textfield
                 VStack {
-                    TextField("", text: $webPageTitle, prompt: Text("Page title").foregroundColor(.white.opacity(0.7))).padding()
+                    Spacer()
+                    TextField("", text: $webPageTitle, prompt: Text("Page title").foregroundColor(.white.opacity(0.7))).padding(6)
                         .onChange(of: webPageTitle) { oldValue, newValue in
                             vm.isTitleValid = vm.isTitleValid(title: newValue)
                         }
@@ -75,7 +84,7 @@ struct AddLinkView: View {
                         .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                         .padding(.horizontal)
                         .disabled(vm.showingAlert)
-                    TextField("", text: $urlString, prompt: Text("Your web link").foregroundColor(.white.opacity(0.7))).padding()
+                    TextField("", text: $urlString, prompt: Text("Your web link").foregroundColor(.white.opacity(0.7))).padding(6)
                         .onChange(of: urlString) { oldValue, newValue in
                             vm.isValidURL = vm.validateURL(urlString: newValue)
                             vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: newValue)
@@ -90,11 +99,12 @@ struct AddLinkView: View {
                     PhotoPickerView(vm: photoPikerVM) {
                         
                     }
-                        
+                    
+                    
                 }
                 
                 HStack {
-                    // Add link button
+                    // Add button
                     Button {
                         if vm.isValidURL && !vm.isUrlAlreadyExists && vm.isTitleValid {
                             print("valid")
@@ -103,7 +113,7 @@ struct AddLinkView: View {
                             urlString = ""
                             webPageTitle = ""
                             photoPikerVM.clear()
-                           
+                            
                         } else {
                             print("invalid")
                             withAnimation {
@@ -114,7 +124,7 @@ struct AddLinkView: View {
                         Text("Add")
                             .foregroundColor(.white)
                             .frame(width: 100, height: 40)
-                            .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : Color("addButton")))
+                            .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .orange.opacity(0.8)))
                     }
                     .disabled(vm.showingAlert)
                     
@@ -127,7 +137,7 @@ struct AddLinkView: View {
                         Text("Clear")
                             .foregroundColor(.white)
                             .frame(width: 100, height: 40)
-                            .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .orange.opacity(0.8)))
+                            .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .clearButton.opacity(0.8)))
                     }
                     .disabled(vm.showingAlert)
                 }

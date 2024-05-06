@@ -17,7 +17,6 @@ final class PhotoPickerVM: ObservableObject {
         }
     }
     
-    
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
         

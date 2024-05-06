@@ -31,6 +31,11 @@
 		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
 		789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */; };
 		789D8ABE2BE4B250004E0EA5 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 789D8ABD2BE4B250004E0EA5 /* SwiftyJSON */; };
+		789D8AC02BE70044004E0EA5 /* WordBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8ABF2BE70044004E0EA5 /* WordBookView.swift */; };
+		789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC12BE70252004E0EA5 /* WordBook.swift */; };
+		789D8AC42BE7074F004E0EA5 /* SavedWordsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC32BE7074F004E0EA5 /* SavedWordsListView.swift */; };
+		789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */; };
+		789D8AC82BE84A6B004E0EA5 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC72BE84A6B004E0EA5 /* TabBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +63,11 @@
 		789D8AB62BE3694F004E0EA5 /* Word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Word.json; sourceTree = "<group>"; };
 		789D8AB82BE43959004E0EA5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionVM.swift; sourceTree = "<group>"; };
+		789D8ABF2BE70044004E0EA5 /* WordBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBookView.swift; sourceTree = "<group>"; };
+		789D8AC12BE70252004E0EA5 /* WordBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBook.swift; sourceTree = "<group>"; };
+		789D8AC32BE7074F004E0EA5 /* SavedWordsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWordsListView.swift; sourceTree = "<group>"; };
+		789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBookVM.swift; sourceTree = "<group>"; };
+		789D8AC72BE84A6B004E0EA5 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,10 +146,13 @@
 				781C5B102BDF6A3000FB394B /* EditingView.swift */,
 				785664D92BD871C1008A9EF1 /* ShortcutView.swift */,
 				785664D72BD71C0F008A9EF1 /* DefinitionView.swift */,
+				789D8ABF2BE70044004E0EA5 /* WordBookView.swift */,
+				789D8AC32BE7074F004E0EA5 /* SavedWordsListView.swift */,
 				785664D32BD6728A008A9EF1 /* WebView.swift */,
 				781C5B0E2BDF2BAD00FB394B /* AlertView.swift */,
 				781C5B1E2BE078C700FB394B /* HeadlineView.swift */,
 				781C5B242BE1C43A00FB394B /* PhotoPickerView.swift */,
+				789D8AC72BE84A6B004E0EA5 /* TabBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -150,6 +163,7 @@
 				785664DD2BD88240008A9EF1 /* Link.swift */,
 				781C5B202BE0791100FB394B /* Headline.swift */,
 				789D8AB82BE43959004E0EA5 /* Word.swift */,
+				789D8AC12BE70252004E0EA5 /* WordBook.swift */,
 				781C5B132BE06EEB00FB394B /* Headlines.json */,
 				789D8AB62BE3694F004E0EA5 /* Word.json */,
 			);
@@ -162,6 +176,7 @@
 				785664E02BD88356008A9EF1 /* HomeVM.swift */,
 				781C5B222BE1C3A300FB394B /* PhotoPickerVM.swift */,
 				789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */,
+				789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -254,14 +269,19 @@
 				781C5B1A2BE075A700FB394B /* MockDataService.swift in Sources */,
 				789D8AB92BE43959004E0EA5 /* Word.swift in Sources */,
 				785664C82BD66FBF008A9EF1 /* HomeView.swift in Sources */,
+				789D8AC82BE84A6B004E0EA5 /* TabBar.swift in Sources */,
 				781C5B1F2BE078C700FB394B /* HeadlineView.swift in Sources */,
 				781C5B112BDF6A3000FB394B /* EditingView.swift in Sources */,
+				789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */,
 				789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */,
 				781C5B1D2BE0768600FB394B /* Extension.swift in Sources */,
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
+				789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */,
 				785664DE2BD88240008A9EF1 /* Link.swift in Sources */,
 				785664C62BD66FBF008A9EF1 /* BookwormApp.swift in Sources */,
+				789D8AC42BE7074F004E0EA5 /* SavedWordsListView.swift in Sources */,
 				785664E32BD8E13B008A9EF1 /* AddLinkView.swift in Sources */,
+				789D8AC02BE70044004E0EA5 /* WordBookView.swift in Sources */,
 				785664D82BD71C0F008A9EF1 /* DefinitionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

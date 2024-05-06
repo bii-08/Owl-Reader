@@ -11,8 +11,9 @@ import SwiftUI
 struct BookwormApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            TabBar()
                 .environmentObject(HomeVM())
+                .environmentObject(WordBookVM())
         }
     }
 }

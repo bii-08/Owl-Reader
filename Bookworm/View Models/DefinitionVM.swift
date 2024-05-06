@@ -9,12 +9,12 @@ import Foundation
 
 @MainActor
 class DefinitionVM: ObservableObject {
-    private let dictionaryService: DictionaryService
+    private let dictionaryService: DictionaryServiceDelegate
     @Published var word: Word?
     var selectedWord: String
     
-    // NOTE: Replace MockdataForWord() with WebService() to fetch data from real API
-    init(selectedWord: String, dictionaryService: DictionaryService = DictionaryService()) {
+    // NOTE: Replace MockdataForWord() with DictionaryService() to fetch data from real API
+    init(selectedWord: String, dictionaryService: DictionaryServiceDelegate = MockdataForWord()) {
         self.selectedWord = selectedWord
         self.dictionaryService = dictionaryService
         

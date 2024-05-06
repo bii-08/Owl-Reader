@@ -14,13 +14,12 @@ struct PhotoPickerView: View {
     var body: some View {
         ZStack {
             Color("background").ignoresSafeArea()
-            VStack(spacing: 20) {
+            VStack(spacing: 5) {
                 PhotosPicker(selection: $vm.imageSelection, matching: .images) {
-                    
                     Text("Upload your webpage's icon")
                         .foregroundColor(.white)
-                        .frame(width: 360, height: 40)
-                        .background(Color("uploadImageButton"))
+                        .frame(width: 360, height: 35)
+                        .background(Color.brown)
                         .cornerRadius(5)
                 }
                 
@@ -28,13 +27,13 @@ struct PhotoPickerView: View {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 200, height: 200)
+                        .frame(width: 100, height: 100)
                         .cornerRadius(10)
                 } else {
                     Image(systemName: "photo")
-                        .scaleEffect(8)
+                        .scaleEffect(5)
                         .foregroundColor(.gray)
-                        .frame(width: 200, height: 200)
+                        .frame(width: 100, height: 100)
                 }
                 
             }
@@ -42,6 +41,7 @@ struct PhotoPickerView: View {
                 action()
             }
         }
+        
     }
 }
 

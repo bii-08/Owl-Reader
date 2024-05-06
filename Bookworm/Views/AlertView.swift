@@ -36,8 +36,8 @@ struct AlertView: View {
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 8)
-                                .frame(width: 120, height: 50)
-                                .foregroundColor(Color.blue.opacity(0.5))
+                                .frame(width: 100, height: 42)
+                                .foregroundColor(Color.orange.opacity(0.5))
                             Text(primaryButtonTitle)
                                 .font(.system(size: 18, weight: .bold))
                                 .foregroundColor(.white)

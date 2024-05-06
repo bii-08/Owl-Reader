@@ -12,7 +12,11 @@ import AVFoundation
 struct DefinitionView: View {
     @State private var starTapped = false
     @StateObject var vm: DefinitionVM
+    @EnvironmentObject var wordBookVM: WordBookVM
     let synthesizer = AVSpeechSynthesizer()
+    
+    @State var selectedWordbook = WordBook.init(name: "Default")
+    var shouldHavePicker: Bool
     
     var body: some View {
        
@@ -31,8 +35,10 @@ struct DefinitionView: View {
                         Spacer()
                         Button {
                             starTapped.toggle()
+                            
                         } label: {
                             Image(systemName: "star.fill")
+                                .scaleEffect(1.25)
                                 .foregroundColor(starTapped ? .orange : .gray)
                         }
                         .padding(.horizontal, 20)
@@ -89,7 +95,6 @@ struct DefinitionView: View {
                                 }
                                 .padding(.horizontal)
                             }
-                            
                         }
                     
                     ScrollView {
@@ -154,12 +159,11 @@ struct DefinitionView: View {
                                                 }
                                             }
                                             
-                                            
                                            Spacer()
                                         }
                                         .frame(width: 350)
                                         .padding(8)
-                                        .background(.ultraThickMaterial)
+                                        .background(.regularMaterial)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
                                         .padding(.vertical, 5)
                                         
@@ -167,15 +171,38 @@ struct DefinitionView: View {
                                     .padding(.horizontal)
                                 }
                             }
-                            
                         }
                     }
+                
+                if shouldHavePicker {
+                    VStack {
+                        HStack {
+                            Text("Choose your wordbook")
+                                .font(.custom("Helvetica", size: 19))
+                                .bold()
+
+                            Picker("", selection: $selectedWordbook) {
+                                ForEach(wordBookVM.listWordBook, id: \.self) { wordbook in
+                                    Text(wordbook.name)
+                                        
+                                }
+                            }
+                            .accentColor(.tabBarButton)
+                        }
+                        .padding(.horizontal)
+                    }
+                }
+                
             }
             .padding()
         }
     }
 }
+
+
     
 #Preview {
-    DefinitionView(vm: DefinitionVM(selectedWord: "incoherent"))
+    DefinitionView(vm: DefinitionVM(selectedWord: "pathetic", dictionaryService: MockdataForWord()), shouldHavePicker: true)
+        .environmentObject(WordBookVM())
+        
 }

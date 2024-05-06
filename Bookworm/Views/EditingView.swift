@@ -35,7 +35,7 @@ struct EditingView: View {
                 }
                 .padding(.horizontal)
                 // Textfields
-                TextField("", text: $editingTitle, prompt: Text("Add web page title").foregroundColor(.white.opacity(0.7))).padding()
+                TextField("", text: $editingTitle, prompt: Text("Add web page title").foregroundColor(.white.opacity(0.7))).padding(6)
                     .onChange(of: editingTitle) { oldValue, newValue in
                         vm.isTitleValid = vm.isTitleValid(title: newValue)
                     }
@@ -44,7 +44,7 @@ struct EditingView: View {
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                     .padding(.horizontal)
                     .disabled(vm.showingAlert)
-                TextField("", text: $editingURL, prompt: Text("Add your web link").foregroundColor(.white.opacity(0.7))).padding()
+                TextField("", text: $editingURL, prompt: Text("Add your web link").foregroundColor(.white.opacity(0.7))).padding(6)
                     .onChange(of: editingURL) { oldValue, newValue in
                         vm.isValidURL = vm.validateURL(urlString: newValue)
                         vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: newValue)
@@ -55,7 +55,6 @@ struct EditingView: View {
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                     .padding(.horizontal)
                     .disabled(vm.showingAlert)
-                
                 
                 if let editingImage {
                     VStack {
@@ -78,8 +77,6 @@ struct EditingView: View {
                     }
                 }
                 
-                
-
                 Spacer()
                 
                 // Save changes Button
