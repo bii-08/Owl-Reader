@@ -8,8 +8,8 @@
 import Foundation
 
 struct WordBook: Identifiable, Hashable {
-    static func == (lhs: WordBook, rhs: WordBook) -> Bool {
-        lhs.name == rhs.name
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     var id: String {

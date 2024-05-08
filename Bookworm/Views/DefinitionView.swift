@@ -10,14 +10,12 @@ import AVFoundation
 
 
 struct DefinitionView: View {
-    @State private var starTapped = false
     @StateObject var vm: DefinitionVM
     @EnvironmentObject var wordBookVM: WordBookVM
     let synthesizer = AVSpeechSynthesizer()
-    
-    @State var selectedWordbook = WordBook.init(name: "Default")
-    var shouldHavePicker: Bool
-    
+
+//    var shouldHavePicker: Bool
+
     var body: some View {
        
         ZStack {
@@ -33,13 +31,18 @@ struct DefinitionView: View {
                             .padding(.vertical, 5)
                         
                         Spacer()
+                        
+                        // Star button
                         Button {
-                            starTapped.toggle()
-                            
+                            if let word = vm.word {
+                                wordBookVM.didTapOnStar(word: word, wordBookName: wordBookVM.selectedWordbook)
+                            }
                         } label: {
-                            Image(systemName: "star.fill")
-                                .scaleEffect(1.25)
-                                .foregroundColor(starTapped ? .orange : .gray)
+                            if let word = vm.word {
+                                Image(systemName: "star.fill")
+                                    .scaleEffect(1.25)
+                                    .foregroundColor(wordBookVM.isAlreadySaved(selectedWord: word, wordBookName: wordBookVM.selectedWordbook) ? .orange : .gray)
+                            }
                         }
                         .padding(.horizontal, 20)
                     }
@@ -174,27 +177,25 @@ struct DefinitionView: View {
                         }
                     }
                 
-                if shouldHavePicker {
+                
                     VStack {
                         HStack {
                             Text("Choose your wordbook")
                                 .font(.custom("Helvetica", size: 19))
                                 .bold()
-
-                            Picker("", selection: $selectedWordbook) {
-                                ForEach(wordBookVM.listWordBook, id: \.self) { wordbook in
-                                    Text(wordbook.name)
-                                        
+                            Picker("", selection: $wordBookVM.selectedWordbook) {
+                                ForEach(wordBookVM.wordBookTitle, id: \.self) { title in
+                                    Text(title)
                                 }
                             }
-                            .accentColor(.tabBarButton)
+                            .accentColor(.picker)
+                            .background(.white.opacity(0.2))
+                            .cornerRadius(10)
                         }
                         .padding(.horizontal)
                     }
-                }
-                
             }
-            .padding()
+            .padding(.vertical, 5)
         }
     }
 }
@@ -202,7 +203,6 @@ struct DefinitionView: View {
 
     
 #Preview {
-    DefinitionView(vm: DefinitionVM(selectedWord: "pathetic", dictionaryService: MockdataForWord()), shouldHavePicker: true)
+    DefinitionView(vm: DefinitionVM(selectedWord: "pathetic", dictionaryService: MockdataForWord()))
         .environmentObject(WordBookVM())
-        
 }

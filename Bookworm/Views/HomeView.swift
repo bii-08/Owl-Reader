@@ -68,7 +68,7 @@ struct HomeView: View {
                                         }
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
-                                                DefinitionView(vm: DefinitionVM(selectedWord: word), shouldHavePicker: true)
+                                                DefinitionView(vm: DefinitionVM(selectedWord: word))
                                                     .presentationBackground(.thinMaterial)
                                                     .presentationCornerRadius(15)
                                                     .presentationDetents([.height(300)])
@@ -115,7 +115,7 @@ struct HomeView: View {
                                 
                                 .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                     if let word = selectedWord {
-                                        DefinitionView(vm: DefinitionVM(selectedWord: word), shouldHavePicker: true)
+                                        DefinitionView(vm: DefinitionVM(selectedWord: word))
                                             .presentationBackground(.thickMaterial)
                                             .presentationCornerRadius(15)
                                             .presentationDetents([.height(300)])
@@ -184,7 +184,7 @@ struct HomeView: View {
                                         
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
-                                                DefinitionView(vm: DefinitionVM(selectedWord: word), shouldHavePicker: true)
+                                                DefinitionView(vm: DefinitionVM(selectedWord: word))
                                                     .presentationBackground(.thickMaterial)
                                                     .presentationCornerRadius(15)
                                                     .presentationDetents([.height(300)])

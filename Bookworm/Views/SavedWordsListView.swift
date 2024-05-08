@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SavedWordsListView: View {
     var wordBook: WordBook
-    
     var body: some View {
         ZStack {
             Color.background.ignoresSafeArea()
@@ -31,15 +30,15 @@ struct SavedWordsListView: View {
                     .listRowSeparator(.hidden)
                 }
                 .listStyle(.plain)
-                
             }
         }
         .navigationDestination(for: Word.self) { word in
-            DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: MockdataForWord()), shouldHavePicker: false)
+            DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: MockdataForWord()))
                 
         }
         .navigationTitle(wordBook.name)
-        
+        .navigationBarTitleDisplayMode(.inline)
+       
     }
 }
 

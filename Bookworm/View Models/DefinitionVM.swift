@@ -13,6 +13,7 @@ class DefinitionVM: ObservableObject {
     @Published var word: Word?
     var selectedWord: String
     
+    
     // NOTE: Replace MockdataForWord() with DictionaryService() to fetch data from real API
     init(selectedWord: String, dictionaryService: DictionaryServiceDelegate = MockdataForWord()) {
         self.selectedWord = selectedWord
