@@ -11,9 +11,8 @@ struct WordBookView: View {
     @EnvironmentObject var vm: WordBookVM
     
     @State private var addingWordBookTitle: String = ""
-    
     var title: String?
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -30,7 +29,6 @@ struct WordBookView: View {
                                         Text(totalWordsNumber == 0 ? "" : "\(totalWordsNumber)")
                                             .foregroundColor(.secondary)
                                     }
-                                    
                                 }
                             }
                             .listRowBackground(Color("background"))
@@ -73,11 +71,8 @@ struct WordBookView: View {
                     }
                     .tint(.red)
                 }
-                
             }
-            
         }
-        
     }
 }
 
@@ -89,8 +84,8 @@ extension WordBookView {
                 .padding()
             TextField("", text: $vm.title, prompt: Text("Eg. Harry Potter").foregroundColor(.white.opacity(0.7))).padding(6)
                 .onChange(of: vm.title) { oldValue, newValue in
-                  // should validate textfield before submitting
-                        vm.goodTitle = vm.validateTitle(title: newValue)
+                    // Should validate textfield before submitting
+                    vm.goodTitle = vm.validateTitle(title: newValue.trimmingCharacters(in: .whitespacesAndNewlines))
                     
                 }
                 .foregroundColor(.white)
@@ -99,20 +94,33 @@ extension WordBookView {
                 .padding(.horizontal)
                 .presentationBackground(.thinMaterial)
                 .presentationCornerRadius(15)
-                .presentationDetents([.height(200)])
+                .presentationDetents([.height(225)])
             
-//            Text(vm.message)
-//                .font(Font.custom("DIN Condensed", size: 20))
-//                .foregroundColor(.red)
-//                .padding(.horizontal)
-                
+            // Promt text to indicate textfield error
+            if vm.editingWordBook == nil {
+                Text(vm.goodTitle ? "" : vm.message)
+                    .font(Font.custom("DIN Condensed", size: 20))
+                    .foregroundColor(.red)
+                    .frame(height: 18)
+                    .padding(.horizontal)
+            } else {
+                if let editingWordBook = vm.editingWordBook {
+                    let filtered = vm.listWordBook.filter({$0.name != editingWordBook.name })
+                    if filtered.contains(where: {$0.name == vm.title.trimmingCharacters(in: .whitespacesAndNewlines)}) {
+                        Text("Sorry. This title is already taken.")
+                            .font(Font.custom("DIN Condensed", size: 20))
+                            .foregroundColor(.red)
+                            .frame(height: 18)
+                            .padding(.horizontal)
+                    }
+                }
+            }
             
             HStack {
                 Spacer()
                 Button {
                     vm.handleWordBook(wordBook: WordBook(name: vm.title))
                     vm.showingSheet = false
-                    
                 } label: {
                     Text(vm.editingWordBook == nil ? "Create" : "Update")
                         .foregroundColor(.white)
@@ -120,8 +128,6 @@ extension WordBookView {
                         .background(RoundedRectangle(cornerRadius: 5).fill(vm.goodTitle ? .orange.opacity(0.8) : .orange.opacity(0.2)))
                 }
                 .disabled(!vm.goodTitle)
-                
-               
             }
             .padding()
         }
@@ -133,11 +139,11 @@ extension WordBookView {
         .onDisappear {
             vm.editingWordBook = nil
             vm.title = ""
+            vm.message = ""
         }
         .padding()
     }
 }
-
 
 #Preview {
     WordBookView()

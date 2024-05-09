@@ -17,6 +17,7 @@ struct ShortcutView: View {
         Button {
             action()
         } label: {
+            // Webpage icon
             VStack {
                 if let icon = favicon {
                     Image(uiImage: icon)

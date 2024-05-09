@@ -22,8 +22,6 @@ class WordBookVM: ObservableObject {
         listWordBook.map { $0.name }
     }
     
-
-    
     func didTapOnStar(word: Word, wordBookName: String) {
         if let index = listWordBook.firstIndex(where: { $0.name == wordBookName }) {
             if let wordIndex = listWordBook[index].savedWords?.firstIndex(where: { $0 == word }) {
@@ -52,9 +50,7 @@ class WordBookVM: ObservableObject {
         return false
     }
     
-   
     func handleWordBook(wordBook: WordBook) {
-        
         // Editing word book title
         if let index = listWordBook.firstIndex(where: { $0.name == editingWordBook?.name}) {
             listWordBook[index].name = wordBook.name
@@ -69,22 +65,15 @@ class WordBookVM: ObservableObject {
     }
     
     func validateTitle(title: String) -> Bool {
-        if listWordBook.contains(where: { $0.name == title}) {
-            message = "This title is already taken."
+        if listWordBook.contains(where: { $0.name == title }) {
+            message = "Sorry. This title is already taken."
             return false
-        } else if !isTitleValid(title: title) {
-//            message = "Invalid Title"
+        } else if !HomeVM.isTitleValid(title: title) {
+            message = ""
             return false
         } else {
             return true
         }
     }
-    
-    func isTitleValid(title: String) -> Bool {
-//            let alphanumericCharacterSet = CharacterSet.alphanumerics
-            return !title.isEmpty &&
-//               title.rangeOfCharacter(from: alphanumericCharacterSet.inverted) == nil &&
-          title.count <= 20 && title.count >= 3
-        }
 }
 

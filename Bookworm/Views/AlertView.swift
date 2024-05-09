@@ -39,9 +39,9 @@ struct AlertView: View {
                                 .frame(width: 100, height: 42)
                                 .foregroundColor(Color.orange.opacity(0.5))
                             Text(primaryButtonTitle)
-                                .font(.system(size: 18, weight: .bold))
+                                .font(.custom("DIN Condensed", size: 20))
                                 .foregroundColor(.white)
-                                .padding()
+                               
                         }
                         .padding()
                     }
@@ -49,9 +49,9 @@ struct AlertView: View {
             }
             .fixedSize(horizontal: false, vertical: true)
             .padding(5)
-            .background(.ultraThickMaterial.opacity(0.8))
+            .background(.regularMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 8))
-            .shadow(radius: 2)
+            .shadow(radius: 5)
             .padding(30)
         }
     }

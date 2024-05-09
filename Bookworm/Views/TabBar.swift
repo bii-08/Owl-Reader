@@ -11,7 +11,7 @@ struct TabBar: View {
     @EnvironmentObject var vm: HomeVM
     var body: some View {
         
-        TabView {
+        TabView { 
             HomeView()
                 .tabItem {
                     Label("Home", systemImage: "house")
@@ -23,10 +23,8 @@ struct TabBar: View {
                     Label("Word Book", systemImage: "book.pages")
                 }
                 .tag(1)
-            
         }
         .accentColor(.tabBarButton)
-                
     }
 }
 

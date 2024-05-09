@@ -20,7 +20,7 @@ struct AddLinkView: View {
         ZStack {
             Color("background").ignoresSafeArea()
             VStack {
-
+                
                 //Shortcut List
                 HStack {
                     Text("Shortcut list")
@@ -29,7 +29,7 @@ struct AddLinkView: View {
                 }
                 .padding(.horizontal)
                 
-                // Web pages list
+                // Web pages List
                 List(vm.savedShortcuts, id: \.self) { page in
                     Text(page.webPageTitle)
                         .foregroundColor(.secondary)
@@ -61,7 +61,6 @@ struct AddLinkView: View {
                 })
                 .listStyle(.plain)
                 
-                
                 // Add new shortcut Section
                 VStack {
                     Spacer()
@@ -75,15 +74,18 @@ struct AddLinkView: View {
                 // Textfield
                 VStack {
                     Spacer()
+                    // Page title
                     TextField("", text: $webPageTitle, prompt: Text("Page title").foregroundColor(.white.opacity(0.7))).padding(6)
                         .onChange(of: webPageTitle) { oldValue, newValue in
-                            vm.isTitleValid = vm.isTitleValid(title: newValue)
+                            vm.isTitleValid = HomeVM.isTitleValid(title: newValue)
                         }
                         .foregroundColor(.white)
                         .submitLabel(.done)
                         .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                         .padding(.horizontal)
                         .disabled(vm.showingAlert)
+                    
+                    // Weblink
                     TextField("", text: $urlString, prompt: Text("Your web link").foregroundColor(.white.opacity(0.7))).padding(6)
                         .onChange(of: urlString) { oldValue, newValue in
                             vm.isValidURL = vm.validateURL(urlString: newValue)
@@ -96,11 +98,11 @@ struct AddLinkView: View {
                         .padding(.horizontal)
                         .disabled(vm.showingAlert)
                     
+                    // Photo Picker
                     PhotoPickerView(vm: photoPikerVM) {
                         
                     }
-                    
-                    
+                    .disabled(vm.showingAlert)
                 }
                 
                 HStack {
@@ -137,15 +139,14 @@ struct AddLinkView: View {
                         Text("Clear")
                             .foregroundColor(.white)
                             .frame(width: 100, height: 40)
-                            .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .clearButton.opacity(0.8)))
+                            .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .clearButton.opacity(0.5)))
                     }
                     .disabled(vm.showingAlert)
                 }
-                
             }
             
             if vm.showingAlert {
-                AlertView(title: "Invalid", message: "Please enter a valid URL (e.g., https://example.com) or title.", primaryButtonTitle: "Got it") {
+                AlertView(title: !vm.isTitleValid || !vm.isValidURL ? "Invalid" : "Error", message: !vm.isTitleValid || !vm.isValidURL ? "Please ensure your link / title is correct." : "This title is already exists.", primaryButtonTitle: "Got it") {
                     withAnimation {
                         vm.showingAlert = false
                     }

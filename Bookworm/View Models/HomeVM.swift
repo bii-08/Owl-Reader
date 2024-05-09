@@ -17,6 +17,10 @@ class HomeVM: ObservableObject {
     var isValidURL = false
     var isUrlAlreadyExists = false
     var isTitleValid = false
+    var isTitleAlreadyExists = false
+    
+    @Published var message = ""
+    
     @Published var showingAlert = false
     @Published var showingEditingView = false
     init(webService: WebServiceDelegate = MocdataWebService()) {
@@ -44,15 +48,32 @@ class HomeVM: ObservableObject {
     }
     
     func isUrlAlreadyExists(urlString: String) -> Bool {
-        return savedShortcuts.contains { $0.url.absoluteString == urlString || $0.url.absoluteString == urlString + "/" }
+        // Normalize the user-entered URL
+        let normalizedUserURL = normalizeURL(urlString)
+        if savedShortcuts.contains(where: { $0.url.absoluteString == normalizedUserURL }) {
+            return true
+        }
+        return false
     }
     
-    func isTitleValid(title: String) -> Bool {
-            let alphanumericCharacterSet = CharacterSet.alphanumerics
-            return !title.isEmpty &&
-               title.rangeOfCharacter(from: alphanumericCharacterSet.inverted) == nil &&
-          title.count <= 20 && title.count >= 3
-        }
+   static func isTitleValid(title: String) -> Bool {
+        guard !title.isEmpty else { return false }
+        
+        // Trim the title to remove leading and trailing spaces
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // Ensure the title does not contain only spaces after trimming
+        guard !trimmedTitle.isEmpty else { return false }
+        
+        // Ensure the title contains only letters, numbers, and spaces
+        let validCharacterSet = CharacterSet.alphanumerics.union(CharacterSet.whitespaces)
+        guard trimmedTitle.rangeOfCharacter(from: validCharacterSet.inverted) == nil else { return false }
+        
+        // Ensure the length of the title is between 3 and 20 characters
+        guard trimmedTitle.count >= 3 && trimmedTitle.count <= 20 else { return false }
+        // Return true if all conditions are met
+        return true
+    }
     
     
     func addLink(newLink: Link) {
@@ -67,6 +88,43 @@ class HomeVM: ObservableObject {
         }
     }
     
+    func isEditingInputValid(link: Link) -> Bool {
+        
+        // Ensure the title is valid
+        guard HomeVM.isTitleValid(title: link.webPageTitle) else {
+            print("the title is invalid.")
+            return false
+        }
+        // Ensure the title is unique
+        guard !savedShortcuts.contains(where: { $0.webPageTitle == link.webPageTitle }) else {
+            print("the url is already exists.")
+            return false
+        }
+        // Ensure the URL is valid
+        guard validateURL(urlString: link.url.absoluteString) else {
+            print("the url is invalid.")
+            return false
+        }
+        // Ensure the URL is unique
+        guard isUrlAlreadyExists(urlString: link.url.absoluteString) else {
+            print("the url is already exists.")
+            return false
+        }
+        
+        return true
+    }
+    
+    
+    func normalizeURL(_ urlString: String) -> String {
+        var normalizedURL = urlString.lowercased()
+        
+        // Remove any trailing slashes
+        normalizedURL = normalizedURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        
+        // Return the normalized URL
+        return normalizedURL
+    }
+    
     // FUNCTION: for fetching data from real api
         func fetchHeadlines() async {
         headLines = [Headline]()
@@ -75,4 +133,5 @@ class HomeVM: ObservableObject {
             }
         }
 }
+
 

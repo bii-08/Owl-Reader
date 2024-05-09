@@ -16,6 +16,7 @@ struct EditingView: View {
     @State private var editingURL: String
     @State private var editingImage: UIImage?
     @State private var showingPhotoPiker = false
+    @State private var showingAlert = false
     
     init(link: Link, photoPiker: PhotoPickerVM) {
         self.link = link
@@ -24,6 +25,7 @@ struct EditingView: View {
         self._editingURL = State(initialValue: link.url.absoluteString)
         self._editingImage = State(initialValue: link.favicon)
     }
+    
     var body: some View {
         ZStack {
             Color("background").ignoresSafeArea()
@@ -34,21 +36,17 @@ struct EditingView: View {
                     Spacer()
                 }
                 .padding(.horizontal)
-                // Textfields
+                
+                // Textfield : editing title
                 TextField("", text: $editingTitle, prompt: Text("Add web page title").foregroundColor(.white.opacity(0.7))).padding(6)
-                    .onChange(of: editingTitle) { oldValue, newValue in
-                        vm.isTitleValid = vm.isTitleValid(title: newValue)
-                    }
                     .foregroundColor(.white)
                     .submitLabel(.done)
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                     .padding(.horizontal)
                     .disabled(vm.showingAlert)
+                
+                // Textfield : editing URL
                 TextField("", text: $editingURL, prompt: Text("Add your web link").foregroundColor(.white.opacity(0.7))).padding(6)
-                    .onChange(of: editingURL) { oldValue, newValue in
-                        vm.isValidURL = vm.validateURL(urlString: newValue)
-                        vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: newValue)
-                    }
                     .textInputAutocapitalization(.never)
                     .foregroundColor(.white)
                     .submitLabel(.done)
@@ -68,6 +66,7 @@ struct EditingView: View {
                             photoPikerVM.selectedImage = editingImage
                         }
                         .foregroundColor(.saveChangesButton)
+                        
                     }
                     
                 } else {
@@ -81,21 +80,37 @@ struct EditingView: View {
                 
                 // Save changes Button
                 Button {
-                    vm.updateLink(link: Link(url: URL(string: editingURL)!, favicon: editingImage, webPageTitle: editingTitle))
-                   dismiss()
+                    if vm.isEditingInputValid(link: Link(url: URL(string: editingURL)!, favicon: editingImage, webPageTitle: editingTitle)) {
+                        vm.updateLink(link: Link(url: URL(string: editingURL)!, favicon: editingImage, webPageTitle: editingTitle))
+                        dismiss()
+                    } else {
+                        showingAlert = true
+                    }
+                   
                 } label: {
                     Text("Save changes")
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(10)
-                        .background(RoundedRectangle(cornerRadius: 5).fill(Color("saveChangesButton")))
+                        .background(RoundedRectangle(cornerRadius: 5).fill(!showingAlert ? Color(.orange.opacity(0.8)) : .gray))
                 }
                 .padding(.horizontal, 50)
+                .disabled(showingAlert)
             }
             .navigationDestination(isPresented: $showingPhotoPiker) {
                 PhotoPickerView(vm: photoPikerVM) {
                     self.editingImage = photoPikerVM.selectedImage
                 }
+            }
+            
+            if showingAlert {
+                AlertView(title: "Error", message: "", primaryButtonTitle: "Got it") {
+                    withAnimation {
+                        showingAlert = false
+                    }
+                }
+                .zIndex(5)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
     }

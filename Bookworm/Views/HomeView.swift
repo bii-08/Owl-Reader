@@ -112,7 +112,6 @@ struct HomeView: View {
                                     selectedWord = word
                                     showingDefinition = true
                                 }
-                                
                                 .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                     if let word = selectedWord {
                                         DefinitionView(vm: DefinitionVM(selectedWord: word))
@@ -143,11 +142,10 @@ struct HomeView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
                                 VStack {
-                                    // Add New Link Button
+                                    // Add/Edit Link Button
                                     Button {
                                         showingAddLinkSheet = true
                                     } label: {
-                                        
                                         Image(systemName: "plus.circle.fill")
                                             .scaleEffect(2)
                                             .foregroundColor(.red.opacity(0.8))
@@ -158,7 +156,7 @@ struct HomeView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
                                     .shadow(radius: 1)
                                     
-                                    Text("Add New Link")
+                                    Text("Add / Edit Link")
                                         .foregroundColor(.primary.opacity(0.5))
                                         .padding(5)
                                 }
@@ -181,7 +179,6 @@ struct HomeView: View {
                                             selectedWord = word
                                             showingDefinition = true
                                         }
-                                        
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
                                                 DefinitionView(vm: DefinitionVM(selectedWord: word))
@@ -213,7 +210,6 @@ extension HomeView {
     private var navigationBarOnWebPage: some View {
         
         ZStack {
-            
             HStack(spacing: 25) {
                 // Go back button
                 Button {
@@ -225,11 +221,9 @@ extension HomeView {
                     Image(systemName: "arrowshape.turn.up.backward.fill")
                         .tint(.orange.opacity(0.7))
                 }
-              
                 
                 // Go forward button
                 Button {
-                    
                     if let webView = webView, webView.canGoForward {
                         webView.goForward()
                     }
@@ -237,7 +231,6 @@ extension HomeView {
                     Image(systemName: "arrowshape.turn.up.right.fill")
                         .tint(.orange.opacity(0.7))
                 }
-              
                 
                 // Reload button
                 Button {
@@ -251,8 +244,6 @@ extension HomeView {
             }
         }
         .frame(height: 50)
-
-        
     }
 }
 

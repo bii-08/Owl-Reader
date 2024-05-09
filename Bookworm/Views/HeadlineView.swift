@@ -24,7 +24,6 @@ struct HeadlineView: View {
                         .frame(maxWidth: 380, maxHeight: 230)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
-                        
                 }
                 Text(headline.title)
                     .font(.title3)

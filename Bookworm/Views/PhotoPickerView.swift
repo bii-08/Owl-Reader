@@ -35,13 +35,11 @@ struct PhotoPickerView: View {
                         .foregroundColor(.gray)
                         .frame(width: 100, height: 100)
                 }
-                
             }
             .onDisappear {
                 action()
             }
         }
-        
     }
 }
 

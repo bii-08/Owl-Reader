@@ -17,12 +17,11 @@ struct SavedWordsListView: View {
                     NavigationLink(value: savedWord) {
                         VStack(alignment: .leading) {
                             Text(savedWord.word)
-                               
+                            
                             if let definition = savedWord.results?.first?.definition {
                                 Text(definition)
                                     .foregroundColor(.secondary)
                             }
-                                
                         }
                         .padding(.horizontal)
                     }
@@ -34,11 +33,10 @@ struct SavedWordsListView: View {
         }
         .navigationDestination(for: Word.self) { word in
             DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: MockdataForWord()))
-                
+            
         }
         .navigationTitle(wordBook.name)
         .navigationBarTitleDisplayMode(.inline)
-       
     }
 }
 
@@ -53,15 +51,14 @@ struct SavedWordsListView: View {
             "pitiful",
             "poor",
             "wretched"
-          ], similarTo: [
+        ], similarTo: [
             "unfortunate"
-          ], examples: [
+        ], examples: [
             "the shabby room struck her as extraordinarily pathetic"
-          ], derivation: [
+        ], derivation: [
             "pathos"
-          ])], pronunciation: nil, frequency: 3.2)]))
+        ])], pronunciation: nil, frequency: 3.2)]))
         
     }
     .environmentObject(WordBookVM())
-    
 }
