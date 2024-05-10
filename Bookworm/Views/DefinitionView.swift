@@ -13,7 +13,6 @@ struct DefinitionView: View {
     @StateObject var vm: DefinitionVM
     @EnvironmentObject var wordBookVM: WordBookVM
     let synthesizer = AVSpeechSynthesizer()
-    
     var body: some View {
         
         ZStack {
@@ -190,6 +189,7 @@ struct DefinitionView: View {
                         .cornerRadius(10)
                     }
                     .padding(.horizontal)
+
                 }
             }
             .padding(.vertical, 5)

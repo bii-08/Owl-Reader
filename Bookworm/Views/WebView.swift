@@ -184,6 +184,7 @@ struct WebView: UIViewRepresentable, Equatable {
                 parent.onWordSelected(filteredWord)
             }
         }
+        
     }
 }
 

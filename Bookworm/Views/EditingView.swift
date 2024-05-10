@@ -12,18 +12,19 @@ struct EditingView: View {
     @EnvironmentObject var vm: HomeVM
     var link: Link
     var photoPikerVM: PhotoPickerVM
-    @State private var editingTitle: String
-    @State private var editingURL: String
+    
+    @State private var editingTitle = ""
+    @State private var editingURL = ""
     @State private var editingImage: UIImage?
+    
     @State private var showingPhotoPiker = false
     @State private var showingAlert = false
+    @State private var defaultURL: URL
     
     init(link: Link, photoPiker: PhotoPickerVM) {
         self.link = link
         self.photoPikerVM = photoPiker
-        self._editingTitle = State(initialValue: link.webPageTitle)
-        self._editingURL = State(initialValue: link.url.absoluteString)
-        self._editingImage = State(initialValue: link.favicon)
+        self.defaultURL = link.url
     }
     
     var body: some View {
@@ -80,13 +81,18 @@ struct EditingView: View {
                 
                 // Save changes Button
                 Button {
-                    if vm.isEditingInputValid(link: Link(url: URL(string: editingURL)!, favicon: editingImage, webPageTitle: editingTitle)) {
-                        vm.updateLink(link: Link(url: URL(string: editingURL)!, favicon: editingImage, webPageTitle: editingTitle))
+                    let filtered = vm.savedShortcuts.filter({ $0 != link })
+                    vm.isTitleValid = HomeVM.isTitleValid(title: editingTitle)
+                    vm.isTitleAlreadyExists = vm.isTitleAlreadyExists(title: editingTitle, stored: filtered)
+                    vm.isValidURL = vm.validateURL(urlString: editingURL)
+                    vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: editingURL, stored: filtered)
+                    
+                    if vm.isTitleValid && !vm.isTitleAlreadyExists && vm.isValidURL && !vm.isUrlAlreadyExists {
+                        vm.updateLink(linkNeedToUpdate: link, newLink: Link(url: URL(string: editingURL) ?? defaultURL, favicon: editingImage, webPageTitle: editingTitle))
                         dismiss()
                     } else {
                         showingAlert = true
                     }
-                   
                 } label: {
                     Text("Save changes")
                         .foregroundColor(.white)
@@ -104,14 +110,21 @@ struct EditingView: View {
             }
             
             if showingAlert {
-                AlertView(title: "Error", message: "", primaryButtonTitle: "Got it") {
+                
+                AlertView(title: !vm.isTitleValid || !vm.isValidURL ? "Invalid" : "Error", message: !vm.isTitleValid || !vm.isValidURL ? "Please ensure your link or title is correct." : "This title or link is already exists.", primaryButtonTitle: "Got it") {
                     withAnimation {
                         showingAlert = false
                     }
                 }
                 .zIndex(5)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
+                
             }
+        }
+        .onAppear {
+            editingTitle = link.webPageTitle
+            editingURL = link.url.absoluteString
+            editingImage = link.favicon
         }
     }
 }

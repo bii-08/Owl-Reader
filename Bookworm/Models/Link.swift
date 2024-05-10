@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct Link: Identifiable, Hashable {
-    var id: URL {
-        self.url
+    var id: String {
+        self.url.absoluteString
     }
     var url: URL
     var favicon: UIImage?
@@ -19,3 +19,4 @@ struct Link: Identifiable, Hashable {
 
 
 
+ 

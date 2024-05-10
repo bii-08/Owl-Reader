@@ -17,9 +17,9 @@ struct HomeView: View {
     @State private var showingShortcutWebPage = false
     @State private var webView: WKWebView? = nil // State variable to hold WKWebView instance
     @State private var showingAddLinkSheet = false
-    
+    @State private var showingRecentlyReadWebPage = false
     @State private var selectedHeadline: Headline?
-    
+    @State private var fullScreen = false
     var body: some View {
         NavigationStack {
             ZStack {
@@ -69,9 +69,9 @@ struct HomeView: View {
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
                                                 DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                                    .presentationBackground(.thinMaterial)
-                                                    .presentationCornerRadius(15)
-                                                    .presentationDetents([.height(300)])
+                                                .presentationBackground(.thinMaterial)
+                                                .presentationCornerRadius(15)
+                                                .presentationDetents([.large, .height(300)])
                                             }
                                         }
                                     }
@@ -115,9 +115,9 @@ struct HomeView: View {
                                 .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                     if let word = selectedWord {
                                         DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                            .presentationBackground(.thickMaterial)
-                                            .presentationCornerRadius(15)
-                                            .presentationDetents([.height(300)])
+                                        .presentationBackground(.thickMaterial)
+                                        .presentationCornerRadius(15)
+                                        .presentationDetents([.large, .height(300)])
                                     }
                                 }
                             }
@@ -137,7 +137,7 @@ struct HomeView: View {
                             Spacer()
                         }
                         .padding(.horizontal)
-                        
+                          
                         Spacer()
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
@@ -182,9 +182,9 @@ struct HomeView: View {
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
                                                 DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                                    .presentationBackground(.thickMaterial)
-                                                    .presentationCornerRadius(15)
-                                                    .presentationDetents([.height(300)])
+                                                .presentationBackground(.thickMaterial)
+                                                .presentationCornerRadius(15)
+                                                .presentationDetents([.large, .height(300)])
                                             }
                                         }
                                     }
@@ -196,11 +196,56 @@ struct HomeView: View {
                             }
                         }
                     }
+                     
+                    // Recently Read section
+                    VStack {
+                        HStack {
+                            Text("Recently Read")
+                                .font(Font.custom("DIN Condensed", size: 30))
+                                .foregroundColor(.primary.opacity(0.8))
+                                .bold()
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        
+                        ForEach(vm.recentlyReadURLs, id: \.self) { url in
+                            Button {
+                                urlString = url
+                                showingRecentlyReadWebPage = true
+                            } label: {
+                                Text(url)
+                            }
+                        }
+                    }
+                    .navigationDestination(isPresented: $showingRecentlyReadWebPage) {
+                        if let url = URL(string: urlString) {
+                            VStack {
+                                WebView(url: url, webView: $webView) { word in
+                                    print(word)
+                                    selectedWord = word
+                                    showingDefinition = true
+                                }
+                                .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                                    if let word = selectedWord {
+                                        DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                        .presentationBackground(.thickMaterial)
+                                        .presentationCornerRadius(15)
+                                        .presentationDetents([.large, .height(300)])
+                                    }
+                                }
+                            }
+                            .toolbar{
+                                navigationBarOnWebPage
+                            }
+                            .edgesIgnoringSafeArea(.all)
+                        }
+                    }
                 }
                 .onAppear {
                     urlString = ""
                 }
                 .ignoresSafeArea()
+                
             }
         }
     }

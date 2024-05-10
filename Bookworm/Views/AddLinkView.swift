@@ -78,6 +78,7 @@ struct AddLinkView: View {
                     TextField("", text: $webPageTitle, prompt: Text("Page title").foregroundColor(.white.opacity(0.7))).padding(6)
                         .onChange(of: webPageTitle) { oldValue, newValue in
                             vm.isTitleValid = HomeVM.isTitleValid(title: newValue)
+                            vm.isTitleAlreadyExists = vm.isTitleAlreadyExists(title: newValue, stored: vm.savedShortcuts)
                         }
                         .foregroundColor(.white)
                         .submitLabel(.done)
@@ -89,7 +90,7 @@ struct AddLinkView: View {
                     TextField("", text: $urlString, prompt: Text("Your web link").foregroundColor(.white.opacity(0.7))).padding(6)
                         .onChange(of: urlString) { oldValue, newValue in
                             vm.isValidURL = vm.validateURL(urlString: newValue)
-                            vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: newValue)
+                            vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: newValue, stored: vm.savedShortcuts)
                         }
                         .textInputAutocapitalization(.never)
                         .foregroundColor(.white)
@@ -108,7 +109,7 @@ struct AddLinkView: View {
                 HStack {
                     // Add button
                     Button {
-                        if vm.isValidURL && !vm.isUrlAlreadyExists && vm.isTitleValid {
+                        if vm.isValidURL && !vm.isUrlAlreadyExists && vm.isTitleValid && !vm.isTitleAlreadyExists {
                             print("valid")
                             vm.addLink(newLink: Link(url: URL(string: urlString)!, favicon: photoPikerVM.selectedImage, webPageTitle: webPageTitle))
                             
@@ -146,7 +147,7 @@ struct AddLinkView: View {
             }
             
             if vm.showingAlert {
-                AlertView(title: !vm.isTitleValid || !vm.isValidURL ? "Invalid" : "Error", message: !vm.isTitleValid || !vm.isValidURL ? "Please ensure your link / title is correct." : "This title is already exists.", primaryButtonTitle: "Got it") {
+                AlertView(title: !vm.isTitleValid || !vm.isValidURL ? "Invalid" : "Error", message: !vm.isTitleValid || !vm.isValidURL ? "Please ensure your link or title is correct." : "This title or link is already exists.", primaryButtonTitle: "Got it") {
                     withAnimation {
                         vm.showingAlert = false
                     }
