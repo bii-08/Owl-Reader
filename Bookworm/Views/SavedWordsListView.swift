@@ -6,34 +6,34 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SavedWordsListView: View {
     var wordBook: WordBook
     var body: some View {
         ZStack {
             Color.background.ignoresSafeArea()
-            if let savedWords = wordBook.savedWords {
-                List(savedWords, id: \.self) { savedWord in
-                    NavigationLink(value: savedWord) {
-                        VStack(alignment: .leading) {
-                            Text(savedWord.word)
-                            
-                            if let definition = savedWord.results?.first?.definition {
-                                Text(definition)
-                                    .foregroundColor(.secondary)
-                            }
+            
+            List(wordBook.savedWords, id: \.self) { savedWord in
+                NavigationLink(value: savedWord) {
+                    VStack(alignment: .leading) {
+                        Text(savedWord.word)
+                        
+                        if let definition = savedWord.results?.first?.definition {
+                            Text(definition)
+                                .foregroundColor(.secondary)
                         }
-                        .padding(.horizontal)
                     }
-                    .listRowBackground(RoundedRectangle(cornerRadius: 10).fill(Color(.savedWordRectangle)).padding(.horizontal))
-                    .listRowSeparator(.hidden)
+                    .padding(.horizontal)
                 }
-                .listStyle(.plain)
+                .listRowBackground(RoundedRectangle(cornerRadius: 10).fill(Color(.savedWordRectangle)).padding(.horizontal))
+                .listRowSeparator(.hidden)
+                
             }
+            .listStyle(.plain)
         }
         .navigationDestination(for: Word.self) { word in
-            DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: MockdataForWord()))
-            
+            DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: DictionaryService()), initialWordBook: wordBook.name)
         }
         .navigationTitle(wordBook.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -58,7 +58,7 @@ struct SavedWordsListView: View {
         ], derivation: [
             "pathos"
         ])], pronunciation: nil, frequency: 3.2)]))
-        
     }
     .environmentObject(WordBookVM())
+    .modelContainer(for: [Word.self, WordBook.self])
 }

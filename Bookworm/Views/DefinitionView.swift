@@ -7,12 +7,22 @@
 
 import SwiftUI
 import AVFoundation
-
+import SwiftData
 
 struct DefinitionView: View {
+    @Environment(\.modelContext) private var modelContext
+    
     @StateObject var vm: DefinitionVM
     @EnvironmentObject var wordBookVM: WordBookVM
+    
+    var initialWordBook: String
+    
     let synthesizer = AVSpeechSynthesizer()
+    
+    init(vm: DefinitionVM, initialWordBook: String = "Default") {
+        _vm = StateObject(wrappedValue: vm)
+        self.initialWordBook = initialWordBook
+    }
     var body: some View {
         
         ZStack {
@@ -32,13 +42,13 @@ struct DefinitionView: View {
                     // Star button
                     Button {
                         if let word = vm.word {
-                            wordBookVM.didTapOnStar(word: word, wordBookName: wordBookVM.selectedWordbook)
+                            wordBookVM.didTapOnStar(word: word, wordBookName: wordBookVM.selectedWordbook, modelContext: modelContext)
                         }
                     } label: {
                         if let word = vm.word {
                             Image(systemName: "star.fill")
                                 .scaleEffect(1.25)
-                                .foregroundColor(wordBookVM.isAlreadySaved(selectedWord: word, wordBookName: wordBookVM.selectedWordbook) ? .orange : .gray)
+                                .foregroundColor(wordBookVM.isThisWordAlreadySaved(selectedWord: word, wordBookName: wordBookVM.selectedWordbook) ? .orange : .gray)
                         }
                     }
                     .padding(.horizontal, 20)
@@ -194,10 +204,17 @@ struct DefinitionView: View {
             }
             .padding(.vertical, 5)
         }
+        .onAppear {
+            wordBookVM.selectedWordbook = initialWordBook
+            Task {
+                await vm.fetchWordFromAPI(modelContext: modelContext)
+            }
+        }
     }
 }
 
 #Preview {
     DefinitionView(vm: DefinitionVM(selectedWord: "pathetic", dictionaryService: MockdataForWord()))
         .environmentObject(WordBookVM())
+        .modelContainer(for: [Word.self, WordBook.self]) 
 }

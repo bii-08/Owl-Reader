@@ -67,7 +67,6 @@ struct EditingView: View {
                             photoPikerVM.selectedImage = editingImage
                         }
                         .foregroundColor(.saveChangesButton)
-                        
                     }
                     
                 } else {
@@ -88,7 +87,7 @@ struct EditingView: View {
                     vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: editingURL, stored: filtered)
                     
                     if vm.isTitleValid && !vm.isTitleAlreadyExists && vm.isValidURL && !vm.isUrlAlreadyExists {
-                        vm.updateLink(linkNeedToUpdate: link, newLink: Link(url: URL(string: editingURL) ?? defaultURL, favicon: editingImage, webPageTitle: editingTitle))
+                        vm.updateLink(linkNeedToUpdate: link, newLink: Link(url: URL(string: editingURL) ?? defaultURL, favicon: editingImage?.pngData(), webPageTitle: editingTitle))
                         dismiss()
                     } else {
                         showingAlert = true
@@ -124,12 +123,12 @@ struct EditingView: View {
         .onAppear {
             editingTitle = link.webPageTitle
             editingURL = link.url.absoluteString
-            editingImage = link.favicon
+            editingImage = UIImage(data: link.favicon ?? Data())
         }
     }
 }
 
 #Preview {
-    EditingView(link: Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia"), webPageTitle: "Investopedia"), photoPiker: PhotoPickerVM())
+    EditingView(link: Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopedia"), photoPiker: PhotoPickerVM())
         .environmentObject(HomeVM())
 }

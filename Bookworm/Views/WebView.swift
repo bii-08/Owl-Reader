@@ -9,11 +9,10 @@ import SwiftUI
 import WebKit
 
 struct WebView: UIViewRepresentable, Equatable {
-    
     static func == (lhs: WebView, rhs: WebView) -> Bool {
         lhs.url == rhs.url
     }
-    
+
     let url: URL?
     @Binding var webView: WKWebView?
     

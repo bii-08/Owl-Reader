@@ -6,15 +6,24 @@
 //
 
 import Foundation
+import SwiftData
 
-struct WordBook: Identifiable, Hashable {
+@Model
+final class WordBook: Identifiable, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
     
-    var id: String {
-        self.name
-    }
+    var id = UUID()
+    
+    @Attribute(.unique)
     var name: String
-    var savedWords : [Word]?
+    
+    var savedWords : [Word]
+    
+    init(name: String, savedWords: [Word] = []) {
+        self.name = name
+        self.savedWords = savedWords
+    }
 }
+

@@ -19,18 +19,20 @@ class HomeVM: ObservableObject {
     var isTitleValid = false
     var isTitleAlreadyExists = false
     
-    
     @Published var showingAlert = false
     @Published var showingEditingView = false
+    
+    // NOTE: Replace MockdataWebServie() with WebService() to fetch headlines data from real API
     init(webService: WebServiceDelegate = MocdataWebService()) {
         self.webService = webService
-        savedShortcuts = [Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia"), webPageTitle: "Investopideaaaaaaaaaaa"),
-                          Link(url: URL(string: "https://www.apple.com")!, favicon: UIImage(named: "apple"), webPageTitle: "Apple"), Link(url: URL(string: "https://www.bbc.com")!, favicon: UIImage(named: "BBC news"), webPageTitle: "BBC News")]
+        savedShortcuts = [Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopideaaaaaaaaaaa"),
+                          Link(url: URL(string: "https://www.apple.com")!, favicon: UIImage(named: "apple")?.pngData(), webPageTitle: "Apple"), Link(url: URL(string: "https://www.bbc.com")!, favicon: UIImage(named: "BBC news")?.pngData(), webPageTitle: "BBC News")]
         Task {
             await fetchHeadlines()
         }
     }
     
+    // FUNCTION: to validate the given URL
     func validateURL(urlString: String) -> Bool {
         // Define a regular expression pattern for a valid URL
         let urlPattern = "^(https?://)?(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}(?:/\\S*)?$"
@@ -52,6 +54,7 @@ class HomeVM: ObservableObject {
         }
     }
     
+    // FUNCTION: to check if the given URL is already exists on the shortcut list or not
     func isUrlAlreadyExists(urlString: String, stored: [Link]) -> Bool {
         // Normalize the user-entered URL
         let normalizedUserURL = normalizeURL(urlString)
@@ -62,6 +65,7 @@ class HomeVM: ObservableObject {
         return false
     }
     
+    // FUNCTION: to check if the webpage's title is valid or not
     static func isTitleValid(title: String) -> Bool {
         guard !title.isEmpty else {
             print("The title is empty.")
@@ -93,6 +97,7 @@ class HomeVM: ObservableObject {
         return true
     }
     
+    // FUNCTION: to check if the given webpage's title is already exists or not
     func isTitleAlreadyExists(title: String, stored: [Link]) -> Bool {
         guard !stored.contains(where: { $0.webPageTitle == title}) else {
             print("This title is already exists.")
@@ -101,16 +106,19 @@ class HomeVM: ObservableObject {
         return false
     }
     
+    // FUNCTION: to add link(url) to the shortcut list
     func addLink(newLink: Link) {
         savedShortcuts.append(newLink)
     }
     
+    // FUNCTION: to update the existing link if needed
     func updateLink(linkNeedToUpdate: Link, newLink: Link) {
         if let index = savedShortcuts.firstIndex(where: { $0.id == linkNeedToUpdate.id }) {
             savedShortcuts[index] = newLink
         }
     }
     
+    // FUNCTION: to normalize the given URL (Eg: if the given url is sth like https://www.apple.com/ -> normalize it to https://www.apple.com
     func normalizeURL(_ urlString: String) -> String {
         var normalizedURL = urlString.lowercased()
         
@@ -121,6 +129,7 @@ class HomeVM: ObservableObject {
         return normalizedURL
     }
     
+
     // FUNCTION: to add URL into recentlyReadURLs array
     func addURL(urlString: String) {
         // if the URL already exists in the list
@@ -140,12 +149,12 @@ class HomeVM: ObservableObject {
         saveRecentlyReadURLs()
     }
     
-    // Save the list of recently read URLs to UserDefaults
+    // FUNCTION: Save the list of recently read URLs to UserDefaults
     private func saveRecentlyReadURLs() {
         UserDefaults.standard.set(recentlyReadURLs, forKey: "recentlyReadURLs")
     }
     
-    // Load the list of recently read URLs from UserDefaults
+    // FUNCTION: Load the list of recently read URLs from UserDefaults
     private func loadRecentlyReadURLs() {
         if let savedURLs = UserDefaults.standard.array(forKey: "recentlyReadURLs") as? [String] {
             recentlyReadURLs = savedURLs

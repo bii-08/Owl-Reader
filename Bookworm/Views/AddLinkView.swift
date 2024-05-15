@@ -111,7 +111,7 @@ struct AddLinkView: View {
                     Button {
                         if vm.isValidURL && !vm.isUrlAlreadyExists && vm.isTitleValid && !vm.isTitleAlreadyExists {
                             print("valid")
-                            vm.addLink(newLink: Link(url: URL(string: urlString)!, favicon: photoPikerVM.selectedImage, webPageTitle: webPageTitle))
+                            vm.addLink(newLink: Link(url: URL(string: urlString)!, favicon: photoPikerVM.selectedImage?.pngData(), webPageTitle: webPageTitle))
                             
                             urlString = ""
                             webPageTitle = ""

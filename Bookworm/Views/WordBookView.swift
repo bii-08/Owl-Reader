@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WordBookView: View {
     @EnvironmentObject var vm: WordBookVM
+    @Environment(\.modelContext) var modelContext
     
     @State private var addingWordBookTitle: String = ""
     var title: String?
@@ -25,17 +27,17 @@ struct WordBookView: View {
                                     Text(wordBook.name)
                                         .foregroundColor(.secondary)
                                     Spacer()
-                                    if let totalWordsNumber = wordBook.savedWords?.count {
-                                        Text(totalWordsNumber == 0 ? "" : "\(totalWordsNumber)")
-                                            .foregroundColor(.secondary)
-                                    }
+                                    
+                                    Text(wordBook.savedWords.count == 0 ? "" : "\(wordBook.savedWords.count)")
+                                        .foregroundColor(.secondary)
+                                    
                                 }
                             }
                             .listRowBackground(Color("background"))
                             .swipeActions(allowsFullSwipe: false) {
                                 // Delete Button
                                 Button(role: .destructive) {
-                                    vm.deleteWordBook(wordBook: wordBook)
+                                    vm.deleteWordBook(wordBook: wordBook, modelContext: modelContext)
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
@@ -72,6 +74,9 @@ struct WordBookView: View {
                     .tint(.red)
                 }
             }
+        }
+        .onAppear {
+            vm.fetchWordBookList(modelContext: modelContext)
         }
     }
 }
@@ -119,7 +124,7 @@ extension WordBookView {
             HStack {
                 Spacer()
                 Button {
-                    vm.handleWordBook(wordBook: WordBook(name: vm.title))
+                    vm.handleWordBook(wordBook: WordBook(name: vm.title), modelContext: modelContext)
                     vm.showingSheet = false
                 } label: {
                     Text(vm.editingWordBook == nil ? "Create" : "Update")
@@ -148,4 +153,5 @@ extension WordBookView {
 #Preview {
     WordBookView()
         .environmentObject(WordBookVM())
+        .modelContainer(for: [Word.self, WordBook.self])
 }

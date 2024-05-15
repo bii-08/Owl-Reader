@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TabBar: View {
     @EnvironmentObject var vm: HomeVM
@@ -32,4 +33,5 @@ struct TabBar: View {
     TabBar()
         .environmentObject(HomeVM())
         .environmentObject(WordBookVM())
+        .modelContainer(for: [Link.self, Headline.self, Word.self, WordBook.self])
 }

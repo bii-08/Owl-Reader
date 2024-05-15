@@ -7,9 +7,11 @@
 
 import SwiftUI
 import WebKit
+import SwiftData
 
 struct HomeView: View {
     @EnvironmentObject var vm: HomeVM
+
     @State private var urlString = ""
     @State private var selectedWord: String? = nil
     @State private var showingDefinition = false
@@ -19,7 +21,7 @@ struct HomeView: View {
     @State private var showingAddLinkSheet = false
     @State private var showingRecentlyReadWebPage = false
     @State private var selectedHeadline: Headline?
-    @State private var fullScreen = false
+   
     var body: some View {
         NavigationStack {
             ZStack {
@@ -165,7 +167,7 @@ struct HomeView: View {
                                 }
                                 
                                 ForEach(vm.savedShortcuts, id: \.self) { shortcut in
-                                    ShortcutView(webPageTitle: shortcut.webPageTitle, favicon: shortcut.favicon) {
+                                    ShortcutView(webPageTitle: shortcut.webPageTitle, favicon: UIImage(data: shortcut.favicon ?? Data())) {
                                         urlString = shortcut.url.absoluteString
                                         showingShortcutWebPage = true
                                     }
@@ -296,4 +298,5 @@ extension HomeView {
     HomeView()
         .environmentObject(HomeVM())
         .environmentObject(WordBookVM())
+        .modelContainer(for: [Link.self, Headline.self, Word.self, WordBook.self])
 }
