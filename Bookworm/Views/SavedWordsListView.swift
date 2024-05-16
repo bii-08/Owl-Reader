@@ -18,6 +18,7 @@ struct SavedWordsListView: View {
                 NavigationLink(value: savedWord) {
                     VStack(alignment: .leading) {
                         Text(savedWord.word)
+                            .bold()
                         
                         if let definition = savedWord.results?.first?.definition {
                             Text(definition)
@@ -31,6 +32,7 @@ struct SavedWordsListView: View {
                 
             }
             .listStyle(.plain)
+            .listRowSpacing(10)
         }
         .navigationDestination(for: Word.self) { word in
             DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: DictionaryService()), initialWordBook: wordBook.name)

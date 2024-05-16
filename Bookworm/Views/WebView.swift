@@ -15,6 +15,8 @@ struct WebView: UIViewRepresentable, Equatable {
 
     let url: URL?
     @Binding var webView: WKWebView?
+    var didFinishLoadingThisURL: ((Link?) -> Void)?
+
     
     var onWordSelected: (String) -> Void
 
@@ -184,6 +186,16 @@ struct WebView: UIViewRepresentable, Equatable {
             }
         }
         
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            if let currentURL = webView.url, let currentTitle = webView.title {
+                parent.didFinishLoadingThisURL?(Link(url: currentURL, webPageTitle: currentTitle))
+//                parent.vm.addURL(urlString: currentURL.absoluteString)
+                
+                print("Finished navigating to url \(String(describing: webView.url))")
+                print("\(String(describing: webView.title))")
+            }
+            
+        }  
     }
 }
 

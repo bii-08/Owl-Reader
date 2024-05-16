@@ -21,7 +21,7 @@ struct HeadlineView: View {
                 AsyncImage(url: URL(string: headline.urlToImage)) { image in
                     image.image?.resizable()
                         .scaledToFill()
-                        .frame(maxWidth: 380, maxHeight: 230)
+                        .frame(maxWidth: 380, maxHeight: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }

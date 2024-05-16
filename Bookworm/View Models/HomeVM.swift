@@ -7,11 +7,12 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 class HomeVM: ObservableObject {
     private let webService: WebServiceDelegate
     @Published var savedShortcuts: [Link]
-    @Published var recentlyReadURLs: [String] = []
+    @Published var recentlyReadURLs: [Link] = []
     @Published var headLines: [Headline] = [Headline(title: "BBC Gaza reporter: My struggle to keep family safe while covering the war", url: "https://www.bbc.co.uk/news/world-middle-east-68906903", urlToImage: "https://ichef.bbci.co.uk/news/1024/branded_news/977D/production/_133218783_razan_hug.jpg"), Headline(title: "BBC Gaza reporter: My struggle to keep family safe while covering the war", url: "https://www.bbc.co.uk/news/world-middle-east-68906903", urlToImage: "https://ichef.bbci.co.uk/news/1024/branded_news/977D/production/_133218783_razan_hug.jpg"), Headline(title: "BBC Gaza reporter: My struggle to keep family safe while covering the war", url: "https://www.bbc.co.uk/news/world-middle-east-68906903", urlToImage: "https://ichef.bbci.co.uk/news/1024/branded_news/977D/production/_133218783_razan_hug.jpg")]
     
     var isValidURL = false
@@ -131,35 +132,27 @@ class HomeVM: ObservableObject {
     
 
     // FUNCTION: to add URL into recentlyReadURLs array
-    func addURL(urlString: String) {
+    func addURL(link: Link?, modelContext: ModelContext) {
         // if the URL already exists in the list
-        if recentlyReadURLs.contains(urlString) {
-            if let index = recentlyReadURLs.firstIndex(of: urlString) {
-                recentlyReadURLs.remove(at: index)
+        if recentlyReadURLs.contains(where: { $0.url == link?.url }) {
+            if let index = recentlyReadURLs.firstIndex(where: { $0.url == link?.url }) {
+//                recentlyReadURLs.remove(at: index)
+                modelContext.delete(recentlyReadURLs[index])
             }
         }
         // Add the URL to the top of the list
-        recentlyReadURLs.insert(urlString, at: 0)
-        
-        
+        if let link {
+            modelContext.insert(link)
+            recentlyReadURLs.insert(link, at: 0)
+        }
+
         if recentlyReadURLs.count > 10 {
             recentlyReadURLs = Array(recentlyReadURLs.prefix(10))
         }
-
-        saveRecentlyReadURLs()
+        
+        fetchWordBookList(modelContext: modelContext)
     }
     
-    // FUNCTION: Save the list of recently read URLs to UserDefaults
-    private func saveRecentlyReadURLs() {
-        UserDefaults.standard.set(recentlyReadURLs, forKey: "recentlyReadURLs")
-    }
-    
-    // FUNCTION: Load the list of recently read URLs from UserDefaults
-    private func loadRecentlyReadURLs() {
-        if let savedURLs = UserDefaults.standard.array(forKey: "recentlyReadURLs") as? [String] {
-            recentlyReadURLs = savedURLs
-        }
-    }
         // FUNCTION: for fetching data from real api
         func fetchHeadlines() async {
             headLines = [Headline]()
@@ -167,5 +160,19 @@ class HomeVM: ObservableObject {
                 headLines = downloadedHeadlines.articles
             }
         }
+    
+    // FUNCTION: to fetch saved wordBook list from model context.
+    func fetchWordBookList(modelContext: ModelContext) {
+        do {
+            let descriptor = FetchDescriptor<Link>(sortBy: [SortDescriptor(\.webPageTitle)])
+            recentlyReadURLs = try modelContext.fetch(descriptor)
+        } catch {
+            print("Fetch failed")
+        }
     }
+    
+    func removeRows(link: Link, modelContext: ModelContext) {
+        modelContext.delete(link)
+    }
+}
     

@@ -13,7 +13,7 @@ class DefinitionVM: ObservableObject {
     private let dictionaryService: DictionaryServiceDelegate
     @Published var word: Word? {
         didSet {
-            print(word?.word)
+//            print(word?.word)
         }
     }
     var selectedWord: String

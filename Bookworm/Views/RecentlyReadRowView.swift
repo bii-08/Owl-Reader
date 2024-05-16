@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct RecentlyReadRowView: View {
+    @State private var recentlyReadURLs: [Link] = []
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            ForEach(recentlyReadURLs, id: \.self) { url in
+                Text(url.url.absoluteString)
+            }
+        }
     }
 }
 

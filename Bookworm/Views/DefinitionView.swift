@@ -205,6 +205,7 @@ struct DefinitionView: View {
             .padding(.vertical, 5)
         }
         .onAppear {
+            wordBookVM.fetchWordBookList(modelContext: modelContext)
             wordBookVM.selectedWordbook = initialWordBook
             Task {
                 await vm.fetchWordFromAPI(modelContext: modelContext)

@@ -9,9 +9,11 @@ import SwiftUI
 import WebKit
 import SwiftData
 
+
 struct HomeView: View {
     @EnvironmentObject var vm: HomeVM
-
+    @Environment(\.modelContext) var modelContext
+    
     @State private var urlString = ""
     @State private var selectedWord: String? = nil
     @State private var showingDefinition = false
@@ -21,13 +23,19 @@ struct HomeView: View {
     @State private var showingAddLinkSheet = false
     @State private var showingRecentlyReadWebPage = false
     @State private var selectedHeadline: Headline?
-   
+    
+    
+    @State var didFinishedLoading = false
+    
+    
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 Color("background").ignoresSafeArea()
                 
-                ScrollView {
+                VStack {
+                    
                     VStack {
                         ZStack {
                             //Header Image
@@ -35,16 +43,17 @@ struct HomeView: View {
                                 .resizable()
                                 .ignoresSafeArea()
                                 .scaledToFill()
-                                .frame(maxWidth: .infinity, maxHeight: 200)
+                                .frame(maxWidth: .infinity, maxHeight: 190)
                                 .cornerRadius(10)
+                                .ignoresSafeArea()
                             
                             VStack(alignment: .leading) {
-                                Spacer()
+                                
                                 // App's name
                                 Text("BOOKWORM")
                                     .font(Font.custom("Marker Felt", size: 40))
                                     .bold()
-                                    .padding(.horizontal)
+                                    .padding()
                                 
                                 // SearchBar
                                 HStack {
@@ -56,6 +65,8 @@ struct HomeView: View {
                                             processingLink = true
                                         }
                                         .submitLabel(.done)
+                                        .textInputAutocapitalization(.never)
+                                        .autocorrectionDisabled()
                                 }
                                 .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.6)))
                                 .padding(12)
@@ -63,7 +74,7 @@ struct HomeView: View {
                             .navigationDestination(isPresented: $processingLink) {
                                 if let url = URL(string: urlString) {
                                     VStack {
-                                        WebView(url: url, webView: $webView) { word in
+                                        WebView(url: url, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                             print(word)
                                             selectedWord = word
                                             showingDefinition = true
@@ -71,9 +82,9 @@ struct HomeView: View {
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
                                                 DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                                .presentationBackground(.thinMaterial)
-                                                .presentationCornerRadius(15)
-                                                .presentationDetents([.large, .height(300)])
+                                                    .presentationBackground(.thinMaterial)
+                                                    .presentationCornerRadius(15)
+                                                    .presentationDetents([.large, .height(300)])
                                             }
                                         }
                                     }
@@ -83,10 +94,11 @@ struct HomeView: View {
                                     .edgesIgnoringSafeArea(.all)
                                 }
                             }
+                            Spacer()
                         }
                     }
                     // Latest Headlines section
-                    VStack(spacing: 1) {
+                    VStack(spacing: 0) {
                         HStack {
                             Text("Breaking News")
                                 .font(Font.custom("DIN Condensed", size: 30))
@@ -105,11 +117,11 @@ struct HomeView: View {
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                        .aspectRatio(1.5, contentMode: .fit)
+                        .aspectRatio(2, contentMode: .fit)
                         .frame(maxWidth: .infinity)
                         .navigationDestination(item: $selectedHeadline) { headline in
                             VStack {
-                                WebView(url: URL(string: headline.url), webView: $webView) { word in
+                                WebView(url: URL(string: headline.url), webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                     print(word)
                                     selectedWord = word
                                     showingDefinition = true
@@ -117,9 +129,9 @@ struct HomeView: View {
                                 .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                     if let word = selectedWord {
                                         DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                        .presentationBackground(.thickMaterial)
-                                        .presentationCornerRadius(15)
-                                        .presentationDetents([.large, .height(300)])
+                                            .presentationBackground(.thickMaterial)
+                                            .presentationCornerRadius(15)
+                                            .presentationDetents([.large, .height(300)])
                                     }
                                 }
                             }
@@ -139,8 +151,7 @@ struct HomeView: View {
                             Spacer()
                         }
                         .padding(.horizontal)
-                          
-                        Spacer()
+                        
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
                                 VStack {
@@ -151,7 +162,7 @@ struct HomeView: View {
                                         Image(systemName: "plus.circle.fill")
                                             .scaleEffect(2)
                                             .foregroundColor(.red.opacity(0.8))
-                                            .frame(width: 80, height: 80)
+                                            .frame(width: 50, height: 50)
                                             .padding(9)
                                     }
                                     .background(.ultraThinMaterial)
@@ -176,7 +187,7 @@ struct HomeView: View {
                             .navigationDestination(isPresented: $showingShortcutWebPage) {
                                 if let url = URL(string: urlString) {
                                     VStack {
-                                        WebView(url: url, webView: $webView) { word in
+                                        WebView(url: url, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                             print(word)
                                             selectedWord = word
                                             showingDefinition = true
@@ -184,9 +195,9 @@ struct HomeView: View {
                                         .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                             if let word = selectedWord {
                                                 DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                                .presentationBackground(.thickMaterial)
-                                                .presentationCornerRadius(15)
-                                                .presentationDetents([.large, .height(300)])
+                                                    .presentationBackground(.thickMaterial)
+                                                    .presentationCornerRadius(15)
+                                                    .presentationDetents([.large, .height(300)])
                                             }
                                         }
                                     }
@@ -197,8 +208,9 @@ struct HomeView: View {
                                 }
                             }
                         }
+                        
                     }
-                     
+                    
                     // Recently Read section
                     VStack {
                         HStack {
@@ -210,19 +222,53 @@ struct HomeView: View {
                         }
                         .padding(.horizontal)
                         
-                        ForEach(vm.recentlyReadURLs, id: \.self) { url in
-                            Button {
-                                urlString = url
-                                showingRecentlyReadWebPage = true
-                            } label: {
-                                Text(url)
+                        List {
+                            
+                            ForEach(vm.recentlyReadURLs, id: \.self) { link in
+                                Button {
+                                    urlString = link.url.absoluteString
+                                    showingRecentlyReadWebPage = true
+                                } label: {
+                                    VStack(spacing: 0) {
+                                        HStack {
+                                            Text(link.webPageTitle)
+                                                .foregroundColor(.secondary)
+                                                .font(.title3)
+                                                .lineLimit(1)
+                                            Spacer()
+                                        }
+                                        HStack {
+                                            Text(link.url.absoluteString)
+                                                .lineLimit(1)
+                                            Spacer()
+                                        }
+                                    }
+                                    .padding()
+                                    .background(RoundedRectangle(cornerRadius: 5).fill(Color.gray.opacity(0.1)))
+                                }
+                                .listRowBackground(Color("background"))
+//                                .padding(.horizontal, 10)
+                                .swipeActions {
+                                    Button(role: .destructive) {
+                                        if let index = vm.recentlyReadURLs.firstIndex(where: { $0.url == link.url }) {
+                                            modelContext.delete(vm.recentlyReadURLs[index])
+                                        }
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.clear)
+                                }
                             }
+                        
+ 
                         }
+                        .listStyle(.plain)
+                        
                     }
                     .navigationDestination(isPresented: $showingRecentlyReadWebPage) {
                         if let url = URL(string: urlString) {
                             VStack {
-                                WebView(url: url, webView: $webView) { word in
+                                WebView(url: url, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                     print(word)
                                     selectedWord = word
                                     showingDefinition = true
@@ -230,9 +276,9 @@ struct HomeView: View {
                                 .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
                                     if let word = selectedWord {
                                         DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                        .presentationBackground(.thickMaterial)
-                                        .presentationCornerRadius(15)
-                                        .presentationDetents([.large, .height(300)])
+                                            .presentationBackground(.thickMaterial)
+                                            .presentationCornerRadius(15)
+                                            .presentationDetents([.large, .height(300)])
                                     }
                                 }
                             }
@@ -242,9 +288,12 @@ struct HomeView: View {
                             .edgesIgnoringSafeArea(.all)
                         }
                     }
+                    Spacer()
+                    Spacer()
                 }
                 .onAppear {
                     urlString = ""
+                    vm.fetchWordBookList(modelContext: modelContext)
                 }
                 .ignoresSafeArea()
                 
@@ -252,6 +301,7 @@ struct HomeView: View {
         }
     }
 }
+
 
 extension HomeView {
     private var navigationBarOnWebPage: some View {

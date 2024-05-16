@@ -23,7 +23,7 @@ struct ShortcutView: View {
                     Image(uiImage: icon)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 100, height: 100)
+                        .frame(width: 70, height: 70)
                         .cornerRadius(10)
                 } else {
                     Image(systemName: "photo")
