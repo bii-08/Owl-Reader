@@ -199,7 +199,6 @@ struct DefinitionView: View {
                         .cornerRadius(10)
                     }
                     .padding(.horizontal)
-
                 }
             }
             .padding(.vertical, 5)

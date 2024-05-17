@@ -29,38 +29,45 @@ struct AddLinkView: View {
                 }
                 .padding(.horizontal)
                 
-                // Web pages List
-                List(vm.savedShortcuts, id: \.self) { page in
-                    Text(page.webPageTitle)
-                        .foregroundColor(.secondary)
-                        .listRowBackground(Color("background"))
-                        .swipeActions(allowsFullSwipe: false) {
-                            // Delete Button
-                            Button(role: .destructive) {
-                                if let index = vm.savedShortcuts.firstIndex(where: { $0.url == page.url }) {
-                                    vm.savedShortcuts.remove(at: index)
+                if vm.savedShortcuts.isEmpty {
+                        Text("No Item")
+                            .font(Font.custom("Avenir Next Condensed", size: 20))
+                            .foregroundColor(.secondary)
+                            .padding(40)
+                } else {
+                    // Web pages List
+                    List(vm.savedShortcuts, id: \.self) { page in
+                        Text(page.webPageTitle)
+                            .foregroundColor(.secondary)
+                            .listRowBackground(Color("background"))
+                            .swipeActions(allowsFullSwipe: false) {
+                                // Delete Button
+                                Button(role: .destructive) {
+                                    if let index = vm.savedShortcuts.firstIndex(where: { $0.url == page.url }) {
+                                        vm.savedShortcuts.remove(at: index)
+                                    }
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
                                 }
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                            }
-                            .tint(.red)
-                            
-                            // Edit Button
-                            Button {
-                                withAnimation {
-                                    selectedPage = page
+                                .tint(.red)
+                                
+                                // Edit Button
+                                Button {
+                                    withAnimation {
+                                        selectedPage = page
+                                    }
+                                } label: {
+                                    Label("Edit", systemImage: "pencil")
                                 }
-                            } label: {
-                                Label("Edit", systemImage: "pencil")
+                                .tint(.orange)
                             }
-                            .tint(.orange)
-                        }
+                    }
+                    .navigationDestination(item: $selectedPage, destination: { page in
+                        EditingView(link: page, photoPiker: PhotoPickerVM())
+                    })
+                    .listStyle(.plain)
                 }
-                .navigationDestination(item: $selectedPage, destination: { page in
-                    EditingView(link: page, photoPiker: PhotoPickerVM())
-                })
-                .listStyle(.plain)
-                
+
                 // Add new shortcut Section
                 VStack {
                     Spacer()

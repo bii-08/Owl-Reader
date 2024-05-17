@@ -90,7 +90,7 @@ class HomeVM: ObservableObject {
         }
         
         // Ensure the length of the title is between 3 and 20 characters
-        guard trimmedTitle.count >= 3 && trimmedTitle.count <= 20 else {
+        guard trimmedTitle.count >= 2 && trimmedTitle.count <= 20 else {
             print("The length of the title should be between 3 and 20 characters.")
             return false
         }
@@ -143,14 +143,14 @@ class HomeVM: ObservableObject {
         // Add the URL to the top of the list
         if let link {
             modelContext.insert(link)
-            recentlyReadURLs.insert(link, at: 0)
+           // recentlyReadURLs.insert(link, at: 0)
         }
 
         if recentlyReadURLs.count > 10 {
             recentlyReadURLs = Array(recentlyReadURLs.prefix(10))
         }
         
-        fetchWordBookList(modelContext: modelContext)
+        fetchRecentlyReadURLs(modelContext: modelContext)
     }
     
         // FUNCTION: for fetching data from real api
@@ -162,9 +162,9 @@ class HomeVM: ObservableObject {
         }
     
     // FUNCTION: to fetch saved wordBook list from model context.
-    func fetchWordBookList(modelContext: ModelContext) {
+    func fetchRecentlyReadURLs(modelContext: ModelContext) {
         do {
-            let descriptor = FetchDescriptor<Link>(sortBy: [SortDescriptor(\.webPageTitle)])
+            let descriptor = FetchDescriptor<Link>(sortBy: [])
             recentlyReadURLs = try modelContext.fetch(descriptor)
         } catch {
             print("Fetch failed")

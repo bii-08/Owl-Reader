@@ -11,8 +11,9 @@ struct AlertView: View {
     var title: String
     var message: String
     var primaryButtonTitle: String
+    var secondaryButtonTitle: String?
     var action1: () -> ()
-    
+    var action2: (() -> ())?
     @State private var offset: CGFloat = 0
     
     var body: some View {
@@ -31,6 +32,23 @@ struct AlertView: View {
                 Spacer()
   
                 HStack {
+                    if let action2 {
+                        Button {
+                            action2()
+                        } label: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .frame(width: 150, height: 42)
+                                    .foregroundColor(Color.blue.opacity(0.5))
+                                Text(secondaryButtonTitle ?? "")
+                                    .font(.custom("DIN Condensed", size: 20))
+                                    .foregroundColor(.white)
+                                   
+                            }
+                            .padding()
+                        }
+                    }
+                    
                     Button {
                         action1()
                     } label: {

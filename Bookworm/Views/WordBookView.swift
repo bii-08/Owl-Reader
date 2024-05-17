@@ -13,6 +13,7 @@ struct WordBookView: View {
     @Environment(\.modelContext) var modelContext
     
     @State private var addingWordBookTitle: String = ""
+    
     var title: String?
     
     var body: some View {
@@ -20,6 +21,7 @@ struct WordBookView: View {
             ZStack {
                 Color("background").ignoresSafeArea()
                 VStack {
+                    
                     List {
                         ForEach(vm.listWordBook, id: \.self) { wordBook in
                             NavigationLink(value: wordBook) {
@@ -30,7 +32,6 @@ struct WordBookView: View {
                                     
                                     Text(wordBook.savedWords.count == 0 ? "" : "\(wordBook.savedWords.count)")
                                         .foregroundColor(.secondary)
-                                    
                                 }
                             }
                             .listRowBackground(Color("background"))
@@ -64,12 +65,12 @@ struct WordBookView: View {
                 }
                 .navigationTitle("Word Book")
                 .toolbar {
+                    
                     Button {
                         vm.showingSheet = true
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .scaleEffect(1.2)
-                        
                     }
                     .tint(.red)
                 }

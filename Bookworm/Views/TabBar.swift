@@ -24,6 +24,13 @@ struct TabBar: View {
                     Label("Word Book", systemImage: "book.pages")
                 }
                 .tag(1)
+            NavigationStack {
+                AllWordsView()
+            }
+            .tabItem {
+                Label("All words", systemImage: "heart")
+            }
+            .tag(2)
         }
         .accentColor(.tabBarButton)
     }

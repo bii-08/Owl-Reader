@@ -9,7 +9,6 @@ import SwiftUI
 import WebKit
 import SwiftData
 
-
 struct HomeView: View {
     @EnvironmentObject var vm: HomeVM
     @Environment(\.modelContext) var modelContext
@@ -24,18 +23,12 @@ struct HomeView: View {
     @State private var showingRecentlyReadWebPage = false
     @State private var selectedHeadline: Headline?
     
-    
-    @State var didFinishedLoading = false
-    
-    
-    
     var body: some View {
         NavigationStack {
             ZStack {
                 Color("background").ignoresSafeArea()
                 
                 VStack {
-                    
                     VStack {
                         ZStack {
                             //Header Image
@@ -50,7 +43,7 @@ struct HomeView: View {
                             VStack(alignment: .leading) {
                                 
                                 // App's name
-                                Text("BOOKWORM")
+                                Text("ReadSmart")
                                     .font(Font.custom("Marker Felt", size: 40))
                                     .bold()
                                     .padding()
@@ -208,7 +201,6 @@ struct HomeView: View {
                                 }
                             }
                         }
-                        
                     }
                     
                     // Recently Read section
@@ -222,48 +214,54 @@ struct HomeView: View {
                         }
                         .padding(.horizontal)
                         
-                        List {
-                            
-                            ForEach(vm.recentlyReadURLs, id: \.self) { link in
-                                Button {
-                                    urlString = link.url.absoluteString
-                                    showingRecentlyReadWebPage = true
-                                } label: {
-                                    VStack(spacing: 0) {
-                                        HStack {
-                                            Text(link.webPageTitle)
-                                                .foregroundColor(.secondary)
-                                                .font(.title3)
-                                                .lineLimit(1)
-                                            Spacer()
-                                        }
-                                        HStack {
-                                            Text(link.url.absoluteString)
-                                                .lineLimit(1)
-                                            Spacer()
-                                        }
-                                    }
-                                    .padding()
-                                    .background(RoundedRectangle(cornerRadius: 5).fill(Color.gray.opacity(0.1)))
-                                }
-                                .listRowBackground(Color("background"))
-//                                .padding(.horizontal, 10)
-                                .swipeActions {
-                                    Button(role: .destructive) {
-                                        if let index = vm.recentlyReadURLs.firstIndex(where: { $0.url == link.url }) {
-                                            modelContext.delete(vm.recentlyReadURLs[index])
-                                        }
+                        if vm.recentlyReadURLs == [] {
+                                Text("No history")
+                                    .font(Font.custom("Avenir Next Condensed", size: 20))
+                                    .foregroundColor(.secondary)
+                                    .padding(40)
+                        } else {
+                            List {
+                                ForEach(vm.recentlyReadURLs.reversed(), id: \.self) { link in
+                                    Button {
+                                        urlString = link.url.absoluteString
+                                        showingRecentlyReadWebPage = true
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        VStack {
+                                            HStack {
+                                                Text(link.webPageTitle)
+                                                    .foregroundColor(.secondary)
+                                                    .font(.title3)
+                                                    .lineLimit(1)
+                                                Spacer()
+                                            }
+                                            HStack {
+                                                Text(link.url.absoluteString)
+                                                    .lineLimit(1)
+                                                Spacer()
+                                            }
+                                        }
+                                        .padding(10)
+                                        .background(RoundedRectangle(cornerRadius: 5).fill(Color.gray.opacity(0.1)))
                                     }
-                                    .tint(.clear)
+                                    .listRowBackground(Color("background"))
+//                                    .listRowSeparator(.hidden)
+                                    .swipeActions(allowsFullSwipe: true) {
+                                        Button {
+                                            if let index = vm.recentlyReadURLs.firstIndex(where: { $0.url == link.url }) {
+                                                withAnimation {
+                                                    modelContext.delete(vm.recentlyReadURLs[index])
+                                                }
+                                            }
+                                            vm.fetchRecentlyReadURLs(modelContext: modelContext)
+                                        } label: {
+                                           Label("", image: "trash")
+                                        }
+                                        .tint(.clear)
+                                    }
                                 }
                             }
-                        
- 
+                            .listStyle(.plain)
                         }
-                        .listStyle(.plain)
-                        
                     }
                     .navigationDestination(isPresented: $showingRecentlyReadWebPage) {
                         if let url = URL(string: urlString) {
@@ -293,15 +291,13 @@ struct HomeView: View {
                 }
                 .onAppear {
                     urlString = ""
-                    vm.fetchWordBookList(modelContext: modelContext)
+                    vm.fetchRecentlyReadURLs(modelContext: modelContext)
                 }
                 .ignoresSafeArea()
-                
             }
         }
     }
 }
-
 
 extension HomeView {
     private var navigationBarOnWebPage: some View {
