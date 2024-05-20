@@ -51,7 +51,13 @@ final class Word: Codable , Hashable {
         } catch {
             results = []
         }
-        pronunciation = try values.decodeIfPresent(Pronunciation.self, forKey: .pronunciation)
+        do {
+            let string = try values.decodeIfPresent(String.self, forKey: .pronunciation)
+            pronunciation = Pronunciation(all: string ?? "")
+        } catch DecodingError.typeMismatch {
+            pronunciation = try values.decodeIfPresent(Pronunciation.self, forKey: .pronunciation)
+        }
+//        pronunciation = try values.decodeIfPresent(Pronunciation.self, forKey: .pronunciation)
         frequency = try values.decodeIfPresent(Double.self, forKey: .frequency)
     }
 }

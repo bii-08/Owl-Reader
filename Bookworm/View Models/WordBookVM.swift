@@ -8,7 +8,6 @@
 import Foundation
 import SwiftData
 
-
 class WordBookVM: ObservableObject {
     @Published var listWordBook: [WordBook] = [WordBook(name: "Default")]
     @Published var selectedWordbook = "Default"
@@ -23,6 +22,7 @@ class WordBookVM: ObservableObject {
     var wordBookTitle: [String] {
         listWordBook.map { $0.name }
     }
+    
     
     init(selectedWordbook: String = "Default") {
         self.selectedWordbook = selectedWordbook
@@ -79,7 +79,7 @@ class WordBookVM: ObservableObject {
     }
     
     // FUNCTION: to validate the wordbook title, ensure it is correct and unique before submitting
-    func validateTitle(title: String) -> Bool {
+    @MainActor func validateTitle(title: String) -> Bool {
         if listWordBook.contains(where: { $0.name == title }) {
             message = "Sorry. This title is already taken."
             return false

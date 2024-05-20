@@ -101,37 +101,68 @@ struct HomeView: View {
                         }
                         .padding(.horizontal)
                         
-                        // Tab View
-                        TabView {
-                            ForEach(0..<vm.headLines.count, id: \.self) { index in
-                                HeadlineView(headline: vm.headLines[index]) {
-                                    selectedHeadline = vm.headLines[index]
-                                }
-                            }
-                        }
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                        .aspectRatio(2, contentMode: .fit)
-                        .frame(maxWidth: .infinity)
-                        .navigationDestination(item: $selectedHeadline) { headline in
-                            VStack {
-                                WebView(url: URL(string: headline.url), webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
-                                    print(word)
-                                    selectedWord = word
-                                    showingDefinition = true
-                                }
-                                .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
-                                    if let word = selectedWord {
-                                        DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                            .presentationBackground(.thickMaterial)
-                                            .presentationCornerRadius(15)
-                                            .presentationDetents([.large, .height(300)])
+                        switch vm.loadingState {
+                        case .loading:
+                            ProgressView("Loading...")
+                        case .success:
+                            // Tab View
+                            TabView {
+                                ForEach(0..<vm.headLines.count, id: \.self) { index in
+                                    HeadlineView(headline: vm.headLines[index]) {
+                                        selectedHeadline = vm.headLines[index]
                                     }
                                 }
                             }
-                            .toolbar{
-                                navigationBarOnWebPage
+                            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                            .aspectRatio(2, contentMode: .fit)
+                            .frame(maxWidth: .infinity)
+                            .navigationDestination(item: $selectedHeadline) { headline in
+                                VStack {
+                                    WebView(url: URL(string: headline.url), webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                        print(word)
+                                        selectedWord = word
+                                        showingDefinition = true
+                                    }
+                                    .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                                        if let word = selectedWord {
+                                            DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                                .presentationBackground(.thickMaterial)
+                                                .presentationCornerRadius(15)
+                                                .presentationDetents([.large, .height(300)])
+                                        }
+                                    }
+                                }
+                                .toolbar{
+                                    navigationBarOnWebPage
+                                }
+                                .edgesIgnoringSafeArea(.all)
                             }
-                            .edgesIgnoringSafeArea(.all)
+                        case .failed:
+                            ZStack {
+                                Color.gray.opacity(0.1)
+                                ContentUnavailableView {
+                                    VStack {
+                                        Image("error")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50, height: 50)
+                                        Text("Error loading headlines")
+                                            .bold()
+                                    }
+                                } description: {
+                                    Text("An error occurred while loading headlines.")
+                                } actions: {
+                                    Button("Retry") {
+                                        Task {
+                                            await vm.fetchHeadlines()
+                                        }
+                                    }
+                                    .buttonStyle(BorderedButtonStyle())
+                                }
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.horizontal)
+                            
                         }
                     }
                     // Shortcut section

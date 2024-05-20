@@ -46,8 +46,10 @@ struct SavedWordsListView: View {
             }
             .searchable(text: $searchQuery, prompt: Text("Search by word"))
             .overlay {
-                if filteredWords.isEmpty {
-                    ContentUnavailableView.search
+                if filteredWords.isEmpty && searchQuery != "" {
+                    ContentUnavailableView.search(text: searchQuery)
+                } else if filteredWords.isEmpty {
+                    ContentUnavailableView("Empty Words", systemImage: "books.vertical.fill", description: Text("Start browsing your webpages to add new words."))
                 }
             }
             .listStyle(.plain)
@@ -56,7 +58,7 @@ struct SavedWordsListView: View {
                 DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: DictionaryService()), initialWordBook: wordBook.name)
             }
         }
-        .navigationTitle(wordBook.name)
+        .navigationTitle("\(wordBook.name)" + " " + "(\(wordBook.savedWords.count))")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -19,6 +19,8 @@ class DefinitionVM: ObservableObject {
     var selectedWord: String
     var isNewWord = false
     
+    @Published var loadingState = LoadingStateManager.loading
+    
     // NOTE: Replace MockdataForWord() with DictionaryService() to fetch data from real API
     init(selectedWord: String, dictionaryService: DictionaryServiceDelegate = DictionaryService()) {
         self.selectedWord = selectedWord
@@ -30,7 +32,11 @@ class DefinitionVM: ObservableObject {
         if !fetchWordFromDatabase(selectedWord: selectedWord, modelContext: modelContext) {
             if let targetWord: Word = await dictionaryService.downloadWord(word: selectedWord) {
                 word = targetWord
-                print("successfully downloaded word from api")
+                loadingState = LoadingStateManager.success
+                print("Successfully downloaded this word from api.")
+            } else {
+                loadingState = LoadingStateManager.failed
+                print("Failed to download this word from api!")
             }
         }
     }
@@ -50,12 +56,14 @@ class DefinitionVM: ObservableObject {
             let descriptor = FetchDescriptor(predicate: predicate)
             let words = try modelContext.fetch(descriptor)
                 self.word = words.first
-            print("successfully fetched word from database")
+            loadingState = LoadingStateManager.success
+            print("Successfully fetched word from database.")
             if word == nil {
                 return false
             }
         } catch {
-            print("Fetch saved word failed")
+            loadingState = LoadingStateManager.failed
+            print("Failed to fetched this word from database!")
             return false
         }
         return true

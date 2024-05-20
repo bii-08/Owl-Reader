@@ -38,6 +38,7 @@
 		789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */; };
 		789D8AC82BE84A6B004E0EA5 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC72BE84A6B004E0EA5 /* TabBar.swift */; };
 		78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */; };
+		78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBookVM.swift; sourceTree = "<group>"; };
 		789D8AC72BE84A6B004E0EA5 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogView.swift; sourceTree = "<group>"; };
+		78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				781C5B202BE0791100FB394B /* Headline.swift */,
 				789D8AB82BE43959004E0EA5 /* Word.swift */,
 				789D8AC12BE70252004E0EA5 /* WordBook.swift */,
+				78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */,
 				781C5B132BE06EEB00FB394B /* Headlines.json */,
 				789D8AB62BE3694F004E0EA5 /* Word.json */,
 			);
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				781C5B162BE0732400FB394B /* WebService.swift in Sources */,
+				78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */,
 				78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */,
 				785664DA2BD871C1008A9EF1 /* ShortcutView.swift in Sources */,
 				785664D42BD6728A008A9EF1 /* WebView.swift in Sources */,

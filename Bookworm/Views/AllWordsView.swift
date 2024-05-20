@@ -18,7 +18,7 @@ struct AllWordsView: View {
     @State private var showingDefinition = false
     
     @State private var allowToDeleteWithoutAsking = UserDefaults.standard.bool(forKey: "allowToDeleteWithoutAsking")
-    @State private var testing = true
+    @State private var testing = false
     
     @State private var searchWord = ""
     @State private var showingConfirmation = false
@@ -85,8 +85,10 @@ struct AllWordsView: View {
                 })
             })
             .overlay {
-                if filteredWords.isEmpty {
-                    ContentUnavailableView.search
+                if filteredWords.isEmpty && searchQuery != "" {
+                    ContentUnavailableView.search(text: searchQuery)
+                } else if filteredWords.isEmpty {
+                    ContentUnavailableView("Empty Words", systemImage: "books.vertical.fill", description: Text("Click plus button or start browsing your webpages to add new words."))
                 }
             }
             .listStyle(.plain)
