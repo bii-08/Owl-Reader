@@ -41,7 +41,6 @@
 		78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */; };
 		78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */; };
 		78FE730C2BFC01E4006A23D4 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE730B2BFC01E4006A23D4 /* ProgressBarView.swift */; };
-		78FE73122BFD83F8006A23D4 /* BrowserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73112BFD83F8006A23D4 /* BrowserVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,7 +78,6 @@
 		78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateManager.swift; sourceTree = "<group>"; };
 		78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVM.swift; sourceTree = "<group>"; };
 		78FE730B2BFC01E4006A23D4 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
-		78FE73112BFD83F8006A23D4 /* BrowserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,7 +192,6 @@
 				789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */,
 				789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */,
 				78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */,
-				78FE73112BFD83F8006A23D4 /* BrowserVM.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -296,7 +293,6 @@
 				789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */,
 				789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */,
 				78FE730C2BFC01E4006A23D4 /* ProgressBarView.swift in Sources */,
-				78FE73122BFD83F8006A23D4 /* BrowserVM.swift in Sources */,
 				781C5B1D2BE0768600FB394B /* Extension.swift in Sources */,
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
 				789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */,

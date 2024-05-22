@@ -8,7 +8,7 @@
 import Foundation
 
 // Mockdata for testing Headlines
-class MocdataWebService: WebServiceDelegate {
+class MockdataWebService: WebServiceDelegate {
     func downloadData<T: Codable>(fromURL: String) async -> T? {
         let mockHeadlines = Bundle.main.decode(HeadlinesResultReponse.self, from: "Headlines.json")
         return mockHeadlines as? T

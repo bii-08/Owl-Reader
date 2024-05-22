@@ -127,7 +127,7 @@ struct AllWordsView: View {
 extension AllWordsView {
     private var searchByDictionarySheet: some View {
         VStack(alignment: .leading) {
-            Text("Search your word")
+            Text("Add new word")
                 .font(Font.custom("DIN Condensed", size: 25))
                 .padding()
             TextField("", text: $searchWord, prompt: Text("Type any word...").foregroundColor(.white.opacity(0.7))).padding(6)

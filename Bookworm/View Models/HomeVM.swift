@@ -26,7 +26,7 @@ class HomeVM: ObservableObject {
     @Published var showingEditingView = false
     
     // NOTE: Replace MockdataWebServie() with WebService() to fetch headlines data from real API
-    init(webService: WebServiceDelegate = MocdataWebService()) {
+    init(webService: WebServiceDelegate = MockdataWebService()) {
         self.webService = webService
         savedShortcuts = [Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopideaaaaaaaaaaa"),
                           Link(url: URL(string: "https://www.apple.com")!, favicon: UIImage(named: "apple")?.pngData(), webPageTitle: "Apple"), Link(url: URL(string: "https://www.bbc.com")!, favicon: UIImage(named: "BBC news")?.pngData(), webPageTitle: "BBC News")]
@@ -156,7 +156,7 @@ class HomeVM: ObservableObject {
     }
     
         // FUNCTION: for fetching data from real api
-    func fetchHeadlines() async {
+    @MainActor func fetchHeadlines() async {
             headLines = [Headline]()
             if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=c0054895dda142d5896f81665100a207&pageSize=10") {
                 headLines = downloadedHeadlines.articles

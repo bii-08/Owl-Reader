@@ -13,7 +13,6 @@ struct HomeView: View {
     @EnvironmentObject var vm: HomeVM
     @Environment(\.modelContext) var modelContext
     @StateObject var viewModel = ProgressVM()
-    @StateObject var browserVM = BrowserVM()
         
     @State private var urlString = ""
     @State private var selectedWord: String? = nil
@@ -79,7 +78,7 @@ struct HomeView: View {
                                         }
                                         .frame(height: 4)
                                         VStack {
-                                            WebView(url: url, viewModel: viewModel, browserVM: browserVM, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                                 print(word)
                                                 selectedWord = word
                                                 showingDefinition = true
@@ -141,7 +140,7 @@ struct HomeView: View {
                                     }
                                     .frame(height: 4)
                                     VStack {
-                                        WebView(url: URL(string: headline.url),viewModel: viewModel, browserVM: browserVM, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                        WebView(url: URL(string: headline.url),viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                             print(word)
                                             selectedWord = word
                                             showingDefinition = true
@@ -244,7 +243,7 @@ struct HomeView: View {
                                         }
                                         .frame(height: 4)
                                         VStack {
-                                            WebView(url: url, viewModel: viewModel, browserVM: browserVM, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                                 print(word)
                                                 selectedWord = word
                                                 showingDefinition = true
@@ -351,7 +350,7 @@ struct HomeView: View {
                                 }
                                 .frame(height: 4)
                                 VStack {
-                                    WebView(url: url, viewModel: viewModel, browserVM: browserVM, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                    WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                         print(word)
                                         selectedWord = word
                                         showingDefinition = true
@@ -392,7 +391,7 @@ extension HomeView {
             HStack(spacing: 25) {
                 // Go back button
                 Button {
-                    browserVM.goBack()
+                    webView?.goBack()
                 } label: {
                     Image(systemName: "arrowshape.turn.up.backward.fill")
                         .tint(.orange.opacity(0.7))
@@ -401,7 +400,7 @@ extension HomeView {
                
                 // Go forward button
                 Button {
-                    browserVM.goForward()
+                    webView?.goForward()
                 } label: {
                     Image(systemName: "arrowshape.turn.up.right.fill")
                         .tint(.orange.opacity(0.7))
@@ -410,7 +409,7 @@ extension HomeView {
                 
                 // Reload button
                 Button {
-                    browserVM.reload()
+                    webView?.reload()
                 } label: {
                     Image(systemName: "arrow.counterclockwise.circle.fill")
                         .tint(.orange.opacity(0.7))
