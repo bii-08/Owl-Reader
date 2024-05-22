@@ -9,17 +9,19 @@ import SwiftUI
 import WebKit
 
 struct WebView: UIViewRepresentable, Equatable {
+    
     static func == (lhs: WebView, rhs: WebView) -> Bool {
-        lhs.url == rhs.url
+        lhs.url == rhs.url && lhs.webView == rhs.webView
     }
 
     let url: URL?
+    @ObservedObject var viewModel: ProgressViewModel
+    
     @Binding var webView: WKWebView?
     var didFinishLoadingThisURL: ((Link?) -> Void)?
-
     var onWordSelected: (String) -> Void
 
-    func makeUIView(context: Context) -> WKWebView {
+   func makeUIView(context: Context) -> WKWebView {
         let config = WKWebViewConfiguration()
         config.defaultWebpagePreferences.allowsContentJavaScript = true
         
@@ -135,16 +137,27 @@ struct WebView: UIViewRepresentable, Equatable {
         
         let webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = context.coordinator
-        self.webView = webView
-        
-        return webView
-    }
+        webView.addObserver(context.coordinator, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+       
+       DispatchQueue.main.async {
+           self.webView = webView
+       }
+       
+       if let myURL = url {
+           let request = URLRequest(url: myURL)
+           webView.load(request)
+       }
+       return webView
+   }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        guard let myURL = url else { return }
-        let request = URLRequest(url: myURL)
-        uiView.load(request)
-
+//        guard let myURL = url else { return }
+//        if uiView.url != url {
+//            if let myURL = url {
+//                let request = URLRequest(url: myURL)
+//                uiView.load(request)
+//            }
+//        }
     }
     
     func makeCoordinator() -> Coordinator {
@@ -167,11 +180,21 @@ struct WebView: UIViewRepresentable, Equatable {
     
     class Coordinator: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         var parent: WebView
-        
+    
         init(_ parent: WebView) {
             self.parent = parent
         }
         
+        override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+                    if keyPath == "estimatedProgress" {
+                        if let webView = object as? WKWebView {
+                            DispatchQueue.main.async {
+                                self.parent.viewModel.progress = webView.estimatedProgress
+//                                print("\(self.parent.viewModel.progress)")
+                            }
+                        }
+                    }
+                }
         
         // Make sure the Coordinator conforms to WKScriptMessageHandler
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -190,9 +213,10 @@ struct WebView: UIViewRepresentable, Equatable {
                 parent.didFinishLoadingThisURL?(Link(url: currentURL, webPageTitle: currentTitle))
                 print("Finished navigating to url \(String(describing: webView.url))")
                 print("\(String(describing: webView.title))")
+                
             }
-            
-        }  
+        }
     }
 }
+
 

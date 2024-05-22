@@ -12,7 +12,8 @@ import SwiftData
 struct HomeView: View {
     @EnvironmentObject var vm: HomeVM
     @Environment(\.modelContext) var modelContext
-    
+    @StateObject var viewModel = ProgressViewModel()
+        
     @State private var urlString = ""
     @State private var selectedWord: String? = nil
     @State private var showingDefinition = false
@@ -67,24 +68,35 @@ struct HomeView: View {
                             .navigationDestination(isPresented: $processingLink) {
                                 if let url = URL(string: urlString) {
                                     VStack {
-                                        WebView(url: url, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
-                                            print(word)
-                                            selectedWord = word
-                                            showingDefinition = true
-                                        }
-                                        .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
-                                            if let word = selectedWord {
-                                                DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                                    .presentationBackground(.thinMaterial)
-                                                    .presentationCornerRadius(15)
-                                                    .presentationDetents([.large, .height(300)])
+                                        ZStack{
+                                            Divider()
+                                            if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
+                                                ProgressView(value: viewModel.progress)
+                                                                .progressViewStyle(LinearProgressViewStyle())
+                                                                .padding()
                                             }
                                         }
-                                    }
-                                    .toolbar{
-                                        navigationBarOnWebPage
-                                    }
+                                        .frame(height: 4)
+                                        VStack {
+                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                                print(word)
+                                                selectedWord = word
+                                                showingDefinition = true
+                                            }
+                                            .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                                                if let word = selectedWord {
+                                                    DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                                        .presentationBackground(.thinMaterial)
+                                                        .presentationCornerRadius(15)
+                                                        .presentationDetents([.large, .height(300)])
+                                                }
+                                            }
+                                        }
+                                        .toolbar{
+                                            navigationBarOnWebPage
+                                        }
                                     .edgesIgnoringSafeArea(.all)
+                                    }
                                 }
                             }
                             Spacer()
@@ -118,24 +130,35 @@ struct HomeView: View {
                             .frame(maxWidth: .infinity)
                             .navigationDestination(item: $selectedHeadline) { headline in
                                 VStack {
-                                    WebView(url: URL(string: headline.url), webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
-                                        print(word)
-                                        selectedWord = word
-                                        showingDefinition = true
-                                    }
-                                    .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
-                                        if let word = selectedWord {
-                                            DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                                .presentationBackground(.thickMaterial)
-                                                .presentationCornerRadius(15)
-                                                .presentationDetents([.large, .height(300)])
+                                    ZStack{
+                                        Divider()
+                                        if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
+                                            ProgressView(value: viewModel.progress)
+                                                            .progressViewStyle(LinearProgressViewStyle())
+                                                            .padding()
                                         }
                                     }
-                                }
-                                .toolbar{
-                                    navigationBarOnWebPage
-                                }
+                                    .frame(height: 4)
+                                    VStack {
+                                        WebView(url: URL(string: headline.url),viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                            print(word)
+                                            selectedWord = word
+                                            showingDefinition = true
+                                        }
+                                        .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                                            if let word = selectedWord {
+                                                DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                                    .presentationBackground(.thickMaterial)
+                                                    .presentationCornerRadius(15)
+                                                    .presentationDetents([.large, .height(300)])
+                                            }
+                                        }
+                                    }
+                                    .toolbar{
+                                        navigationBarOnWebPage
+                                    }
                                 .edgesIgnoringSafeArea(.all)
+                                }
                             }
                         case .failed:
                             ZStack {
@@ -162,7 +185,6 @@ struct HomeView: View {
                             }
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .padding(.horizontal)
-                            
                         }
                     }
                     // Shortcut section
@@ -211,24 +233,35 @@ struct HomeView: View {
                             .navigationDestination(isPresented: $showingShortcutWebPage) {
                                 if let url = URL(string: urlString) {
                                     VStack {
-                                        WebView(url: url, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
-                                            print(word)
-                                            selectedWord = word
-                                            showingDefinition = true
-                                        }
-                                        .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
-                                            if let word = selectedWord {
-                                                DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                                    .presentationBackground(.thickMaterial)
-                                                    .presentationCornerRadius(15)
-                                                    .presentationDetents([.large, .height(300)])
+                                        ZStack{
+                                            Divider()
+                                            if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
+                                                ProgressView(value: viewModel.progress)
+                                                                .progressViewStyle(LinearProgressViewStyle())
+                                                                .padding()
                                             }
                                         }
-                                    }
-                                    .toolbar{
-                                        navigationBarOnWebPage
-                                    }
+                                        .frame(height: 4)
+                                        VStack {
+                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                                print(word)
+                                                selectedWord = word
+                                                showingDefinition = true
+                                            }
+                                            .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                                                if let word = selectedWord {
+                                                    DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                                        .presentationBackground(.thickMaterial)
+                                                        .presentationCornerRadius(15)
+                                                        .presentationDetents([.large, .height(300)])
+                                                }
+                                            }
+                                        }
+                                        .toolbar{
+                                            navigationBarOnWebPage
+                                        }
                                     .edgesIgnoringSafeArea(.all)
+                                    }
                                 }
                             }
                         }
@@ -237,11 +270,19 @@ struct HomeView: View {
                     // Recently Read section
                     VStack {
                         HStack {
-                            Text("Recently Read")
+                            Text("Recently Read" + " " + "(\(vm.recentlyReadURLs.count))")
                                 .font(Font.custom("DIN Condensed", size: 30))
                                 .foregroundColor(.primary.opacity(0.8))
                                 .bold()
-                            Spacer()
+                           Spacer()
+                            Button("Clear all") {
+                                for url in vm.recentlyReadURLs {
+                                    modelContext.delete(url)
+                                }
+                                vm.fetchRecentlyReadURLs(modelContext: modelContext)
+                            }
+                            .buttonStyle(BorderedButtonStyle())
+                            .foregroundColor(.cyan)
                         }
                         .padding(.horizontal)
                         
@@ -297,24 +338,36 @@ struct HomeView: View {
                     .navigationDestination(isPresented: $showingRecentlyReadWebPage) {
                         if let url = URL(string: urlString) {
                             VStack {
-                                WebView(url: url, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
-                                    print(word)
-                                    selectedWord = word
-                                    showingDefinition = true
-                                }
-                                .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
-                                    if let word = selectedWord {
-                                        DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                            .presentationBackground(.thickMaterial)
-                                            .presentationCornerRadius(15)
-                                            .presentationDetents([.large, .height(300)])
+                                ZStack{
+                                    Divider()
+                                    if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
+                                        ProgressView(value: viewModel.progress)
+                                                        .progressViewStyle(LinearProgressViewStyle())
+                                                        .padding()
                                     }
                                 }
-                            }
-                            .toolbar{
-                                navigationBarOnWebPage
-                            }
+                                .frame(height: 4)
+                                VStack {
+                                    
+                                    WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                        print(word)
+                                        selectedWord = word
+                                        showingDefinition = true
+                                    }
+                                    .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                                        if let word = selectedWord {
+                                            DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                                .presentationBackground(.thickMaterial)
+                                                .presentationCornerRadius(15)
+                                                .presentationDetents([.large, .height(300)])
+                                        }
+                                    }
+                                }
+                                .toolbar{
+                                    navigationBarOnWebPage
+                                }
                             .edgesIgnoringSafeArea(.all)
+                            }
                         }
                     }
                     Spacer()
