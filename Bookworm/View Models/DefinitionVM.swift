@@ -30,6 +30,7 @@ class DefinitionVM: ObservableObject {
     // FUNCTION: to fetch word from dictionary api
     func fetchWordFromAPI(modelContext: ModelContext) async {
         if !fetchWordFromDatabase(selectedWord: selectedWord, modelContext: modelContext) {
+            loadingState = LoadingStateManager.loading
             if let targetWord: Word = await dictionaryService.downloadWord(word: selectedWord) {
                 word = targetWord
                 loadingState = LoadingStateManager.success
@@ -49,6 +50,7 @@ class DefinitionVM: ObservableObject {
     
     // FUNCTION: to fetch word from database
     func fetchWordFromDatabase(selectedWord: String, modelContext: ModelContext) -> Bool {
+        loadingState = LoadingStateManager.loading
         do {
             let predicate = #Predicate<Word> { word in
                 word.word == selectedWord

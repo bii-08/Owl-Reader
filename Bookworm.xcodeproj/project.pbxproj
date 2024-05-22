@@ -39,8 +39,9 @@
 		789D8AC82BE84A6B004E0EA5 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC72BE84A6B004E0EA5 /* TabBar.swift */; };
 		78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */; };
 		78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */; };
-		78FE730A2BFBFDBC006A23D4 /* ProgressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73092BFBFDBC006A23D4 /* ProgressViewModel.swift */; };
+		78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */; };
 		78FE730C2BFC01E4006A23D4 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE730B2BFC01E4006A23D4 /* ProgressBarView.swift */; };
+		78FE73122BFD83F8006A23D4 /* BrowserVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73112BFD83F8006A23D4 /* BrowserVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,8 +77,9 @@
 		789D8AC72BE84A6B004E0EA5 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogView.swift; sourceTree = "<group>"; };
 		78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateManager.swift; sourceTree = "<group>"; };
-		78FE73092BFBFDBC006A23D4 /* ProgressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewModel.swift; sourceTree = "<group>"; };
+		78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVM.swift; sourceTree = "<group>"; };
 		78FE730B2BFC01E4006A23D4 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
+		78FE73112BFD83F8006A23D4 /* BrowserVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,7 +193,8 @@
 				781C5B222BE1C3A300FB394B /* PhotoPickerVM.swift */,
 				789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */,
 				789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */,
-				78FE73092BFBFDBC006A23D4 /* ProgressViewModel.swift */,
+				78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */,
+				78FE73112BFD83F8006A23D4 /* BrowserVM.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -293,12 +296,13 @@
 				789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */,
 				789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */,
 				78FE730C2BFC01E4006A23D4 /* ProgressBarView.swift in Sources */,
+				78FE73122BFD83F8006A23D4 /* BrowserVM.swift in Sources */,
 				781C5B1D2BE0768600FB394B /* Extension.swift in Sources */,
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
 				789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */,
 				785664DE2BD88240008A9EF1 /* Link.swift in Sources */,
 				785664C62BD66FBF008A9EF1 /* BookwormApp.swift in Sources */,
-				78FE730A2BFBFDBC006A23D4 /* ProgressViewModel.swift in Sources */,
+				78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */,
 				789D8AC42BE7074F004E0EA5 /* SavedWordsListView.swift in Sources */,
 				785664E32BD8E13B008A9EF1 /* AddLinkView.swift in Sources */,
 				789D8AC02BE70044004E0EA5 /* WordBookView.swift in Sources */,

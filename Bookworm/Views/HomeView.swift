@@ -12,7 +12,8 @@ import SwiftData
 struct HomeView: View {
     @EnvironmentObject var vm: HomeVM
     @Environment(\.modelContext) var modelContext
-    @StateObject var viewModel = ProgressViewModel()
+    @StateObject var viewModel = ProgressVM()
+    @StateObject var browserVM = BrowserVM()
         
     @State private var urlString = ""
     @State private var selectedWord: String? = nil
@@ -78,7 +79,7 @@ struct HomeView: View {
                                         }
                                         .frame(height: 4)
                                         VStack {
-                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                            WebView(url: url, viewModel: viewModel, browserVM: browserVM, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                                 print(word)
                                                 selectedWord = word
                                                 showingDefinition = true
@@ -140,7 +141,7 @@ struct HomeView: View {
                                     }
                                     .frame(height: 4)
                                     VStack {
-                                        WebView(url: URL(string: headline.url),viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                        WebView(url: URL(string: headline.url),viewModel: viewModel, browserVM: browserVM, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                             print(word)
                                             selectedWord = word
                                             showingDefinition = true
@@ -243,7 +244,7 @@ struct HomeView: View {
                                         }
                                         .frame(height: 4)
                                         VStack {
-                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                            WebView(url: url, viewModel: viewModel, browserVM: browserVM, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                                 print(word)
                                                 selectedWord = word
                                                 showingDefinition = true
@@ -275,14 +276,16 @@ struct HomeView: View {
                                 .foregroundColor(.primary.opacity(0.8))
                                 .bold()
                            Spacer()
-                            Button("Clear all") {
-                                for url in vm.recentlyReadURLs {
-                                    modelContext.delete(url)
+                            if vm.recentlyReadURLs.count >= 2 {
+                                Button("Clear all") {
+                                    for url in vm.recentlyReadURLs {
+                                        modelContext.delete(url)
+                                    }
+                                    vm.fetchRecentlyReadURLs(modelContext: modelContext)
                                 }
-                                vm.fetchRecentlyReadURLs(modelContext: modelContext)
+                                .buttonStyle(BorderedButtonStyle())
+                                .foregroundColor(.cyan)
                             }
-                            .buttonStyle(BorderedButtonStyle())
-                            .foregroundColor(.cyan)
                         }
                         .padding(.horizontal)
                         
@@ -348,8 +351,7 @@ struct HomeView: View {
                                 }
                                 .frame(height: 4)
                                 VStack {
-                                    
-                                    WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                    WebView(url: url, viewModel: viewModel, browserVM: browserVM, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
                                         print(word)
                                         selectedWord = word
                                         showingDefinition = true
@@ -390,30 +392,25 @@ extension HomeView {
             HStack(spacing: 25) {
                 // Go back button
                 Button {
-                    if let webView = webView, webView.canGoBack {
-                        webView.goBack()
-                    }
-                    
+                    browserVM.goBack()
                 } label: {
                     Image(systemName: "arrowshape.turn.up.backward.fill")
                         .tint(.orange.opacity(0.7))
                 }
-                
+                .disabled(!(webView?.canGoBack ?? false))
+               
                 // Go forward button
                 Button {
-                    if let webView = webView, webView.canGoForward {
-                        webView.goForward()
-                    }
+                    browserVM.goForward()
                 } label: {
                     Image(systemName: "arrowshape.turn.up.right.fill")
                         .tint(.orange.opacity(0.7))
                 }
+                .disabled(!(webView?.canGoForward ?? false))
                 
                 // Reload button
                 Button {
-                    if let webView = webView {
-                        webView.reload()
-                    }
+                    browserVM.reload()
                 } label: {
                     Image(systemName: "arrow.counterclockwise.circle.fill")
                         .tint(.orange.opacity(0.7))

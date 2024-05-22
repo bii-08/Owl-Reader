@@ -15,7 +15,8 @@ struct WebView: UIViewRepresentable, Equatable {
     }
 
     let url: URL?
-    @ObservedObject var viewModel: ProgressViewModel
+    @ObservedObject var viewModel: ProgressVM
+    @ObservedObject var browserVM: BrowserVM
     
     @Binding var webView: WKWebView?
     var didFinishLoadingThisURL: ((Link?) -> Void)?
@@ -142,7 +143,7 @@ struct WebView: UIViewRepresentable, Equatable {
        DispatchQueue.main.async {
            self.webView = webView
        }
-       
+       browserVM.webView = webView
        if let myURL = url {
            let request = URLRequest(url: myURL)
            webView.load(request)

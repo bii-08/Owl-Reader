@@ -8,10 +8,6 @@
 import Combine
 import WebKit
 
-class ProgressViewModel: ObservableObject {
+class ProgressVM: ObservableObject {
     @Published var progress: Double = 0.0
 }
-
-
-
-
