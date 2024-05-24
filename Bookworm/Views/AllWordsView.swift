@@ -163,6 +163,6 @@ extension AllWordsView {
 #Preview {
     NavigationStack {
         AllWordsView()
-            .modelContainer(for: [Link.self, Headline.self, Word.self, WordBook.self])
+            .modelContainer(for: [Link.self, Shortcut.self, Headline.self, Word.self, WordBook.self])
     }
 }

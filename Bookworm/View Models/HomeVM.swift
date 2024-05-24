@@ -11,9 +11,9 @@ import SwiftData
 
 class HomeVM: ObservableObject {
     private let webService: WebServiceDelegate
-    @Published var savedShortcuts: [Link]
+    @Published var savedShortcuts: [Shortcut] = []
     @Published var recentlyReadURLs: [Link] = []
-    @Published var headLines: [Headline] = [Headline(title: "BBC Gaza reporter: My struggle to keep family safe while covering the war", url: "https://www.bbc.co.uk/news/world-middle-east-68906903", urlToImage: "https://ichef.bbci.co.uk/news/1024/branded_news/977D/production/_133218783_razan_hug.jpg"), Headline(title: "BBC Gaza reporter: My struggle to keep family safe while covering the war", url: "https://www.bbc.co.uk/news/world-middle-east-68906903", urlToImage: "https://ichef.bbci.co.uk/news/1024/branded_news/977D/production/_133218783_razan_hug.jpg"), Headline(title: "BBC Gaza reporter: My struggle to keep family safe while covering the war", url: "https://www.bbc.co.uk/news/world-middle-east-68906903", urlToImage: "https://ichef.bbci.co.uk/news/1024/branded_news/977D/production/_133218783_razan_hug.jpg")]
+    @Published var headLines: [Headline] = []
     
     var isValidURL = false
     var isUrlAlreadyExists = false
@@ -28,8 +28,7 @@ class HomeVM: ObservableObject {
     // NOTE: Replace MockdataWebServie() with WebService() to fetch headlines data from real API
     init(webService: WebServiceDelegate = MockdataWebService()) {
         self.webService = webService
-        savedShortcuts = [Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopideaaaaaaaaaaa"),
-                          Link(url: URL(string: "https://www.apple.com")!, favicon: UIImage(named: "apple")?.pngData(), webPageTitle: "Apple"), Link(url: URL(string: "https://www.bbc.com")!, favicon: UIImage(named: "BBC news")?.pngData(), webPageTitle: "BBC News")]
+        
         Task {
             await fetchHeadlines()
         }
@@ -58,7 +57,7 @@ class HomeVM: ObservableObject {
     }
     
     // FUNCTION: to check if the given URL is already exists on the shortcut list or not
-    func isUrlAlreadyExists(urlString: String, stored: [Link]) -> Bool {
+    func isUrlAlreadyExists(urlString: String, stored: [Shortcut]) -> Bool {
         // Normalize the user-entered URL
         let normalizedUserURL = normalizeURL(urlString)
         guard !stored.contains(where: { $0.url.absoluteString == normalizedUserURL }) else {
@@ -101,7 +100,7 @@ class HomeVM: ObservableObject {
     }
     
     // FUNCTION: to check if the given webpage's title is already exists or not
-    func isTitleAlreadyExists(title: String, stored: [Link]) -> Bool {
+    func isTitleAlreadyExists(title: String, stored: [Shortcut]) -> Bool {
         guard !stored.contains(where: { $0.webPageTitle == title}) else {
             print("This title is already exists.")
             return true
@@ -110,15 +109,8 @@ class HomeVM: ObservableObject {
     }
     
     // FUNCTION: to add link(url) to the shortcut list
-    func addLink(newLink: Link) {
-        savedShortcuts.append(newLink)
-    }
-    
-    // FUNCTION: to update the existing link if needed
-    func updateLink(linkNeedToUpdate: Link, newLink: Link) {
-        if let index = savedShortcuts.firstIndex(where: { $0.id == linkNeedToUpdate.id }) {
-            savedShortcuts[index] = newLink
-        }
+    func addLink(newShortcut: Shortcut, modelContext: ModelContext) {
+        modelContext.insert(newShortcut)
     }
     
     // FUNCTION: to normalize the given URL (Eg: if the given url is sth like https://www.apple.com/ -> normalize it to https://www.apple.com
@@ -132,22 +124,20 @@ class HomeVM: ObservableObject {
         return normalizedURL
     }
     
-
+    
     // FUNCTION: to add URL into recentlyReadURLs array
     func addURL(link: Link?, modelContext: ModelContext) {
         // if the URL already exists in the list
         if recentlyReadURLs.contains(where: { $0.url == link?.url }) {
             if let index = recentlyReadURLs.firstIndex(where: { $0.url == link?.url }) {
-//                recentlyReadURLs.remove(at: index)
                 modelContext.delete(recentlyReadURLs[index])
             }
         }
         // Add the URL to the top of the list
         if let link {
             modelContext.insert(link)
-           // recentlyReadURLs.insert(link, at: 0)
         }
-
+        
         if recentlyReadURLs.count > 10 {
             recentlyReadURLs = Array(recentlyReadURLs.prefix(10))
         }
@@ -155,19 +145,29 @@ class HomeVM: ObservableObject {
         fetchRecentlyReadURLs(modelContext: modelContext)
     }
     
-        // FUNCTION: for fetching data from real api
+    // FUNCTION: for fetching data from real api
     @MainActor func fetchHeadlines() async {
-            headLines = [Headline]()
-            if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=c0054895dda142d5896f81665100a207&pageSize=10") {
-                headLines = downloadedHeadlines.articles
-                
-                loadingState = LoadingStateManager.success
-                print("Successfully fetched headlines data.")
-            } else {
-                loadingState = LoadingStateManager.failed
-                print("Failed to load headlines!")
-            }
+        headLines = [Headline]()
+        if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=c0054895dda142d5896f81665100a207&pageSize=10") {
+            headLines = downloadedHeadlines.articles
+            
+            loadingState = LoadingStateManager.success
+            print("Successfully fetched headlines data.")
+        } else {
+            loadingState = LoadingStateManager.failed
+            print("Failed to load headlines!")
         }
+    }
+    
+    // FUNCTION: to fetch shortcut list from model context.
+    func fetchShortcuts(modelContext: ModelContext) {
+        do {
+            let descriptor = FetchDescriptor<Shortcut>(sortBy: [])
+            savedShortcuts = try modelContext.fetch(descriptor)
+        } catch {
+            print("Fetch shortcut list failed")
+        }
+    }
     
     // FUNCTION: to fetch saved wordBook list from model context.
     func fetchRecentlyReadURLs(modelContext: ModelContext) {
@@ -175,12 +175,8 @@ class HomeVM: ObservableObject {
             let descriptor = FetchDescriptor<Link>(sortBy: [])
             recentlyReadURLs = try modelContext.fetch(descriptor)
         } catch {
-            print("Fetch failed")
+            print("Fetch Recently Read data failed")
         }
     }
-    
-    func removeRows(link: Link, modelContext: ModelContext) {
-        modelContext.delete(link)
-    }
 }
-    
+

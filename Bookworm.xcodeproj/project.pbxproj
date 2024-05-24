@@ -28,6 +28,7 @@
 		785664DE2BD88240008A9EF1 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664DD2BD88240008A9EF1 /* Link.swift */; };
 		785664E12BD88356008A9EF1 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E02BD88356008A9EF1 /* HomeVM.swift */; };
 		785664E32BD8E13B008A9EF1 /* AddLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E22BD8E13B008A9EF1 /* AddLinkView.swift */; };
+		787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787AD29A2C00416E00910ADD /* Shortcut.swift */; };
 		789D8AB72BE3694F004E0EA5 /* Word.json in Resources */ = {isa = PBXBuildFile; fileRef = 789D8AB62BE3694F004E0EA5 /* Word.json */; };
 		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
 		789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */; };
@@ -66,6 +67,7 @@
 		785664DD2BD88240008A9EF1 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		785664E02BD88356008A9EF1 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
 		785664E22BD8E13B008A9EF1 /* AddLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkView.swift; sourceTree = "<group>"; };
+		787AD29A2C00416E00910ADD /* Shortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcut.swift; sourceTree = "<group>"; };
 		789D8AB62BE3694F004E0EA5 /* Word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Word.json; sourceTree = "<group>"; };
 		789D8AB82BE43959004E0EA5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionVM.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				785664DD2BD88240008A9EF1 /* Link.swift */,
+				787AD29A2C00416E00910ADD /* Shortcut.swift */,
 				781C5B202BE0791100FB394B /* Headline.swift */,
 				789D8AB82BE43959004E0EA5 /* Word.swift */,
 				789D8AC12BE70252004E0EA5 /* WordBook.swift */,
@@ -303,6 +306,7 @@
 				785664E32BD8E13B008A9EF1 /* AddLinkView.swift in Sources */,
 				789D8AC02BE70044004E0EA5 /* WordBookView.swift in Sources */,
 				785664D82BD71C0F008A9EF1 /* DefinitionView.swift in Sources */,
+				787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

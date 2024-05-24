@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 // Extension to parse JSON
 extension Bundle {
@@ -34,6 +35,33 @@ extension Bundle {
             fatalError("Failed to decode \(file) from bundle because it appears to be invalid JSON")
         } catch {
             fatalError("Failed to decode \(file) from bundle: \(error.localizedDescription)")
+        }
+    }
+}
+
+
+
+extension View {
+    // Extension of View for onLoad Modifier
+    func onLoad(perform action: (() -> Void)? = nil) -> some View {
+        modifier(OnLoadModifier(perform: action))
+    }
+}
+
+struct OnLoadModifier: ViewModifier {
+    @State private var didLoad = false
+    private let action: (() -> Void)?
+    
+    public init(perform action: (() -> Void)? = nil) {
+        self.action = action
+    }
+    
+    public func body(content: Content) -> some View {
+        content.onAppear {
+            if didLoad == false {
+                didLoad = true
+                action?()
+            }
         }
     }
 }

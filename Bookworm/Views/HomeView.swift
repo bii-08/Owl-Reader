@@ -10,10 +10,13 @@ import WebKit
 import SwiftData
 
 struct HomeView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var vm: HomeVM
     @Environment(\.modelContext) var modelContext
     @StateObject var viewModel = ProgressVM()
-        
+    
+    @State var tabBarVisibility: Visibility = .visible
+    
     @State private var urlString = ""
     @State private var selectedWord: String? = nil
     @State private var showingDefinition = false
@@ -23,86 +26,88 @@ struct HomeView: View {
     @State private var showingAddLinkSheet = false
     @State private var showingRecentlyReadWebPage = false
     @State private var selectedHeadline: Headline?
+    @State private var urlToDisplay = ""
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Color("background").ignoresSafeArea()
+                Color("background")
                 
                 VStack {
-                    VStack {
-                        ZStack {
-                            //Header Image
+                    // MARK: HEADER
+                    ZStack {
+                        // MARK: HEADER IMAGE
                             Image("HeaderImage")
                                 .resizable()
-                                .ignoresSafeArea()
                                 .scaledToFill()
-                                .frame(maxWidth: .infinity, maxHeight: 190)
+                                .frame(height: 160)
                                 .cornerRadius(10)
-                                .ignoresSafeArea()
-                            
-                            VStack(alignment: .leading) {
-                                
-                                // App's name
-                                Text("ReadSmart")
-                                    .font(Font.custom("Marker Felt", size: 40))
-                                    .bold()
-                                    .padding()
-                                
-                                // SearchBar
-                                HStack {
-                                    Image(systemName: "magnifyingglass")
-                                        .padding()
-                                    TextField("", text: $urlString, prompt: Text("Enter your web link here").foregroundColor(.white.opacity(0.7)))
-                                        .foregroundColor(.white)
-                                        .onSubmit {
-                                            processingLink = true
-                                        }
-                                        .submitLabel(.done)
-                                        .textInputAutocapitalization(.never)
-                                        .autocorrectionDisabled()
-                                }
-                                .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.6)))
-                                .padding(12)
-                            }
-                            .navigationDestination(isPresented: $processingLink) {
-                                if let url = URL(string: urlString) {
-                                    VStack {
-                                        ZStack{
-                                            Divider()
-                                            if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
-                                                ProgressView(value: viewModel.progress)
-                                                                .progressViewStyle(LinearProgressViewStyle())
-                                                                .padding()
-                                            }
-                                        }
-                                        .frame(height: 4)
-                                        VStack {
-                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
-                                                print(word)
-                                                selectedWord = word
-                                                showingDefinition = true
-                                            }
-                                            .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
-                                                if let word = selectedWord {
-                                                    DefinitionView(vm: DefinitionVM(selectedWord: word))
-                                                        .presentationBackground(.thinMaterial)
-                                                        .presentationCornerRadius(15)
-                                                        .presentationDetents([.large, .height(300)])
-                                                }
-                                            }
-                                        }
-                                        .toolbar{
-                                            navigationBarOnWebPage
-                                        }
-                                    .edgesIgnoringSafeArea(.all)
-                                    }
-                                }
-                            }
                             Spacer()
+                        
+                        VStack(alignment: .leading) {
+                            // App's name
+                            Text("ReadSmart")
+                                .font(Font.custom("Marker Felt", size: 27))
+                                .bold()
+                                .padding(.horizontal)
+                            
+                            // SearchBar
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+                                    .padding()
+                                TextField("", text: $urlString, prompt: Text("Enter your web link here").foregroundColor(.white.opacity(0.7)))
+                                    .foregroundColor(.white)
+                                    .onSubmit {
+                                        processingLink = true
+                                    }
+                                    .submitLabel(.done)
+                                    .textInputAutocapitalization(.never)
+                                    .autocorrectionDisabled()
+                            }
+                            .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.6)))
+                            .padding(.horizontal)
+                        }
+                        .navigationDestination(isPresented: $processingLink) {
+                            if let url = URL(string: urlString) {
+                                VStack {
+                                    ZStack{
+                                        Divider()
+                                        if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
+                                            ProgressView(value: viewModel.progress)
+                                                .progressViewStyle(LinearProgressViewStyle())
+                                                .padding()
+                                        }
+                                    }
+                                    .frame(height: 4)
+                                    VStack {
+                                        WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
+                                            urlToDisplay = link?.url.absoluteString ?? ""
+                                        }) { word in
+                                            print(word)
+                                            selectedWord = word
+                                            showingDefinition = true
+                                        }
+                                        .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                                            if let word = selectedWord {
+                                                DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                                    .presentationBackground(.thinMaterial)
+                                                    .presentationCornerRadius(15)
+                                                    .presentationDetents([.large, .height(300)])
+                                            }
+                                        }
+                                    }
+                                    .toolbar{
+                                        navigationBarOnWebPage
+                                    }
+                                    //.edgesIgnoringSafeArea(.all)
+                                }
+                                .toolbarBackground(tabBarVisibility, for: .tabBar)
+                                .toolbarBackground(colorScheme == .light ? Color.white.opacity(0.7) : Color.black.opacity(0.7), for: .tabBar)
+                            }
                         }
                     }
-                    // Latest Headlines section
+                    
+                    // MARK: BREAKING NEWS
                     VStack(spacing: 0) {
                         HStack {
                             Text("Breaking News")
@@ -126,21 +131,23 @@ struct HomeView: View {
                                 }
                             }
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                            .aspectRatio(2, contentMode: .fit)
-                            .frame(maxWidth: .infinity)
+//                            .aspectRatio(2, contentMode: .fit)
+                            .frame(height: 200)
                             .navigationDestination(item: $selectedHeadline) { headline in
                                 VStack {
                                     ZStack{
                                         Divider()
                                         if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
                                             ProgressView(value: viewModel.progress)
-                                                            .progressViewStyle(LinearProgressViewStyle())
-                                                            .padding()
+                                                .progressViewStyle(LinearProgressViewStyle())
+                                                .padding()
                                         }
                                     }
                                     .frame(height: 4)
                                     VStack {
-                                        WebView(url: URL(string: headline.url),viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                        WebView(url: URL(string: headline.url),viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
+                                            urlToDisplay = link?.url.absoluteString ?? ""
+                                        }) { word in
                                             print(word)
                                             selectedWord = word
                                             showingDefinition = true
@@ -157,8 +164,10 @@ struct HomeView: View {
                                     .toolbar{
                                         navigationBarOnWebPage
                                     }
-                                .edgesIgnoringSafeArea(.all)
+                                    .edgesIgnoringSafeArea(.all)
                                 }
+                                .toolbarBackground(tabBarVisibility, for: .tabBar)
+                                .toolbarBackground(colorScheme == .light ? Color.white.opacity(0.7) : Color.black.opacity(0.7), for: .tabBar)
                             }
                         case .failed:
                             ZStack {
@@ -187,7 +196,8 @@ struct HomeView: View {
                             .padding(.horizontal)
                         }
                     }
-                    // Shortcut section
+                    
+                    // MARK: SHORTCUT
                     VStack {
                         HStack {
                             Text("Shortcut")
@@ -200,8 +210,8 @@ struct HomeView: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                VStack {
-                                    // Add/Edit Link Button
+                                // Add/Edit Link Button
+                                VStack(spacing: 2) {
                                     Button {
                                         showingAddLinkSheet = true
                                     } label: {
@@ -223,6 +233,7 @@ struct HomeView: View {
                                     AddLinkView(photoPikerVM: PhotoPickerVM())
                                 }
                                 
+                                // Shortcut button
                                 ForEach(vm.savedShortcuts, id: \.self) { shortcut in
                                     ShortcutView(webPageTitle: shortcut.webPageTitle, favicon: UIImage(data: shortcut.favicon ?? Data())) {
                                         urlString = shortcut.url.absoluteString
@@ -237,13 +248,15 @@ struct HomeView: View {
                                             Divider()
                                             if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
                                                 ProgressView(value: viewModel.progress)
-                                                                .progressViewStyle(LinearProgressViewStyle())
-                                                                .padding()
+                                                    .progressViewStyle(LinearProgressViewStyle())
+                                                    .padding()
                                             }
                                         }
                                         .frame(height: 4)
                                         VStack {
-                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                            WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
+                                                urlToDisplay = link?.url.absoluteString ?? ""
+                                            }) { word in
                                                 print(word)
                                                 selectedWord = word
                                                 showingDefinition = true
@@ -260,21 +273,23 @@ struct HomeView: View {
                                         .toolbar{
                                             navigationBarOnWebPage
                                         }
-                                    .edgesIgnoringSafeArea(.all)
+                                        .edgesIgnoringSafeArea(.all)
                                     }
+                                    .toolbarBackground(tabBarVisibility, for: .tabBar)
+                                    .toolbarBackground(colorScheme == .light ? Color.white.opacity(0.7) : Color.black.opacity(0.7), for: .tabBar)
                                 }
                             }
                         }
                     }
                     
-                    // Recently Read section
+                    // MARK: RECENTLY READ
                     VStack {
                         HStack {
                             Text("Recently Read" + " " + "(\(vm.recentlyReadURLs.count))")
                                 .font(Font.custom("DIN Condensed", size: 30))
                                 .foregroundColor(.primary.opacity(0.8))
                                 .bold()
-                           Spacer()
+                            Spacer()
                             if vm.recentlyReadURLs.count >= 2 {
                                 Button("Clear all") {
                                     for url in vm.recentlyReadURLs {
@@ -289,10 +304,10 @@ struct HomeView: View {
                         .padding(.horizontal)
                         
                         if vm.recentlyReadURLs == [] {
-                                Text("No history")
-                                    .font(Font.custom("Avenir Next Condensed", size: 20))
-                                    .foregroundColor(.secondary)
-                                    .padding(40)
+                            Text("No history")
+                                .font(Font.custom("Avenir Next Condensed", size: 20))
+                                .foregroundColor(.secondary)
+                                .padding(40)
                         } else {
                             List {
                                 ForEach(vm.recentlyReadURLs.reversed(), id: \.self) { link in
@@ -318,7 +333,7 @@ struct HomeView: View {
                                         .background(RoundedRectangle(cornerRadius: 5).fill(Color.gray.opacity(0.1)))
                                     }
                                     .listRowBackground(Color("background"))
-//                                    .listRowSeparator(.hidden)
+                                    //                                    .listRowSeparator(.hidden)
                                     .swipeActions(allowsFullSwipe: true) {
                                         Button {
                                             if let index = vm.recentlyReadURLs.firstIndex(where: { $0.url == link.url }) {
@@ -328,7 +343,7 @@ struct HomeView: View {
                                             }
                                             vm.fetchRecentlyReadURLs(modelContext: modelContext)
                                         } label: {
-                                           Label("", image: "trash")
+                                            Label("", image: "trash")
                                         }
                                         .tint(.clear)
                                     }
@@ -344,13 +359,15 @@ struct HomeView: View {
                                     Divider()
                                     if viewModel.progress >= 0.0 && viewModel.progress < 1.0 {
                                         ProgressView(value: viewModel.progress)
-                                                        .progressViewStyle(LinearProgressViewStyle())
-                                                        .padding()
+                                            .progressViewStyle(LinearProgressViewStyle())
+                                            .padding()
                                     }
                                 }
                                 .frame(height: 4)
                                 VStack {
-                                    WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)}) { word in
+                                    WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
+                                        urlToDisplay = link?.url.absoluteString ?? ""
+                                    }) { word in
                                         print(word)
                                         selectedWord = word
                                         showingDefinition = true
@@ -367,20 +384,29 @@ struct HomeView: View {
                                 .toolbar{
                                     navigationBarOnWebPage
                                 }
-                            .edgesIgnoringSafeArea(.all)
+                                .edgesIgnoringSafeArea(.all)
                             }
+                            .toolbar(tabBarVisibility, for: .tabBar)
+                            .toolbarBackground(tabBarVisibility, for: .tabBar)
+                            .toolbarBackground(colorScheme == .light ? Color.white.opacity(0.7) : Color.black.opacity(0.7), for: .tabBar)
                         }
                     }
-                    Spacer()
+                    
                     Spacer()
                 }
-                .onAppear {
-                    urlString = ""
-                    vm.fetchRecentlyReadURLs(modelContext: modelContext)
-                }
-                .ignoresSafeArea()
+            }
+            .edgesIgnoringSafeArea(.top)
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                urlString = ""
+                vm.fetchRecentlyReadURLs(modelContext: modelContext)
+                vm.fetchShortcuts(modelContext: modelContext)
+                tabBarVisibility = .visible
+                
             }
         }
+        .toolbarBackground(tabBarVisibility, for: .tabBar)
+        .toolbarBackground(colorScheme == .light ? Color.white.opacity(0.5) : Color.black.opacity(0.5), for: .tabBar)
     }
 }
 
@@ -388,7 +414,19 @@ extension HomeView {
     private var navigationBarOnWebPage: some View {
         
         ZStack {
-            HStack(spacing: 25) {
+            HStack(spacing: 10) {
+                // Reload button
+                Button {
+                    webView?.reload()
+                } label: {
+                    Image(systemName: "arrow.counterclockwise.circle.fill")
+                        .tint(.orange.opacity(0.7))
+                }
+                
+                TextField("Loading url....", text: $urlToDisplay, onCommit: {
+                    
+                })
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 // Go back button
                 Button {
                     webView?.goBack()
@@ -397,7 +435,7 @@ extension HomeView {
                         .tint(.orange.opacity(0.7))
                 }
                 .disabled(!(webView?.canGoBack ?? false))
-               
+                
                 // Go forward button
                 Button {
                     webView?.goForward()
@@ -407,12 +445,14 @@ extension HomeView {
                 }
                 .disabled(!(webView?.canGoForward ?? false))
                 
-                // Reload button
                 Button {
-                    webView?.reload()
+                    if tabBarVisibility == .visible {
+                        tabBarVisibility = .hidden
+                    } else {
+                        tabBarVisibility = .visible
+                    }
                 } label: {
-                    Image(systemName: "arrow.counterclockwise.circle.fill")
-                        .tint(.orange.opacity(0.7))
+                    Image(systemName: (tabBarVisibility == .visible) ? "eyeglasses" : "eyeglasses.slash")
                 }
             }
         }
@@ -424,5 +464,5 @@ extension HomeView {
     HomeView()
         .environmentObject(HomeVM())
         .environmentObject(WordBookVM())
-        .modelContainer(for: [Link.self, Headline.self, Word.self, WordBook.self])
+        .modelContainer(for: [Link.self, Shortcut.self, Headline.self, Word.self, WordBook.self])
 }

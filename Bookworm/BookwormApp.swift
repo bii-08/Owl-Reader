@@ -10,11 +10,16 @@ import SwiftData
 
 @main
 struct BookwormApp: App {
+    @AppStorage("isFirstTimeLaunch") private var isFirstTimeLaunch: Bool = true
     // defining the modelContainer
     let modelContainer: ModelContainer
       init() {
         do {
-            modelContainer = try ModelContainer(for: Link.self, Headline.self, Word.self, WordBook.self)
+            modelContainer = try ModelContainer(for: Link.self, Shortcut.self, Headline.self, Word.self, WordBook.self)
+            if isFirstTimeLaunch {
+                Shortcut.defaults.forEach { modelContainer.mainContext.insert($0) }
+                isFirstTimeLaunch = false
+            }
         } catch {
           fatalError("Could not initialize ModelContainer")
         }

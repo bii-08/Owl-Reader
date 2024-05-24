@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomDialog<DialogContent: View>: ViewModifier {
-  @Environment(\.colorScheme) var colorScheme
+  
   @Binding var isShowing: Bool // set this to show/hide the dialog
   let dialogContent: DialogContent
 

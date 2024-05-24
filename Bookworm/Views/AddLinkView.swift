@@ -6,16 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AddLinkView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
     @EnvironmentObject var vm: HomeVM
     @State private var urlString = ""
     @State private var webPageTitle = ""
     
     var photoPikerVM: PhotoPickerVM
     
-    @State var selectedPage: Link?
+    @State var selectedPage: Shortcut?
     var body: some View {
         ZStack {
             Color("background").ignoresSafeArea()
@@ -44,7 +46,8 @@ struct AddLinkView: View {
                                 // Delete Button
                                 Button(role: .destructive) {
                                     if let index = vm.savedShortcuts.firstIndex(where: { $0.url == page.url }) {
-                                        vm.savedShortcuts.remove(at: index)
+//                                        vm.savedShortcuts.remove(at: index)
+                                        modelContext.delete(vm.savedShortcuts[index])
                                     }
                                 } label: {
                                     Label("Delete", systemImage: "trash")
@@ -61,6 +64,9 @@ struct AddLinkView: View {
                                 }
                                 .tint(.orange)
                             }
+                    }
+                    .onAppear {
+                        vm.fetchShortcuts(modelContext: modelContext)
                     }
                     .navigationDestination(item: $selectedPage, destination: { page in
                         EditingView(link: page, photoPiker: PhotoPickerVM())
@@ -118,7 +124,7 @@ struct AddLinkView: View {
                     Button {
                         if vm.isValidURL && !vm.isUrlAlreadyExists && vm.isTitleValid && !vm.isTitleAlreadyExists {
                             print("valid")
-                            vm.addLink(newLink: Link(url: URL(string: urlString)!, favicon: photoPikerVM.selectedImage?.pngData(), webPageTitle: webPageTitle))
+                            vm.addLink(newShortcut: Shortcut(url: URL(string: urlString)!, favicon: photoPikerVM.selectedImage?.pngData(), webPageTitle: webPageTitle), modelContext: modelContext)
                             
                             urlString = ""
                             webPageTitle = ""
@@ -150,7 +156,7 @@ struct AddLinkView: View {
                             .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .clearButton.opacity(0.5)))
                     }
                     .disabled(vm.showingAlert)
-                }
+                }  
             }
             
             if vm.showingAlert {
@@ -170,4 +176,5 @@ struct AddLinkView: View {
     
     AddLinkView(photoPikerVM: PhotoPickerVM())
         .environmentObject(HomeVM())
+        .modelContainer(for: [Shortcut.self])
 }

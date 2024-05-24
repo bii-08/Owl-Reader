@@ -33,18 +33,19 @@ struct DefinitionView: View {
                 ProgressView("Loading...")
             case .success:
                 VStack(alignment: .leading) {
-                    // Selected word
+                    
+                    // MARK: Selected Word and Button
                     HStack {
+                        // MARK: Selected word
                         Text(vm.selectedWord)
                             .font(.custom("Helvetica", size: 25))
                             .textCase(.lowercase)
                             .bold()
-                            .padding(.horizontal)
-                            .padding(.vertical, 5)
+                            .padding(.vertical, 15)
                         
                         Spacer()
                         
-                        // Star button
+                        // MARK: Star button
                         Button {
                             if let word = vm.word {
                                 wordBookVM.didTapOnStar(word: word, wordBookName: wordBookVM.selectedWordbook, modelContext: modelContext)
@@ -56,18 +57,18 @@ struct DefinitionView: View {
                                     .foregroundColor(wordBookVM.isThisWordAlreadySaved(selectedWord: word, wordBookName: wordBookVM.selectedWordbook) ? .orange : .gray)
                             }
                         }
-                        .padding(.horizontal, 20)
                     }
+                    .padding(.horizontal)
                     
-                    // Pronunciation
+                    // MARK: Pronunciation
                     VStack(alignment: .leading) {
+                        // Phonetic
                         HStack {
                             if let word = vm.word {
                                 if let pronunciation = word.pronunciation {
                                     Text("[\(pronunciation.all)]")
                                         .font(.custom("Helvetica", size: 19))
                                         .foregroundColor(.secondary)
-                                        .padding(.horizontal)
                                 }
                             }
                             Spacer()
@@ -89,7 +90,6 @@ struct DefinitionView: View {
                                         .foregroundColor(.cyan)
                                 }
                             }
-                            .padding(.horizontal)
                             
                             // American accent
                             HStack(spacing: 2) {
@@ -108,17 +108,17 @@ struct DefinitionView: View {
                                         .foregroundColor(.cyan)
                                 }
                             }
-                            .padding(.horizontal)
                         }
                     }
+                    .padding(.horizontal)
                     
+                    // MARK: All Definitions
                     ScrollView {
                         if let word = vm.word {
                             if let results = word.results {
                                 ForEach(results, id: \.self) { result in
-                                    HStack {
-                                        VStack(alignment: .leading) {
-                                            
+//                                    HStack {
+                                        VStack {
                                             // Word function
                                             HStack {
                                                 if let partOfSpeech = result.partOfSpeech {
@@ -159,9 +159,12 @@ struct DefinitionView: View {
                                             
                                             // Synonyms
                                             if result.synonyms != nil {
-                                                Text("Synonyms:")
-                                                    .font(.custom("Helvetica", size: 19))
+                                                HStack {
+                                                    Text("Synonyms:")
+                                                        .font(.custom("Helvetica", size: 19))
                                                     .underline()
+                                                    Spacer()
+                                                }
                                             }
                                             
                                             if let synonyms = result.synonyms {
@@ -170,43 +173,42 @@ struct DefinitionView: View {
                                                         Text(syn)
                                                             .font(.custom("Helvetica", size: 18))
                                                             .foregroundColor(.secondary)
+                                                        Spacer()
                                                     }
                                                 }
                                             }
                                             
                                             Spacer()
                                         }
-                                        .frame(width: 350)
-                                        .padding(8)
+                                        .padding(.horizontal, 15)
+//                                        .frame(width: 350)
                                         .background(.regularMaterial)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .padding(.horizontal)
                                         .padding(.vertical, 5)
-                                        
-                                    }
-                                    .padding(.horizontal)
                                 }
                             }
                         }
                     }
+                
                     
-                    VStack {
-                        HStack {
-                            Text("Choose your wordbook")
-                                .font(.custom("Helvetica", size: 19))
-                                .bold()
-                            Picker("", selection: $wordBookVM.selectedWordbook) {
-                                ForEach(wordBookVM.wordBookTitle, id: \.self) { title in
-                                    Text(title)
-                                }
+                    // MARK: Picker
+                    HStack {
+                        Text("Choose your wordbook:")
+                            .font(.custom("Helvetica", size: 19))
+                            .bold()
+                        Picker("", selection: $wordBookVM.selectedWordbook) {
+                            ForEach(wordBookVM.wordBookTitle, id: \.self) { title in
+                                Text(title)
                             }
-                            .accentColor(.picker)
-                            .background(.white.opacity(0.2))
-                            .cornerRadius(10)
                         }
-                        .padding(.horizontal)
+                        .accentColor(.picker)
+                        .background(.white.opacity(0.2))
+                        .cornerRadius(10)
                     }
+                    .padding(.horizontal)
+                    
                 }
-                .padding(.vertical, 5)
                 
             case .failed:
                 ContentUnavailableView {

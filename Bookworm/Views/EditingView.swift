@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EditingView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
     @EnvironmentObject var vm: HomeVM
-    var link: Link
+    @Bindable var link: Shortcut
+    
     var photoPikerVM: PhotoPickerVM
     
     @State private var editingTitle = ""
@@ -21,7 +24,7 @@ struct EditingView: View {
     @State private var showingAlert = false
     @State private var defaultURL: URL
     
-    init(link: Link, photoPiker: PhotoPickerVM) {
+    init(link: Shortcut, photoPiker: PhotoPickerVM) {
         self.link = link
         self.photoPikerVM = photoPiker
         self.defaultURL = link.url
@@ -87,7 +90,9 @@ struct EditingView: View {
                     vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: editingURL, stored: filtered)
                     
                     if vm.isTitleValid && !vm.isTitleAlreadyExists && vm.isValidURL && !vm.isUrlAlreadyExists {
-                        vm.updateLink(linkNeedToUpdate: link, newLink: Link(url: URL(string: editingURL) ?? defaultURL, favicon: editingImage?.pngData(), webPageTitle: editingTitle))
+                        link.url = URL(string: editingURL) ?? defaultURL
+                        link.favicon = editingImage?.pngData()
+                        link.webPageTitle = editingTitle
                         dismiss()
                     } else {
                         showingAlert = true
@@ -120,7 +125,7 @@ struct EditingView: View {
                 
             }
         }
-        .onAppear {
+        .onLoad {
             editingTitle = link.webPageTitle
             editingURL = link.url.absoluteString
             editingImage = UIImage(data: link.favicon ?? Data())
@@ -129,6 +134,6 @@ struct EditingView: View {
 }
 
 #Preview {
-    EditingView(link: Link(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopedia"), photoPiker: PhotoPickerVM())
+    EditingView(link: Shortcut(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopedia"), photoPiker: PhotoPickerVM())
         .environmentObject(HomeVM())
 }

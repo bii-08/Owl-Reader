@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HeadlineView: View {
-    
+
     var headline: Headline
     var action: () -> ()
     
@@ -21,15 +21,16 @@ struct HeadlineView: View {
                 AsyncImage(url: URL(string: headline.urlToImage)) { image in
                     image.image?.resizable()
                         .scaledToFill()
-                        .frame(maxWidth: 380, maxHeight: 200)
+                        .frame(maxWidth: UIScreen.main.bounds.height <= 812 && UIScreen.main.bounds.width <= 375 ? 350 : 380, maxHeight: UIScreen.main.bounds.height <= 812 && UIScreen.main.bounds.width <= 375 ? 180 : 200)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .shadow(radius: 5)
                 }
                 Text(headline.title)
-                    .font(.title3)
-                    .frame(width: 350)
+                    .font(.headline)
+                    .frame(width: UIScreen.main.bounds.height <= 812 && UIScreen.main.bounds.width <= 375 ? 320 : 350)
                     .foregroundColor(.white)
                     .background(.black.opacity(0.4))
+                    .cornerRadius(5)
                     .padding()
             }
         }
