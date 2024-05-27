@@ -15,14 +15,15 @@ final class WordBook: Identifiable, Hashable {
     }
     
     var id = UUID()
-    
+    var isDefault: Bool
     @Attribute(.unique)
     var name: String
     
     var savedWords : [Word]
     
-    init(name: String, savedWords: [Word] = []) {
+    init(name: String, isDefault: Bool = false, savedWords: [Word] = []) {
         self.name = name
+        self.isDefault = isDefault
         self.savedWords = savedWords
     }
 }

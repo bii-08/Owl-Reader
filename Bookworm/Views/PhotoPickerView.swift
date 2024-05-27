@@ -12,13 +12,12 @@ struct PhotoPickerView: View {
     @StateObject var vm: PhotoPickerVM
     var action: () -> ()
     var body: some View {
-        ZStack {
-            Color("background").ignoresSafeArea()
             VStack(spacing: 5) {
                 PhotosPicker(selection: $vm.imageSelection, matching: .images) {
                     Text("Upload your webpage's icon")
                         .foregroundColor(.white)
-                        .frame(width: 360, height: 35)
+                        .padding()
+                        .frame(height: 35)
                         .background(Color.brown)
                         .cornerRadius(5)
                 }
@@ -33,13 +32,12 @@ struct PhotoPickerView: View {
                     Image(systemName: "photo")
                         .scaleEffect(5)
                         .foregroundColor(.gray)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 50, height: 90)
                 }
             }
             .onDisappear {
                 action()
             }
-        }
     }
 }
 

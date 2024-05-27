@@ -58,7 +58,7 @@ struct SavedWordsListView: View {
                 DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: DictionaryService()), initialWordBook: wordBook.name)
             }
         }
-        .navigationTitle("\(wordBook.name)" + " " + "(\(wordBook.savedWords.count))")
+        .navigationTitle("\(wordBook.name.truncatedText())" + " " + "(\(wordBook.savedWords.count))")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

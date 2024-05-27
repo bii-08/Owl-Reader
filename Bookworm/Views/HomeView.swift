@@ -131,7 +131,6 @@ struct HomeView: View {
                                 }
                             }
                             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-//                            .aspectRatio(2, contentMode: .fit)
                             .frame(height: 200)
                             .navigationDestination(item: $selectedHeadline) { headline in
                                 VStack {
@@ -230,7 +229,7 @@ struct HomeView: View {
                                         .padding(5)
                                 }
                                 .navigationDestination(isPresented: $showingAddLinkSheet) {
-                                    AddLinkView(photoPikerVM: PhotoPickerVM())
+                                    AddOrEditLinkView(photoPickerVM: PhotoPickerVM())
                                 }
                                 
                                 // Shortcut button
@@ -319,17 +318,18 @@ struct HomeView: View {
                                             HStack {
                                                 Text(link.webPageTitle)
                                                     .foregroundColor(.secondary)
-                                                    .font(.title3)
+                                                    .font(.headline)
                                                     .lineLimit(1)
                                                 Spacer()
                                             }
                                             HStack {
                                                 Text(link.url.absoluteString)
                                                     .lineLimit(1)
+                                                    .font(.caption)
                                                 Spacer()
                                             }
                                         }
-                                        .padding(10)
+                                        .padding(7)
                                         .background(RoundedRectangle(cornerRadius: 5).fill(Color.gray.opacity(0.1)))
                                     }
                                     .listRowBackground(Color("background"))
@@ -405,6 +405,7 @@ struct HomeView: View {
                 
             }
         }
+        .toolbar(tabBarVisibility, for: .tabBar)
         .toolbarBackground(tabBarVisibility, for: .tabBar)
         .toolbarBackground(colorScheme == .light ? Color.white.opacity(0.5) : Color.black.opacity(0.5), for: .tabBar)
     }

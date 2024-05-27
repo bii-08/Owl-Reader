@@ -8,21 +8,20 @@
 import SwiftUI
 import SwiftData
 
-struct AddLinkView: View {
+struct AddOrEditLinkView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
     @EnvironmentObject var vm: HomeVM
     @State private var urlString = ""
     @State private var webPageTitle = ""
     
-    var photoPikerVM: PhotoPickerVM
-    
+    var photoPickerVM: PhotoPickerVM
     @State var selectedPage: Shortcut?
+    
     var body: some View {
         ZStack {
             Color("background").ignoresSafeArea()
             VStack {
-                
                 //Shortcut List
                 HStack {
                     Text("Shortcut list")
@@ -30,24 +29,40 @@ struct AddLinkView: View {
                     Spacer()
                 }
                 .padding(.horizontal)
+                if !vm.savedShortcuts.isEmpty {
+                    HStack {
+                        Text("※ swipe to edit or delete wordbook's name")
+                            .font(Font.custom("Apple SD Gothic Neo", size: 15))
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    .padding(.horizontal)
+                }
                 
                 if vm.savedShortcuts.isEmpty {
-                        Text("No Item")
-                            .font(Font.custom("Avenir Next Condensed", size: 20))
-                            .foregroundColor(.secondary)
-                            .padding(40)
+                    Text("No Item")
+                        .font(Font.custom("Avenir Next Condensed", size: 20))
+                        .padding(40)
+                        .foregroundColor(.secondary)
                 } else {
                     // Web pages List
                     List(vm.savedShortcuts, id: \.self) { page in
                         Text(page.webPageTitle)
-                            .foregroundColor(.secondary)
-                            .listRowBackground(Color("background"))
+                            .foregroundColor(.primary)
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(Color.clear)
+                                .padding(.vertical, 2)
+                                .padding(.horizontal, 10)
+                            )
                             .swipeActions(allowsFullSwipe: false) {
                                 // Delete Button
                                 Button(role: .destructive) {
                                     if let index = vm.savedShortcuts.firstIndex(where: { $0.url == page.url }) {
-//                                        vm.savedShortcuts.remove(at: index)
+                                        //                                        vm.savedShortcuts.remove(at: index)
                                         modelContext.delete(vm.savedShortcuts[index])
+                                        vm.fetchShortcuts(modelContext: modelContext)
                                     }
                                 } label: {
                                     Label("Delete", systemImage: "trash")
@@ -71,64 +86,64 @@ struct AddLinkView: View {
                     .navigationDestination(item: $selectedPage, destination: { page in
                         EditingView(link: page, photoPiker: PhotoPickerVM())
                     })
+                    .scrollIndicators(.visible)
                     .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.gray.opacity(0.1))
+                            .padding(.horizontal, 10)
+                    )
                 }
-
-                // Add new shortcut Section
-                VStack {
+                
+                HStack {
+                    Text("Add new shortcut")
+                        .font(Font.custom("DIN Condensed", size: 25))
                     Spacer()
-                    HStack {
-                        Text("Add new shortcut")
-                            .font(Font.custom("DIN Condensed", size: 25))
-                        Spacer()
+                }
+                .padding(.horizontal)
+                
+                // Page title
+                TextField("", text: $webPageTitle, prompt: Text("Page title").foregroundColor(.white.opacity(0.7))).padding(6)
+                    .onChange(of: webPageTitle) { oldValue, newValue in
+                        vm.isTitleValid = HomeVM.isTitleValid(title: newValue)
+                        vm.isTitleAlreadyExists = vm.isTitleAlreadyExists(title: newValue, stored: vm.savedShortcuts)
                     }
+                    .foregroundColor(.white)
+                    .submitLabel(.done)
+                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                     .padding(.horizontal)
-                }
-                // Textfield
-                VStack {
-                    Spacer()
-                    // Page title
-                    TextField("", text: $webPageTitle, prompt: Text("Page title").foregroundColor(.white.opacity(0.7))).padding(6)
-                        .onChange(of: webPageTitle) { oldValue, newValue in
-                            vm.isTitleValid = HomeVM.isTitleValid(title: newValue)
-                            vm.isTitleAlreadyExists = vm.isTitleAlreadyExists(title: newValue, stored: vm.savedShortcuts)
-                        }
-                        .foregroundColor(.white)
-                        .submitLabel(.done)
-                        .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
-                        .padding(.horizontal)
-                        .disabled(vm.showingAlert)
-                    
-                    // Weblink
-                    TextField("", text: $urlString, prompt: Text("Your web link").foregroundColor(.white.opacity(0.7))).padding(6)
-                        .onChange(of: urlString) { oldValue, newValue in
-                            vm.isValidURL = vm.validateURL(urlString: newValue)
-                            vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: newValue, stored: vm.savedShortcuts)
-                        }
-                        .textInputAutocapitalization(.never)
-                        .foregroundColor(.white)
-                        .submitLabel(.done)
-                        .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
-                        .padding(.horizontal)
-                        .disabled(vm.showingAlert)
-                    
-                    // Photo Picker
-                    PhotoPickerView(vm: photoPikerVM) {
-                        
-                    }
                     .disabled(vm.showingAlert)
+                
+                // Weblink
+                TextField("", text: $urlString, prompt: Text("Your web link").foregroundColor(.white.opacity(0.7))).padding(6)
+                    .onChange(of: urlString) { oldValue, newValue in
+                        vm.isValidURL = vm.validateURL(urlString: newValue)
+                        vm.isUrlAlreadyExists = vm.isUrlAlreadyExists(urlString: newValue, stored: vm.savedShortcuts)
+                    }
+                    .textInputAutocapitalization(.never)
+                    .foregroundColor(.white)
+                    .submitLabel(.done)
+                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
+                    .padding(.horizontal)
+                    .disabled(vm.showingAlert)
+                
+                // Photo Picker
+                PhotoPickerView(vm: photoPickerVM) {
                 }
+                .disabled(vm.showingAlert)
                 
                 HStack {
                     // Add button
                     Button {
                         if vm.isValidURL && !vm.isUrlAlreadyExists && vm.isTitleValid && !vm.isTitleAlreadyExists {
                             print("valid")
-                            vm.addLink(newShortcut: Shortcut(url: URL(string: urlString)!, favicon: photoPikerVM.selectedImage?.pngData(), webPageTitle: webPageTitle), modelContext: modelContext)
+                            vm.addLink(newShortcut: Shortcut(url: URL(string: urlString)!, favicon: photoPickerVM.selectedImage?.pngData(), webPageTitle: webPageTitle), modelContext: modelContext)
+                            vm.fetchShortcuts(modelContext: modelContext)
                             
                             urlString = ""
                             webPageTitle = ""
-                            photoPikerVM.clear()
+                            photoPickerVM.clear()
                             
                         } else {
                             print("invalid")
@@ -143,12 +158,13 @@ struct AddLinkView: View {
                             .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .orange.opacity(0.8)))
                     }
                     .disabled(vm.showingAlert)
+                    .padding(.vertical, 10)
                     
                     // Clear button
                     Button {
                         urlString = ""
                         webPageTitle = ""
-                        photoPikerVM.clear()
+                        photoPickerVM.clear()
                     } label: {
                         Text("Clear")
                             .foregroundColor(.white)
@@ -156,7 +172,9 @@ struct AddLinkView: View {
                             .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .clearButton.opacity(0.5)))
                     }
                     .disabled(vm.showingAlert)
-                }  
+                    .padding(.vertical, 10)
+                }
+                Spacer()
             }
             
             if vm.showingAlert {
@@ -174,7 +192,7 @@ struct AddLinkView: View {
 
 #Preview {
     
-    AddLinkView(photoPikerVM: PhotoPickerVM())
+    AddOrEditLinkView(photoPickerVM: PhotoPickerVM())
         .environmentObject(HomeVM())
         .modelContainer(for: [Shortcut.self])
 }

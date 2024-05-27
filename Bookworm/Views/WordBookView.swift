@@ -21,7 +21,6 @@ struct WordBookView: View {
             ZStack {
                 Color("background").ignoresSafeArea()
                 VStack {
-                    
                     List {
                         ForEach(vm.listWordBook, id: \.self) { wordBook in
                             NavigationLink(value: wordBook) {
@@ -36,22 +35,24 @@ struct WordBookView: View {
                             }
                             .listRowBackground(Color("background"))
                             .swipeActions(allowsFullSwipe: false) {
-                                // Delete Button
-                                Button(role: .destructive) {
-                                    vm.deleteWordBook(wordBook: wordBook, modelContext: modelContext)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                                if !wordBook.isDefault {
+                                    // Delete Button
+                                    Button(role: .destructive) {
+                                        vm.deleteWordBook(wordBook: wordBook, modelContext: modelContext)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.red)
+                                    
+                                    // Edit Button
+                                    Button {
+                                        vm.showingSheet = true
+                                        vm.editingWordBook = wordBook
+                                    } label: {
+                                        Label("Edit", systemImage: "pencil")
+                                    }
+                                    .tint(.orange)
                                 }
-                                .tint(.red)
-                                
-                                // Edit Button
-                                Button {
-                                    vm.showingSheet = true
-                                    vm.editingWordBook = wordBook
-                                } label: {
-                                    Label("Edit", systemImage: "pencil")
-                                }
-                                .tint(.orange)
                             }
                         }
                     }

@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-
+import NaturalLanguage
 // Extension to parse JSON
 extension Bundle {
     func decode<T: Decodable>(_ type: T.Type, from file: String, dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate, keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) -> T {
@@ -47,6 +47,33 @@ extension View {
         modifier(OnLoadModifier(perform: action))
     }
 }
+
+extension String {
+    func lemmatize() -> String {
+        let tagger = NLTagger(tagSchemes: [.lemma])
+        tagger.string = self
+       
+//        let range = NSRange(location: 0, length: word.utf16.count)
+//        let options: NSLinguisticTagger.Options = [.omitPunctuation, .omitWhitespace]
+        var result = ""
+        tagger.enumerateTags(in: self.startIndex..<self.endIndex, unit: .word, scheme: .lemma) { tag, range in
+           let stemForm = tag?.rawValue ?? String(self[range])
+            result = stemForm
+            return true
+        }
+        return result
+    }
+    
+    func truncatedText() -> String {
+        if self.count > 12 {
+            return String(self.prefix(12)) + "..."
+        } else {
+            return self
+        }
+    }
+}
+
+
 
 struct OnLoadModifier: ViewModifier {
     @State private var didLoad = false

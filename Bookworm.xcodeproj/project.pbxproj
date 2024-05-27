@@ -27,7 +27,7 @@
 		785664DA2BD871C1008A9EF1 /* ShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664D92BD871C1008A9EF1 /* ShortcutView.swift */; };
 		785664DE2BD88240008A9EF1 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664DD2BD88240008A9EF1 /* Link.swift */; };
 		785664E12BD88356008A9EF1 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E02BD88356008A9EF1 /* HomeVM.swift */; };
-		785664E32BD8E13B008A9EF1 /* AddLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E22BD8E13B008A9EF1 /* AddLinkView.swift */; };
+		785664E32BD8E13B008A9EF1 /* AddOrEditLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E22BD8E13B008A9EF1 /* AddOrEditLinkView.swift */; };
 		787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787AD29A2C00416E00910ADD /* Shortcut.swift */; };
 		789D8AB72BE3694F004E0EA5 /* Word.json in Resources */ = {isa = PBXBuildFile; fileRef = 789D8AB62BE3694F004E0EA5 /* Word.json */; };
 		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
@@ -66,7 +66,7 @@
 		785664D92BD871C1008A9EF1 /* ShortcutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutView.swift; sourceTree = "<group>"; };
 		785664DD2BD88240008A9EF1 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		785664E02BD88356008A9EF1 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
-		785664E22BD8E13B008A9EF1 /* AddLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLinkView.swift; sourceTree = "<group>"; };
+		785664E22BD8E13B008A9EF1 /* AddOrEditLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditLinkView.swift; sourceTree = "<group>"; };
 		787AD29A2C00416E00910ADD /* Shortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcut.swift; sourceTree = "<group>"; };
 		789D8AB62BE3694F004E0EA5 /* Word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Word.json; sourceTree = "<group>"; };
 		789D8AB82BE43959004E0EA5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 				789D8ABF2BE70044004E0EA5 /* WordBookView.swift */,
 				7825C1102BEDF9130049E53D /* AllWordsView.swift */,
 				78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */,
-				785664E22BD8E13B008A9EF1 /* AddLinkView.swift */,
+				785664E22BD8E13B008A9EF1 /* AddOrEditLinkView.swift */,
 				781C5B102BDF6A3000FB394B /* EditingView.swift */,
 				785664D92BD871C1008A9EF1 /* ShortcutView.swift */,
 				785664D72BD71C0F008A9EF1 /* DefinitionView.swift */,
@@ -303,7 +303,7 @@
 				785664C62BD66FBF008A9EF1 /* BookwormApp.swift in Sources */,
 				78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */,
 				789D8AC42BE7074F004E0EA5 /* SavedWordsListView.swift in Sources */,
-				785664E32BD8E13B008A9EF1 /* AddLinkView.swift in Sources */,
+				785664E32BD8E13B008A9EF1 /* AddOrEditLinkView.swift in Sources */,
 				789D8AC02BE70044004E0EA5 /* WordBookView.swift in Sources */,
 				785664D82BD71C0F008A9EF1 /* DefinitionView.swift in Sources */,
 				787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */,

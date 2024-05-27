@@ -40,5 +40,5 @@ struct TabBar: View {
     TabBar()
         .environmentObject(HomeVM())
         .environmentObject(WordBookVM())
-        .modelContainer(for: [Link.self, Headline.self, Word.self, WordBook.self])
+        .modelContainer(for: [Link.self, Shortcut.self, Headline.self, Word.self, WordBook.self])
 }

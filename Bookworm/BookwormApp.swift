@@ -18,6 +18,7 @@ struct BookwormApp: App {
             modelContainer = try ModelContainer(for: Link.self, Shortcut.self, Headline.self, Word.self, WordBook.self)
             if isFirstTimeLaunch {
                 Shortcut.defaults.forEach { modelContainer.mainContext.insert($0) }
+                modelContainer.mainContext.insert(WordBook(name: "Default", isDefault: true))
                 isFirstTimeLaunch = false
             }
         } catch {

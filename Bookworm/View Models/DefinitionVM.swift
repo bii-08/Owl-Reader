@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import NaturalLanguage
 
 @MainActor
 class DefinitionVM: ObservableObject {
@@ -18,9 +19,9 @@ class DefinitionVM: ObservableObject {
     }
     var selectedWord: String
     var isNewWord = false
-    
+    var stemForm = ""
     @Published var loadingState = LoadingStateManager.loading
-    
+
     // NOTE: Replace MockdataForWord() with DictionaryService() to fetch data from real API
     init(selectedWord: String, dictionaryService: DictionaryServiceDelegate = DictionaryService()) {
         self.selectedWord = selectedWord
@@ -29,9 +30,10 @@ class DefinitionVM: ObservableObject {
     
     // FUNCTION: to fetch word from dictionary api
     func fetchWordFromAPI(modelContext: ModelContext) async {
-        if !fetchWordFromDatabase(selectedWord: selectedWord, modelContext: modelContext) {
+        if !fetchWordFromDatabase(selectedWord: selectedWord.lemmatize(), modelContext: modelContext) {
+                print("------> \(selectedWord.lemmatize())")
             loadingState = LoadingStateManager.loading
-            if let targetWord: Word = await dictionaryService.downloadWord(word: selectedWord) {
+            if let targetWord: Word = await dictionaryService.downloadWord(word: selectedWord.lemmatize()) {
                 word = targetWord
                 loadingState = LoadingStateManager.success
                 print("Successfully downloaded this word from api.")

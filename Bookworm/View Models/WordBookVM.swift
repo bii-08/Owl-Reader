@@ -9,14 +9,23 @@ import Foundation
 import SwiftData
 
 class WordBookVM: ObservableObject {
-    @Published var listWordBook: [WordBook] = [WordBook(name: "Default")]
-    @Published var selectedWordbook = "Default"
+    @Published var listWordBook: [WordBook] = [WordBook(name: "Default", isDefault: true)]
+    @Published var truncatedText: String = "Default"
+    @Published var selectedWordbook = "Default" {
+        didSet {
+            if selectedWordbook.count > 12 {
+                truncatedText = String(selectedWordbook.prefix(12)) + "..."
+            } else {
+                truncatedText = selectedWordbook
+            }
+        }
+    }
     @Published var showingSheet = false
-    
     @Published var goodTitle = false
     @Published var message = ""
     var editingWordBook: WordBook?
-  
+    var noMoreReference = false
+    
     @Published var title: String = ""
     
     var wordBookTitle: [String] {
@@ -40,6 +49,7 @@ class WordBookVM: ObservableObject {
                 print("removing word")
                 if !listWordBook.contains(where: { $0.savedWords.contains(word)}) {
                     modelContext.delete(word)
+                    noMoreReference = true
                 }
             } else {
                 listWordBook[index].savedWords.append(word)
@@ -74,7 +84,9 @@ class WordBookVM: ObservableObject {
     
     // FUNCTION: to delete wordBook
     func deleteWordBook(wordBook: WordBook, modelContext: ModelContext) {
-        modelContext.delete(wordBook)
+        if !wordBook.isDefault {
+            modelContext.delete(wordBook)
+        }
         fetchWordBookList(modelContext: modelContext)
     }
     

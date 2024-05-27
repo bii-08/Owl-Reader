@@ -14,7 +14,7 @@ struct DefinitionView: View {
     
     @StateObject var vm: DefinitionVM
     @EnvironmentObject var wordBookVM: WordBookVM
-    
+    @State var title = ""
     var initialWordBook: String
     
     let synthesizer = AVSpeechSynthesizer()
@@ -37,7 +37,7 @@ struct DefinitionView: View {
                     // MARK: Selected Word and Button
                     HStack {
                         // MARK: Selected word
-                        Text(vm.selectedWord)
+                        Text(vm.selectedWord.lemmatize())
                             .font(.custom("Helvetica", size: 25))
                             .textCase(.lowercase)
                             .bold()
@@ -57,6 +57,7 @@ struct DefinitionView: View {
                                     .foregroundColor(wordBookVM.isThisWordAlreadySaved(selectedWord: word, wordBookName: wordBookVM.selectedWordbook) ? .orange : .gray)
                             }
                         }
+                        .disabled(wordBookVM.noMoreReference)
                     }
                     .padding(.horizontal)
                     
@@ -117,97 +118,102 @@ struct DefinitionView: View {
                         if let word = vm.word {
                             if let results = word.results {
                                 ForEach(results, id: \.self) { result in
-//                                    HStack {
-                                        VStack {
-                                            // Word function
-                                            HStack {
-                                                if let partOfSpeech = result.partOfSpeech {
-                                                    Text("\(vm.capitalizeFirstLetter(of: partOfSpeech))")
-                                                        .font(.custom("Helvetica", size: 19))
-                                                        .foregroundColor(.orange)
-                                                }
-                                                
-                                                Spacer()
-                                            }
-                                            .padding(.vertical, 5)
-                                            
-                                            // Definitions
-                                            HStack {
-                                                if let definition = result.definition {
-                                                    Text("\(vm.capitalizeFirstLetter(of: definition))")
-                                                        .font(.custom("Helvetica", size: 19))
-                                                        .bold()
-                                                }
-                                                
-                                                Spacer()
-                                            }
-                                            .padding(.vertical, 5)
-                                            
-                                            // Examples
-                                            if let examples = result.examples {
-                                                ForEach(examples, id: \.self) { example in
-                                                    HStack {
-                                                        Text("\(vm.capitalizeFirstLetter(of: example)).")
-                                                            .font(.custom("Helvetica", size: 19))
-                                                            .foregroundColor(.primary)
-                                                            .italic()
-                                                            .padding()
-                                                        Spacer()
-                                                    }
-                                                }
-                                            }
-                                            
-                                            // Synonyms
-                                            if result.synonyms != nil {
-                                                HStack {
-                                                    Text("Synonyms:")
-                                                        .font(.custom("Helvetica", size: 19))
-                                                    .underline()
-                                                    Spacer()
-                                                }
-                                            }
-                                            
-                                            if let synonyms = result.synonyms {
-                                                ForEach(synonyms, id: \.self) { syn in
-                                                    HStack {
-                                                        Text(syn)
-                                                            .font(.custom("Helvetica", size: 18))
-                                                            .foregroundColor(.secondary)
-                                                        Spacer()
-                                                    }
-                                                }
+                                    //                                    HStack {
+                                    VStack {
+                                        // Word function
+                                        HStack {
+                                            if let partOfSpeech = result.partOfSpeech {
+                                                Text("\(vm.capitalizeFirstLetter(of: partOfSpeech))")
+                                                    .font(.custom("Helvetica", size: 19))
+                                                    .foregroundColor(.orange)
                                             }
                                             
                                             Spacer()
                                         }
-                                        .padding(.horizontal, 15)
-//                                        .frame(width: 350)
-                                        .background(.regularMaterial)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .padding(.horizontal)
                                         .padding(.vertical, 5)
+                                        
+                                        // Definitions
+                                        HStack {
+                                            if let definition = result.definition {
+                                                Text("\(vm.capitalizeFirstLetter(of: definition))")
+                                                    .font(.custom("Helvetica", size: 19))
+                                                    .bold()
+                                            }
+                                            
+                                            Spacer()
+                                        }
+                                        .padding(.vertical, 5)
+                                        
+                                        // Examples
+                                        if let examples = result.examples {
+                                            ForEach(examples, id: \.self) { example in
+                                                HStack {
+                                                    Text("\(vm.capitalizeFirstLetter(of: example)).")
+                                                        .font(.custom("Helvetica", size: 19))
+                                                        .foregroundColor(.primary)
+                                                        .italic()
+                                                        .padding()
+                                                    Spacer()
+                                                }
+                                            }
+                                        }
+                                        
+                                        // Synonyms
+                                        if result.synonyms != nil {
+                                            HStack {
+                                                Text("Synonyms:")
+                                                    .font(.custom("Helvetica", size: 19))
+                                                    .underline()
+                                                Spacer()
+                                            }
+                                        }
+                                        
+                                        if let synonyms = result.synonyms {
+                                            ForEach(synonyms, id: \.self) { syn in
+                                                HStack {
+                                                    Text(syn)
+                                                        .font(.custom("Helvetica", size: 18))
+                                                        .foregroundColor(.secondary)
+                                                    Spacer()
+                                                }
+                                            }
+                                        }
+                                        
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal, 15)
+                                    .background(.regularMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 5)
                                 }
                             }
                         }
                     }
-                
                     
                     // MARK: Picker
                     HStack {
                         Text("Choose your wordbook:")
                             .font(.custom("Helvetica", size: 19))
+                            .frame(width: 220)
                             .bold()
-                        Picker("", selection: $wordBookVM.selectedWordbook) {
-                            ForEach(wordBookVM.wordBookTitle, id: \.self) { title in
-                                Text(title)
+                        Menu {
+                            Picker("", selection: $wordBookVM.selectedWordbook) {
+                                ForEach(wordBookVM.wordBookTitle, id: \.self) { title in
+                                    Text(title)
+                                        .lineLimit(1)
+                                        .tag(title)
+                                }
                             }
+                        } label: {
+                            Text(wordBookVM.truncatedText)
+                                .accentColor(.picker)
+                                .frame(width: 120, height: 30)
+                                .background(.white.opacity(0.4))
+                                .cornerRadius(8)
                         }
-                        .accentColor(.picker)
-                        .background(.white.opacity(0.2))
-                        .cornerRadius(10)
                     }
                     .padding(.horizontal)
-                    
                 }
                 
             case .failed:
@@ -221,7 +227,7 @@ struct DefinitionView: View {
                             .bold()
                     }
                 } description: {
-                     Text("An error occurred while loading your word.")
+                    Text("An error occurred while loading your word.")
                 } actions: {
                     Button("Retry") {
                         wordBookVM.fetchWordBookList(modelContext: modelContext)
@@ -247,5 +253,5 @@ struct DefinitionView: View {
 #Preview {
     DefinitionView(vm: DefinitionVM(selectedWord: "pathetic", dictionaryService: MockdataForWord()))
         .environmentObject(WordBookVM())
-        .modelContainer(for: [Word.self, WordBook.self]) 
+        .modelContainer(for: [Word.self, WordBook.self])
 }

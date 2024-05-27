@@ -78,9 +78,7 @@ struct EditingView: View {
                         photoPikerVM.selectedImage = editingImage
                     }
                 }
-                
-                Spacer()
-                
+                  Spacer()
                 // Save changes Button
                 Button {
                     let filtered = vm.savedShortcuts.filter({ $0 != link })
@@ -105,11 +103,15 @@ struct EditingView: View {
                         .background(RoundedRectangle(cornerRadius: 5).fill(!showingAlert ? Color(.orange.opacity(0.8)) : .gray))
                 }
                 .padding(.horizontal, 50)
+                .padding(.vertical, 25)
                 .disabled(showingAlert)
             }
             .navigationDestination(isPresented: $showingPhotoPiker) {
-                PhotoPickerView(vm: photoPikerVM) {
-                    self.editingImage = photoPikerVM.selectedImage
+                ZStack {
+                    Color("background").ignoresSafeArea()
+                    PhotoPickerView(vm: photoPikerVM) {
+                        self.editingImage = photoPikerVM.selectedImage
+                    }
                 }
             }
             
