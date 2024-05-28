@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct PhotoPickerView: View {
-    @StateObject var vm: PhotoPickerVM
+    @ObservedObject var vm: PhotoPickerVM
     var action: () -> ()
     var body: some View {
             VStack(spacing: 5) {

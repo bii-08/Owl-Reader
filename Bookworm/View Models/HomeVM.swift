@@ -145,6 +145,15 @@ class HomeVM: ObservableObject {
         fetchRecentlyReadURLs(modelContext: modelContext)
     }
     
+    func handleUserInputSearchBar(userInput: String) -> String {
+        if let url = URL(string: userInput), UIApplication.shared.canOpenURL(url) {
+            return userInput
+        } else {
+            let searchQuery = userInput.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            return "https://www.google.com/search?q=\(searchQuery)"
+        }
+    }
+    
     // FUNCTION: for fetching data from real api
     @MainActor func fetchHeadlines() async {
         headLines = [Headline]()

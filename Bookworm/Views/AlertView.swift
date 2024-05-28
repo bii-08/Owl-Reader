@@ -38,7 +38,7 @@ struct AlertView: View {
                         } label: {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 8)
-                                    .frame(width: 150, height: 42)
+                                    .frame(width: 150, height: 55)
                                     .foregroundColor(Color.blue.opacity(0.5))
                                 Text(secondaryButtonTitle ?? "")
                                     .font(.custom("DIN Condensed", size: 20))
@@ -54,7 +54,7 @@ struct AlertView: View {
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 8)
-                                .frame(width: 100, height: 42)
+                                .frame(width: 100, height: 55)
                                 .foregroundColor(Color.orange.opacity(0.5))
                             Text(primaryButtonTitle)
                                 .font(.custom("DIN Condensed", size: 20))

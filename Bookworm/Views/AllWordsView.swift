@@ -72,7 +72,7 @@ struct AllWordsView: View {
             }
             .searchable(text: $searchQuery, prompt: Text("Search by word")).disabled(showingConfirmation)
             .customDialog(isShowing: $showingConfirmation, dialogContent: {
-                AlertView(title: "Delete word", message: "Permanently delete your word?" + "\n" + "\n" + "Deleting words from here will make your words disappeared from all your word books also.", primaryButtonTitle: "Cancel", secondaryButtonTitle: "Allow. Don't ask again.", action1: {
+                AlertView(title: "Delete word", message: "Permanently delete your word?" + "\n" + "\n" + "Deleting words from here will make your words disappeared from all your word books also.", primaryButtonTitle: "Cancel", secondaryButtonTitle: "Allow." + "\n" + "Don't ask again.", action1: {
                     showingConfirmation = false
                     
                 }, action2: {

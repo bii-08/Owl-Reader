@@ -15,6 +15,7 @@ struct DefinitionView: View {
     @StateObject var vm: DefinitionVM
     @EnvironmentObject var wordBookVM: WordBookVM
     @State var title = ""
+    @State private var thisWordIsEmpty = false
     var initialWordBook: String
     
     let synthesizer = AVSpeechSynthesizer()
@@ -57,7 +58,7 @@ struct DefinitionView: View {
                                     .foregroundColor(wordBookVM.isThisWordAlreadySaved(selectedWord: word, wordBookName: wordBookVM.selectedWordbook) ? .orange : .gray)
                             }
                         }
-                        .disabled(wordBookVM.noMoreReference)
+                        .disabled(wordBookVM.noMoreReference || thisWordIsEmpty)
                     }
                     .padding(.horizontal)
                     
@@ -116,7 +117,7 @@ struct DefinitionView: View {
                     // MARK: All Definitions
                     ScrollView {
                         if let word = vm.word {
-                            if let results = word.results {
+                            if let results = word.results, !results.isEmpty {
                                 ForEach(results, id: \.self) { result in
                                     //                                    HStack {
                                     VStack {
@@ -187,7 +188,22 @@ struct DefinitionView: View {
                                     .padding(.horizontal)
                                     .padding(.vertical, 5)
                                 }
+                            } else {
+                               
+                                HStack {
+                                    Spacer()
+                                    Text("Sorry. Could not find this word.😔")
+                                        .font(Font.custom("DIN Condensed", size: 20))
+                                        .foregroundColor(.red)
+                                        .padding()
+                                    Spacer()
+                                }
+                                .onAppear {
+                                    thisWordIsEmpty = true
+                                }
+                                
                             }
+                            
                         }
                     }
                     
@@ -237,6 +253,14 @@ struct DefinitionView: View {
                         }
                     }
                     .buttonStyle(BorderedButtonStyle())
+                }
+            case .restricted:
+                VStack {
+                    Text("Sorry. You have reached the request limit.😰")
+                        .font(Font.custom("DIN Condensed", size: 20))
+                    Button("See ads to add more requests.") {
+                        
+                    }
                 }
             }
         }

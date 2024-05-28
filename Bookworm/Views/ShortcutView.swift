@@ -28,7 +28,7 @@ struct ShortcutView: View {
                 } else {
                     Image(systemName: "photo")
                         .frame(width: 70, height: 70)
-                        .padding(10)
+//                        .padding(10)
                         .background(.ultraThinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(radius: 1)
