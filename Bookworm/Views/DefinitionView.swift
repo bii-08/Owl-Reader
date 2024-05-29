@@ -255,10 +255,17 @@ struct DefinitionView: View {
                     .buttonStyle(BorderedButtonStyle())
                 }
             case .restricted:
-                VStack {
+                VStack(spacing: 20) {
                     Text("Sorry. You have reached the request limit.😰")
                         .font(Font.custom("DIN Condensed", size: 20))
-                    Button("See ads to add more requests.") {
+                    Button {
+                        vm.requestLimit += 10
+                    } label: {
+                        Text("Watch AD for 10 free requests 💓")
+                            .font(Font.custom("DIN Condensed", size: 20))
+                            .foregroundColor(.yellow)
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 5).fill(Color.secondary.opacity(0.5)))
                         
                     }
                 }

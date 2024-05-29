@@ -21,6 +21,7 @@ final class Headline: Identifiable, Codable, Hashable {
     var id: String {
         self.url
     }
+    var source: Source?
     var author: String?
     var title: String
     var theDescription: String?
@@ -28,10 +29,11 @@ final class Headline: Identifiable, Codable, Hashable {
     var urlToImage: String
     
     enum CodingKeys: String, CodingKey {
-        case id, author, title, description, url, urlToImage
+        case id,source, author, title, description, url, urlToImage
     }
     
-    init(author: String? = nil, title: String, description: String? = nil, url: String, urlToImage: String) {
+    init(source: Source? = nil,author: String? = nil, title: String, description: String? = nil, url: String, urlToImage: String) {
+        self.source = source
         self.author = author
         self.title = title
         self.theDescription = description
@@ -42,6 +44,7 @@ final class Headline: Identifiable, Codable, Hashable {
     public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encode(id, forKey: .id)
+            try container.encode(source, forKey: .source)
             try container.encode(author, forKey: .author)
             try container.encode(title, forKey: .title)
             try container.encode(theDescription, forKey: .description)
@@ -51,10 +54,19 @@ final class Headline: Identifiable, Codable, Hashable {
     
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        author = try values.decode(String?.self, forKey: .author)
+        source = try values.decodeIfPresent(Source.self, forKey: .source)
+        author = try values.decodeIfPresent(String.self, forKey: .author)
         title = try values.decode(String.self, forKey: .title)
-        theDescription = try values.decode(String?.self, forKey: .description)
+        theDescription = try values.decodeIfPresent(String.self, forKey: .description)
         url = try values.decode(String.self, forKey: .url)
         urlToImage = try values.decode(String.self, forKey: .urlToImage)
+    }
+}
+
+struct Source: Codable, Hashable {
+    let name: String
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
     }
 }

@@ -21,16 +21,23 @@ class DefinitionVM: ObservableObject {
     var isNewWord = false
     var stemForm = ""
     
-    private var requestLimit = 7
-    private let defaults = UserDefaults.standard
-    private let requestCountKey = "requestCount"
-    private let requestDateKey = "requestDate"
+    @Published var requestLimit: Int = 2 {
+        didSet {
+            print("------> \(requestLimit)")
+        }
+    }
     @Published var requestCount: Int = 0 {
         didSet {
-            print("\(requestCount)")
+            print("------> \(requestCount)")
         }
     }
     @Published var canMakeRequest: Bool = false
+    
+    private let defaults = UserDefaults.standard
+    private let requestCountKey = "requestCount"
+    private let requestLimitKey = "requestLimit"
+    private let requestDateKey = "requestDate"
+    
     
     @Published var loadingState = LoadingStateManager.loading
     
@@ -39,7 +46,8 @@ class DefinitionVM: ObservableObject {
         self.selectedWord = selectedWord
         self.dictionaryService = dictionaryService
         self.requestCount = defaults.integer(forKey: requestCountKey)
-        self.canMakeRequest = requestCount < requestLimit
+        self.requestLimit = defaults.integer(forKey: requestLimitKey)
+        self.canMakeRequest = requestLimit > 0
         
         resetCountIfNeeded()
     }
@@ -98,8 +106,9 @@ class DefinitionVM: ObservableObject {
     
     func incrementRequestCount() {
         requestCount += 1
-        requestLimit = requestLimit - requestCount
+        requestLimit -= 1
         defaults.set(requestCount, forKey: requestCountKey)
+        defaults.set(requestLimit, forKey: requestLimitKey)
         if requestLimit == 0 {
             canMakeRequest = false
         }
@@ -110,6 +119,7 @@ class DefinitionVM: ObservableObject {
         let currentDate = Date()
         if !Calendar.current.isDate(lastDate, inSameDayAs: currentDate) {
             defaults.set(0, forKey: requestCountKey)
+            defaults.set(2, forKey: requestLimitKey)
             defaults.set(currentDate, forKey: requestDateKey)
         }
     }

@@ -29,9 +29,10 @@ class HomeVM: ObservableObject {
     init(webService: WebServiceDelegate = MockdataWebService()) {
         self.webService = webService
         
-        Task {
-            await fetchHeadlines()
-        }
+//        Task {
+//            await fetchHeadlines()
+//        }
+        
     }
     
     // FUNCTION: to validate the given URL
@@ -155,10 +156,11 @@ class HomeVM: ObservableObject {
     }
     
     // FUNCTION: for fetching data from real api
-    @MainActor func fetchHeadlines() async {
+    @MainActor func fetchHeadlines(modelContext: ModelContext) async {
         headLines = [Headline]()
-        if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=c0054895dda142d5896f81665100a207&pageSize=10") {
+        if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/everything?domains=techcrunch.com,newyorker.com,bbc.com,nypost.com&apiKey=c0054895dda142d5896f81665100a207&pageSize=15") {
             headLines = downloadedHeadlines.articles
+            headLines.forEach { modelContext.insert($0)}
             
             loadingState = LoadingStateManager.success
             print("Successfully fetched headlines data.")
@@ -185,6 +187,17 @@ class HomeVM: ObservableObject {
             recentlyReadURLs = try modelContext.fetch(descriptor)
         } catch {
             print("Fetch Recently Read data failed")
+        }
+    }
+    
+    func resetHeadlines(modelContext: ModelContext) {
+        let lastDate = UserDefaults.standard.object(forKey: "requestDate") as? Date ?? Date.distantPast
+        let currentDate = Date()
+        if !Calendar.current.isDate(lastDate, inSameDayAs: currentDate) {
+//            modelContext.delete(Headline)
+            Task {
+//                await fetchHeadlines(modelContext: modelContext)
+            }
         }
     }
 }

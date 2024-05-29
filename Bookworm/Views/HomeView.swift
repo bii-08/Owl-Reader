@@ -50,6 +50,7 @@ struct HomeView: View {
                             VStack(alignment: .leading) {
                                 // App's name
                                 Text("ReadSmart")
+                                    .foregroundColor(.black)
                                     .font(Font.custom("Marker Felt", size: 27))
                                     .bold()
                                     .padding(.horizontal)
@@ -58,7 +59,8 @@ struct HomeView: View {
                                 HStack {
                                     HStack {
                                         Image(systemName: "magnifyingglass")
-                                            .padding()
+                                            .foregroundColor(.gray)
+                                            .padding(.horizontal, 10)
                                         TextField("", text: $urlString, prompt: Text("Enter your web link").foregroundColor(.white.opacity(0.7)))
                                             .foregroundColor(.white)
                                             .onSubmit {
@@ -69,6 +71,7 @@ struct HomeView: View {
                                             .autocorrectionDisabled()
                                             .focused($isTextFieldFocused)
                                     }
+                                    .frame(maxHeight: 35)
                                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.6)))
                                    
                                     
@@ -79,7 +82,7 @@ struct HomeView: View {
                                         Text("Cancel")
                                             .foregroundColor(.white)
                                             .padding()
-                                            .frame(height: 50)
+                                            .frame(maxHeight: 35)
                                             .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.8)))
                                     }
                                 }
@@ -126,15 +129,19 @@ struct HomeView: View {
                         }
                         
                         // MARK: BREAKING NEWS
-                        VStack(spacing: 0) {
+                        VStack(spacing: 5) {
                             HStack {
                                 Text("Breaking News")
                                     .font(Font.custom("DIN Condensed", size: 30))
                                     .foregroundColor(.primary.opacity(0.8))
                                     .bold()
                                 Spacer()
+                               
                             }
                             .padding(.horizontal)
+                            
+                            Divider()
+                                .padding(.horizontal)
                             
                             switch vm.loadingState {
                             case .loading:
@@ -148,7 +155,7 @@ struct HomeView: View {
                                         }
                                     }
                                 }
-                                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                                 .frame(height: 200)
                                 .navigationDestination(item: $selectedHeadline) { headline in
                                     VStack {
@@ -220,15 +227,18 @@ struct HomeView: View {
                         }
                         
                         // MARK: SHORTCUT
-                        VStack {
+                        VStack(spacing: 5) {
                             HStack {
-                                Text("Shortcut")
+                                Text("Shortcuts")
                                     .font(Font.custom("DIN Condensed", size: 30))
                                     .foregroundColor(.primary.opacity(0.8))
                                     .bold()
                                 Spacer()
                             }
                             .padding(.horizontal)
+                            
+                            Divider()
+                                .padding(.horizontal)
                             
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
@@ -249,8 +259,9 @@ struct HomeView: View {
                                         
                                         Text("Add / Edit Link")
                                             .foregroundColor(.primary.opacity(0.5))
-                                            .padding(5)
+                                            .padding(12)
                                     }
+                                    .padding(.vertical, 2)
                                     .navigationDestination(isPresented: $showingAddLinkSheet) {
                                         AddOrEditLinkView(photoPickerVM: PhotoPickerVM())
                                     }
@@ -261,6 +272,7 @@ struct HomeView: View {
                                             urlString = shortcut.url.absoluteString
                                             showingShortcutWebPage = true
                                         }
+                                        .padding(.vertical, 10)
                                     }
                                 }
                                 .navigationDestination(isPresented: $showingShortcutWebPage) {
@@ -305,7 +317,7 @@ struct HomeView: View {
                         }
                     
                         // MARK: RECENTLY READ
-                        VStack {
+                        VStack(spacing: 5) {
                             HStack {
                                 Text("Recently Read" + " " + "(\(vm.recentlyReadURLs.count))")
                                     .font(Font.custom("DIN Condensed", size: 30))
@@ -324,6 +336,9 @@ struct HomeView: View {
                                 }
                             }
                             .padding(.horizontal)
+                            
+                            Divider()
+                                .padding(.horizontal)
                             
                             if vm.recentlyReadURLs == [] {
                                 Text("No history")
@@ -356,7 +371,7 @@ struct HomeView: View {
                                             .background(RoundedRectangle(cornerRadius: 5).fill(Color.gray.opacity(0.1)))
                                         }
                                         .listRowBackground(Color("background"))
-                                        //                                    .listRowSeparator(.hidden)
+                                        .listRowSeparator(.hidden)
                                         .swipeActions(allowsFullSwipe: true) {
                                             Button {
                                                 if let index = vm.recentlyReadURLs.firstIndex(where: { $0.url == link.url }) {
@@ -430,6 +445,7 @@ struct HomeView: View {
                 urlString = ""
                 vm.fetchRecentlyReadURLs(modelContext: modelContext)
                 vm.fetchShortcuts(modelContext: modelContext)
+                vm.resetHeadlines(modelContext: modelContext)
                 tabBarVisibility = .visible
                 
             }
