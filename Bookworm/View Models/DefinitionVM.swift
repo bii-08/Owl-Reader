@@ -21,19 +21,18 @@ class DefinitionVM: ObservableObject {
     var isNewWord = false
     var stemForm = ""
     
-    @Published var requestLimit: Int = 2 {
+    @Published var requestLimit: Int {
         didSet {
-            print("------> \(requestLimit)")
+            print("------>Request Limit: \(requestLimit)")
         }
     }
     @Published var requestCount: Int = 0 {
         didSet {
-            print("------> \(requestCount)")
+            print("------>Request used: \(requestCount)")
         }
     }
     @Published var canMakeRequest: Bool = false
     
-    private let defaults = UserDefaults.standard
     private let requestCountKey = "requestCount"
     private let requestLimitKey = "requestLimit"
     private let requestDateKey = "requestDate"
@@ -45,8 +44,8 @@ class DefinitionVM: ObservableObject {
     init(selectedWord: String, dictionaryService: DictionaryServiceDelegate = DictionaryService()) {
         self.selectedWord = selectedWord
         self.dictionaryService = dictionaryService
-        self.requestCount = defaults.integer(forKey: requestCountKey)
-        self.requestLimit = defaults.integer(forKey: requestLimitKey)
+        self.requestCount = UserDefaults.standard.integer(forKey: requestCountKey)
+        self.requestLimit = UserDefaults.standard.integer(forKey: requestLimitKey)
         self.canMakeRequest = requestLimit > 0
         
         resetCountIfNeeded()
@@ -107,20 +106,27 @@ class DefinitionVM: ObservableObject {
     func incrementRequestCount() {
         requestCount += 1
         requestLimit -= 1
-        defaults.set(requestCount, forKey: requestCountKey)
-        defaults.set(requestLimit, forKey: requestLimitKey)
+        UserDefaults.standard.set(requestCount, forKey: requestCountKey)
+        UserDefaults.standard.set(requestLimit, forKey: requestLimitKey)
         if requestLimit == 0 {
             canMakeRequest = false
         }
     }
     
     func resetCountIfNeeded() {
-        let lastDate = defaults.object(forKey: requestDateKey) as? Date ?? Date.distantPast
-        let currentDate = Date()
-        if !Calendar.current.isDate(lastDate, inSameDayAs: currentDate) {
-            defaults.set(0, forKey: requestCountKey)
-            defaults.set(2, forKey: requestLimitKey)
-            defaults.set(currentDate, forKey: requestDateKey)
+        // Check if UserDefault is empty or not, if it is emty, then set '25' as requestLimit
+        if UserDefaults.standard.object(forKey: "lastFetchDate") == nil {
+            UserDefaults.standard.set(25, forKey: requestLimitKey)
+        } else {
+            // if it has a value, then check the date
+            let today = Date().formatted(date: .numeric, time: .omitted)
+            let lastFetchDate = UserDefaults.standard.string(forKey: "lastFetchDate")
+        
+            if lastFetchDate != today {
+                UserDefaults.standard.set(0, forKey: requestCountKey)
+                UserDefaults.standard.set(25, forKey: requestLimitKey)
+                UserDefaults.standard.set(today, forKey: "lastFetchDate")
+            }
         }
     }
 }

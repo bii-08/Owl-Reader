@@ -56,6 +56,7 @@ struct HeadlineView: View {
                                 Spacer()
                                 Text(headline.source?.name ?? "")
                                     .font(.headline)
+//                                    .multilineTextAlignment(.leading)
                                     .foregroundColor(.secondary)
                                     .frame(maxWidth: UIScreen.main.bounds.height <= 812 && UIScreen.main.bounds.width <= 375 ? 190 : 200, maxHeight: UIScreen.main.bounds.height <= 812 && UIScreen.main.bounds.width <= 375 ? 180 : 190)
                                     .background(Rectangle().fill(Color("headlineTitleRounded")))
@@ -86,6 +87,7 @@ struct HeadlineView: View {
                                     Spacer()
                                     Text(headline.title)
                                         .font(.headline)
+                                        .multilineTextAlignment(.leading)
                                         .frame(width: UIScreen.main.bounds.height <= 812 && UIScreen.main.bounds.width <= 375 ? 160 : 170, height: 100)
                                         .foregroundColor(.primary)
                                 }

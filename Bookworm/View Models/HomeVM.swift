@@ -25,14 +25,12 @@ class HomeVM: ObservableObject {
     @Published var showingAlert = false
     @Published var showingEditingView = false
     
+    var testing = false // true: api, false: database
+    
     // NOTE: Replace MockdataWebServie() with WebService() to fetch headlines data from real API
-    init(webService: WebServiceDelegate = MockdataWebService()) {
+    init(webService: WebServiceDelegate = WebService()) {
         self.webService = webService
-        
-//        Task {
-//            await fetchHeadlines()
-//        }
-        
+        print(Date.distantPast)
     }
     
     // FUNCTION: to validate the given URL
@@ -156,17 +154,29 @@ class HomeVM: ObservableObject {
     }
     
     // FUNCTION: for fetching data from real api
-    @MainActor func fetchHeadlines(modelContext: ModelContext) async {
+    @MainActor func fetchHeadlinesFromAPI(modelContext: ModelContext) async {
         headLines = [Headline]()
-        if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/everything?domains=techcrunch.com,newyorker.com,bbc.com,nypost.com&apiKey=c0054895dda142d5896f81665100a207&pageSize=15") {
+        if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/everything?domains=techcrunch.com,newyorker.com,bbc.com,nypost.com&apiKey=c0054895dda142d5896f81665100a207&pageSize=15&language=en") {
             headLines = downloadedHeadlines.articles
-            headLines.forEach { modelContext.insert($0)}
+            headLines.forEach{ modelContext.insert($0) }
             
             loadingState = LoadingStateManager.success
-            print("Successfully fetched headlines data.")
+            print("------> Successfully fetched headlines data.")
         } else {
             loadingState = LoadingStateManager.failed
             print("Failed to load headlines!")
+        }
+    }
+    
+    @MainActor func fetchHeadlinesFromDataBase(modelContext: ModelContext) {
+        do {
+            let descriptor = FetchDescriptor<Headline>(sortBy: [])
+            headLines = try modelContext.fetch(descriptor)
+            loadingState = LoadingStateManager.success
+            print("------> Successfully fetched headlines from database.")
+        } catch {
+            loadingState = LoadingStateManager.failed
+            print("Failed to fetch headlines from database.")
         }
     }
     
@@ -190,15 +200,26 @@ class HomeVM: ObservableObject {
         }
     }
     
-    func resetHeadlines(modelContext: ModelContext) {
-        let lastDate = UserDefaults.standard.object(forKey: "requestDate") as? Date ?? Date.distantPast
-        let currentDate = Date()
-        if !Calendar.current.isDate(lastDate, inSameDayAs: currentDate) {
-//            modelContext.delete(Headline)
-            Task {
-//                await fetchHeadlines(modelContext: modelContext)
+    @MainActor func handleHeadlines(modelContext: ModelContext) async {
+        let today = Date().formatted(date: .numeric, time: .omitted)
+        print("---> \(today)")
+        let lastFetchDate = UserDefaults.standard.string(forKey: "lastFetchDate")
+        print("---> \(String(describing: lastFetchDate))")
+        
+        if today != lastFetchDate {
+            do {
+               try modelContext.delete(model: Headline.self)
+                UserDefaults.standard.set(today, forKey: "lastFetchDate")
+            } catch {
+                print("Failed to delete all headlines.")
             }
+           
+            await fetchHeadlinesFromAPI(modelContext: modelContext)
+
+        } else {
+            fetchHeadlinesFromDataBase(modelContext: modelContext)
         }
     }
 }
 
+// !Calendar.current.isDate(lastDate, inSameDayAs: currentDate)
