@@ -231,7 +231,7 @@ extension HomeView {
             
             switch vm.loadingState {
             case .loading:
-                ProgressView("Loading...")
+                ProgressHeadLineView() 
             case .success:
                 // Tab View
                 TabView {

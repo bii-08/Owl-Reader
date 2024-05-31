@@ -33,7 +33,6 @@ struct TabBar: View {
             .tag(2)
         }
         .accentColor(.tabBarButton)
-//        .accentColor(.green)
     }
 }
 

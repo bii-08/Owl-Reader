@@ -11,6 +11,7 @@ import SwiftData
 
 struct DefinitionView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.presentationMode) var presentationMode
     
     @StateObject var vm: DefinitionVM
     @EnvironmentObject var wordBookVM: WordBookVM
@@ -259,7 +260,11 @@ struct DefinitionView: View {
                     Text("Sorry. You have reached the request limit.😰")
                         .font(Font.custom("DIN Condensed", size: 20))
                     Button {
-                        vm.requestLimit += 10
+                        let requestLimit = UserDefaults.standard.integer(forKey: "requestLimit")
+                        let newLimit = requestLimit + 2
+                        UserDefaults.standard.set(newLimit, forKey: "requestLimit")
+                        vm.requestLimit += 2
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Text("Watch AD for 10 free requests 💓")
                             .font(Font.custom("DIN Condensed", size: 20))

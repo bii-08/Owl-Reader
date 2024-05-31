@@ -26,17 +26,16 @@ class DefinitionVM: ObservableObject {
             print("------>Request Limit: \(requestLimit)")
         }
     }
-    @Published var requestCount: Int = 0 {
+    @Published var requestCount: Int {
         didSet {
             print("------>Request used: \(requestCount)")
         }
     }
-    @Published var canMakeRequest: Bool = false
     
+    @Published var canMakeRequest: Bool = false
     private let requestCountKey = "requestCount"
     private let requestLimitKey = "requestLimit"
-    private let requestDateKey = "requestDate"
-    
+    private let lastFetchDate = "lastFetchDate"
     
     @Published var loadingState = LoadingStateManager.loading
     
@@ -47,7 +46,7 @@ class DefinitionVM: ObservableObject {
         self.requestCount = UserDefaults.standard.integer(forKey: requestCountKey)
         self.requestLimit = UserDefaults.standard.integer(forKey: requestLimitKey)
         self.canMakeRequest = requestLimit > 0
-        
+//        UserDefaults.standard.removeObject(forKey: "lastFetchDate")
         resetCountIfNeeded()
     }
     
@@ -64,7 +63,7 @@ class DefinitionVM: ObservableObject {
             if let targetWord: Word = await dictionaryService.downloadWord(word: selectedWord.lemmatize()) {
                 word = targetWord
                 loadingState = LoadingStateManager.success
-                incrementRequestCount()
+                calculateRequestCountAndRequestLimit()
                 print("Successfully downloaded this word from api.")
             } else {
                 loadingState = LoadingStateManager.failed
@@ -102,8 +101,8 @@ class DefinitionVM: ObservableObject {
         return true
     }
     
-    
-    func incrementRequestCount() {
+    // FUNCTION: to calculate request count and request limit
+    func calculateRequestCountAndRequestLimit() {
         requestCount += 1
         requestLimit -= 1
         UserDefaults.standard.set(requestCount, forKey: requestCountKey)
@@ -113,20 +112,16 @@ class DefinitionVM: ObservableObject {
         }
     }
     
+    // FUNCTION: to reset requestCount and requestLimit if needed
     func resetCountIfNeeded() {
-        // Check if UserDefault is empty or not, if it is emty, then set '25' as requestLimit
-        if UserDefaults.standard.object(forKey: "lastFetchDate") == nil {
-            UserDefaults.standard.set(25, forKey: requestLimitKey)
-        } else {
-            // if it has a value, then check the date
-            let today = Date().formatted(date: .numeric, time: .omitted)
-            let lastFetchDate = UserDefaults.standard.string(forKey: "lastFetchDate")
-        
-            if lastFetchDate != today {
-                UserDefaults.standard.set(0, forKey: requestCountKey)
-                UserDefaults.standard.set(25, forKey: requestLimitKey)
-                UserDefaults.standard.set(today, forKey: "lastFetchDate")
-            }
+        let today = Date().formatted(date: .numeric, time: .omitted)
+        let lastFetchDate = UserDefaults.standard.string(forKey: lastFetchDate)
+        if lastFetchDate != today || lastFetchDate == nil {
+            UserDefaults.standard.set(0, forKey: requestCountKey)
+            requestCount = 0
+            UserDefaults.standard.set(1, forKey: requestLimitKey)
+            requestLimit = 1
+            UserDefaults.standard.set(today, forKey: "lastFetchDate")
         }
     }
 }
