@@ -85,7 +85,7 @@ extension HomeView {
             
             VStack(alignment: .leading) {
                 // App's name
-                Text("ReadSmart")
+                Text("Owl Read")
                     .foregroundColor(.black)
                     .font(Font.custom("Marker Felt", size: 27))
                     .bold()

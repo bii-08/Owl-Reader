@@ -35,7 +35,7 @@ class DefinitionVM: ObservableObject {
     @Published var canMakeRequest: Bool = false
     private let requestCountKey = "requestCount"
     private let requestLimitKey = "requestLimit"
-    private let lastFetchDate = "lastFetchDate"
+    private let lastFetchDate = "lastFetchDateForDefinition"
     
     @Published var loadingState = LoadingStateManager.loading
     
@@ -46,7 +46,6 @@ class DefinitionVM: ObservableObject {
         self.requestCount = UserDefaults.standard.integer(forKey: requestCountKey)
         self.requestLimit = UserDefaults.standard.integer(forKey: requestLimitKey)
         self.canMakeRequest = requestLimit > 0
-//        UserDefaults.standard.removeObject(forKey: "lastFetchDate")
         resetCountIfNeeded()
     }
     
@@ -116,12 +115,14 @@ class DefinitionVM: ObservableObject {
     func resetCountIfNeeded() {
         let today = Date().formatted(date: .numeric, time: .omitted)
         let lastFetchDate = UserDefaults.standard.string(forKey: lastFetchDate)
+        print("the last fetch date: \(String(describing: lastFetchDate))")
         if lastFetchDate != today || lastFetchDate == nil {
             UserDefaults.standard.set(0, forKey: requestCountKey)
             requestCount = 0
             UserDefaults.standard.set(1, forKey: requestLimitKey)
             requestLimit = 1
-            UserDefaults.standard.set(today, forKey: "lastFetchDate")
+            UserDefaults.standard.set(today, forKey: "lastFetchDateForDefinition")
+            self.canMakeRequest = true
         }
     }
 }
