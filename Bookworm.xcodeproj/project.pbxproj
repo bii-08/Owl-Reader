@@ -30,6 +30,8 @@
 		785664DE2BD88240008A9EF1 /* Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664DD2BD88240008A9EF1 /* Link.swift */; };
 		785664E12BD88356008A9EF1 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E02BD88356008A9EF1 /* HomeVM.swift */; };
 		785664E32BD8E13B008A9EF1 /* AddOrEditLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785664E22BD8E13B008A9EF1 /* AddOrEditLinkView.swift */; };
+		7863F3E72C0AF5F000EE828B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7863F3E62C0AF5F000EE828B /* GoogleMobileAds */; };
+		7863F3ED2C0AF93300EE828B /* RewardAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7863F3EC2C0AF93300EE828B /* RewardAdsManager.swift */; };
 		787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787AD29A2C00416E00910ADD /* Shortcut.swift */; };
 		789D8AB72BE3694F004E0EA5 /* Word.json in Resources */ = {isa = PBXBuildFile; fileRef = 789D8AB62BE3694F004E0EA5 /* Word.json */; };
 		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
@@ -71,6 +73,8 @@
 		785664DD2BD88240008A9EF1 /* Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Link.swift; sourceTree = "<group>"; };
 		785664E02BD88356008A9EF1 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
 		785664E22BD8E13B008A9EF1 /* AddOrEditLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditLinkView.swift; sourceTree = "<group>"; };
+		7863F3E82C0AF69100EE828B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7863F3EC2C0AF93300EE828B /* RewardAdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardAdsManager.swift; sourceTree = "<group>"; };
 		787AD29A2C00416E00910ADD /* Shortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcut.swift; sourceTree = "<group>"; };
 		789D8AB62BE3694F004E0EA5 /* Word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Word.json; sourceTree = "<group>"; };
 		789D8AB82BE43959004E0EA5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
@@ -91,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7863F3E72C0AF5F000EE828B /* GoogleMobileAds in Frameworks */,
 				789D8ABE2BE4B250004E0EA5 /* SwiftyJSON in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,6 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				785664C52BD66FBF008A9EF1 /* BookwormApp.swift */,
+				7863F3E82C0AF69100EE828B /* Info.plist */,
+				7863F3E92C0AF75300EE828B /* AdMod Ads */,
 				785664DB2BD881E2008A9EF1 /* Views */,
 				785664DF2BD88313008A9EF1 /* View Models */,
 				785664DC2BD881F5008A9EF1 /* Models */,
@@ -205,6 +212,14 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
+		7863F3E92C0AF75300EE828B /* AdMod Ads */ = {
+			isa = PBXGroup;
+			children = (
+				7863F3EC2C0AF93300EE828B /* RewardAdsManager.swift */,
+			);
+			path = "AdMod Ads";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,6 +238,7 @@
 			name = Bookworm;
 			packageProductDependencies = (
 				789D8ABD2BE4B250004E0EA5 /* SwiftyJSON */,
+				7863F3E62C0AF5F000EE828B /* GoogleMobileAds */,
 			);
 			productName = Bookworm;
 			productReference = 785664C22BD66FBF008A9EF1 /* Bookworm.app */;
@@ -254,6 +270,7 @@
 			mainGroup = 785664B92BD66FBF008A9EF1;
 			packageReferences = (
 				789D8ABC2BE4B250004E0EA5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				7863F3E52C0AF5F000EE828B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 785664C32BD66FBF008A9EF1 /* Products */;
 			projectDirPath = "";
@@ -293,6 +310,7 @@
 				781C5B0F2BDF2BAD00FB394B /* AlertView.swift in Sources */,
 				781C5B232BE1C3A300FB394B /* PhotoPickerVM.swift in Sources */,
 				785664E12BD88356008A9EF1 /* HomeVM.swift in Sources */,
+				7863F3ED2C0AF93300EE828B /* RewardAdsManager.swift in Sources */,
 				781C5B1A2BE075A700FB394B /* MockDataService.swift in Sources */,
 				789D8AB92BE43959004E0EA5 /* Word.swift in Sources */,
 				785664C82BD66FBF008A9EF1 /* HomeView.swift in Sources */,
@@ -451,6 +469,7 @@
 				DEVELOPMENT_TEAM = 49H596ZHS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bookworm/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,6 +481,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bii.Bookworm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -481,6 +501,7 @@
 				DEVELOPMENT_TEAM = 49H596ZHS6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Bookworm/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -492,6 +513,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bii.Bookworm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -524,6 +546,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7863F3E52C0AF5F000EE828B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.5.0;
+			};
+		};
 		789D8ABC2BE4B250004E0EA5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -535,6 +565,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7863F3E62C0AF5F000EE828B /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7863F3E52C0AF5F000EE828B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
 		789D8ABD2BE4B250004E0EA5 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 789D8ABC2BE4B250004E0EA5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;

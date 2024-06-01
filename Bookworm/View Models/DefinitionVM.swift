@@ -32,7 +32,9 @@ class DefinitionVM: ObservableObject {
         }
     }
     
-    @Published var canMakeRequest: Bool = false
+    var canMakeRequest: Bool {
+        requestLimit > 0
+    }
     private let requestCountKey = "requestCount"
     private let requestLimitKey = "requestLimit"
     private let lastFetchDate = "lastFetchDateForDefinition"
@@ -45,7 +47,6 @@ class DefinitionVM: ObservableObject {
         self.dictionaryService = dictionaryService
         self.requestCount = UserDefaults.standard.integer(forKey: requestCountKey)
         self.requestLimit = UserDefaults.standard.integer(forKey: requestLimitKey)
-        self.canMakeRequest = requestLimit > 0
         resetCountIfNeeded()
     }
     
@@ -64,6 +65,7 @@ class DefinitionVM: ObservableObject {
                 loadingState = LoadingStateManager.success
                 calculateRequestCountAndRequestLimit()
                 print("Successfully downloaded this word from api.")
+                print("new request limit = \(requestLimit)")
             } else {
                 loadingState = LoadingStateManager.failed
                 print("Failed to download this word from api!")
@@ -106,9 +108,6 @@ class DefinitionVM: ObservableObject {
         requestLimit -= 1
         UserDefaults.standard.set(requestCount, forKey: requestCountKey)
         UserDefaults.standard.set(requestLimit, forKey: requestLimitKey)
-        if requestLimit == 0 {
-            canMakeRequest = false
-        }
     }
     
     // FUNCTION: to reset requestCount and requestLimit if needed
@@ -122,7 +121,6 @@ class DefinitionVM: ObservableObject {
             UserDefaults.standard.set(1, forKey: requestLimitKey)
             requestLimit = 1
             UserDefaults.standard.set(today, forKey: "lastFetchDateForDefinition")
-            self.canMakeRequest = true
         }
     }
 }

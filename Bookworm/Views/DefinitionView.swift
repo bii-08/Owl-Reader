@@ -12,7 +12,7 @@ import SwiftData
 struct DefinitionView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
-    
+    @StateObject private var rewardManager = RewardAdsManager()
     @StateObject var vm: DefinitionVM
     @EnvironmentObject var wordBookVM: WordBookVM
     @State var title = ""
@@ -260,11 +260,8 @@ struct DefinitionView: View {
                     Text("Sorry. You have reached the request limit.😰")
                         .font(Font.custom("DIN Condensed", size: 20))
                     Button {
-                        let requestLimit = UserDefaults.standard.integer(forKey: "requestLimit")
-                        let newLimit = requestLimit + 2
-                        UserDefaults.standard.set(newLimit, forKey: "requestLimit")
-                        vm.requestLimit += 2
-                        presentationMode.wrappedValue.dismiss()
+                        rewardManager.showAd()
+                        
                     } label: {
                         Text("Watch AD for 10 free requests 💓")
                             .font(Font.custom("DIN Condensed", size: 20))
@@ -274,9 +271,25 @@ struct DefinitionView: View {
                         
                     }
                 }
+                .onAppear {
+                    
+                    print("Restricted view appeared")
+                    if !rewardManager.rewardLoaded {
+                        rewardManager.loadAd()
+                    } else {
+                        let requestLimit = UserDefaults.standard.integer(forKey: "requestLimit")
+                        let newLimit = requestLimit + 1
+                        UserDefaults.standard.set(newLimit, forKey: "requestLimit")
+                        vm.requestLimit += 1
+                        
+                        Task {
+                            await vm.fetchWordFromAPI(modelContext: modelContext)
+                        }
+                    }
+                }
             }
         }
-        .onAppear {
+        .onLoad {
             wordBookVM.fetchWordBookList(modelContext: modelContext)
             wordBookVM.selectedWordbook = initialWordBook
             Task {

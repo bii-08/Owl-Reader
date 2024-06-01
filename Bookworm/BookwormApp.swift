@@ -7,10 +7,23 @@
 
 import SwiftUI
 import SwiftData
+import GoogleMobileAds
+
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+  func application(_ application: UIApplication,
+      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+    GADMobileAds.sharedInstance().start(completionHandler: nil)
+
+    return true
+  }
+}
 
 @main
 struct BookwormApp: App {
     @AppStorage("isFirstTimeLaunch") private var isFirstTimeLaunch: Bool = true
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     // defining the modelContainer
     let modelContainer: ModelContainer
       init() {
