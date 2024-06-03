@@ -56,13 +56,15 @@ class WebService: WebServiceDelegate {
 class DictionaryService: DictionaryServiceDelegate {
     func downloadWord<T: Codable>(word: String) async -> T? {
         do {
+            guard let apiKey = Bundle.main.infoDictionary?["X_RapidAPI_Key"] as? String else { return nil }
+            guard let host = Bundle.main.infoDictionary?["X_RapidAPI_Host"] as? String else { return nil }
         // Define the headers for the request
         let headers = [
-            "X-RapidAPI-Key": "ccb36aa56emsh90975b2ff570ae3p1b04e6jsnde054a8b3038",
-            "X-RapidAPI-Host": "wordsapiv1.p.rapidapi.com"
+            "X-RapidAPI-Key": "\(apiKey)",
+            "X-RapidAPI-Host": "\(host)"
         ]
         // Define the URL for the request
-        let url = "https://wordsapiv1.p.rapidapi.com/words/\(word)"
+        let url = "https://\(host)/words/\(word)"
         guard let url = URL(string: url) else { throw NetworkError.badURL }
         // Create a URL request and set its properties
         var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)

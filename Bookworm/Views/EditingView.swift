@@ -23,6 +23,7 @@ struct EditingView: View {
     @State private var showingPhotoPiker = false
     @State private var showingAlert = false
     @State private var defaultURL: URL
+    @FocusState private var isTextFieldFocused: Bool
     
     init(link: Shortcut, photoPiker: PhotoPickerVM) {
         self.link = link
@@ -48,6 +49,7 @@ struct EditingView: View {
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                     .padding(.horizontal)
                     .disabled(vm.showingAlert)
+                    .focused($isTextFieldFocused)
                 
                 // Textfield : editing URL
                 TextField("", text: $editingURL, prompt: Text("Add your web link").foregroundColor(.white.opacity(0.7))).padding(6)
@@ -57,6 +59,7 @@ struct EditingView: View {
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                     .padding(.horizontal)
                     .disabled(vm.showingAlert)
+                    .focused($isTextFieldFocused)
                 
                 if let editingImage {
                     VStack {
@@ -66,6 +69,7 @@ struct EditingView: View {
                             .frame(width: 200, height: 200)
                             .cornerRadius(10)
                         Button("Change Image") {
+                            isTextFieldFocused = false
                             showingPhotoPiker = true
                             photoPikerVM.selectedImage = editingImage
                         }
@@ -74,6 +78,7 @@ struct EditingView: View {
                     
                 } else {
                     Button("Add Image") {
+                        isTextFieldFocused = false
                         showingPhotoPiker = true
                         photoPikerVM.selectedImage = editingImage
                     }

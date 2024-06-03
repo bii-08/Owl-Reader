@@ -8,11 +8,13 @@
 import SwiftUI
 import AVFoundation
 import SwiftData
+import GoogleMobileAds
 
 struct DefinitionView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var rewardManager = RewardAdsManager()
+    @ObservedObject private var requestManager = RequestManager.shared
     @StateObject var vm: DefinitionVM
     @EnvironmentObject var wordBookVM: WordBookVM
     @State var title = ""
@@ -257,6 +259,10 @@ struct DefinitionView: View {
                 }
             case .restricted:
                 VStack(spacing: 20) {
+                    Image("lock")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 90, height: 90)
                     Text("Sorry. You have reached the request limit.😰")
                         .font(Font.custom("DIN Condensed", size: 20))
                     Button {
@@ -277,14 +283,27 @@ struct DefinitionView: View {
                     if !rewardManager.rewardLoaded {
                         rewardManager.loadAd()
                     } else {
-                        let requestLimit = UserDefaults.standard.integer(forKey: "requestLimit")
-                        let newLimit = requestLimit + 1
-                        UserDefaults.standard.set(newLimit, forKey: "requestLimit")
-                        vm.requestLimit += 1
+//                        let requestLimit = UserDefaults.standard.integer(forKey: "requestLimit")
+//                        let newLimit = requestLimit + 1
+//                        UserDefaults.standard.set(newLimit, forKey: "requestLimit")
+//                        vm.requestLimit += 1
+//                        
+//                        Task {
+//                            await vm.fetchWordFromAPI(modelContext: modelContext)
+//                        }
                         
-                        Task {
-                            await vm.fetchWordFromAPI(modelContext: modelContext)
-                        }
+                        vm.loadingState = .rewarded
+                    }
+                }
+                
+            case .rewarded:
+                RewardedView {
+                    let requestRemaining = UserDefaults.standard.integer(forKey: "requestLimit")
+                    let newRemaining = requestRemaining + 2
+                    UserDefaults.standard.set(newRemaining, forKey: "requestRemaining")
+                    requestManager.requestRemaning += 2
+                    Task {
+                        await vm.fetchWordFromAPI(modelContext: modelContext)
                     }
                 }
             }

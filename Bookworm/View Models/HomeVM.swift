@@ -26,7 +26,6 @@ class HomeVM: ObservableObject {
     @Published var showingEditingView = false
     
     var testing = false // true: api, false: database
-    
     // NOTE: Replace MockdataWebService() with WebService() to fetch headlines data from real API
     init(webService: WebServiceDelegate = MockdataWebService()) {
         self.webService = webService
@@ -156,12 +155,13 @@ class HomeVM: ObservableObject {
     // FUNCTION: for fetching data from real api
     @MainActor func fetchHeadlinesFromAPI(modelContext: ModelContext) async {
         headLines = [Headline]()
-        if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/everything?domains=techcrunch.com,newyorker.com,bbc.com,nypost.com&apiKey=c0054895dda142d5896f81665100a207&pageSize=25&language=en") {
+        guard let apiKey = Bundle.main.infoDictionary?["HEADLINE_API_KEY"] as? String else { return }
+        if let downloadedHeadlines: HeadlinesResultReponse = await webService.downloadData(fromURL: "https://newsapi.org/v2/everything?domains=techcrunch.com,newyorker.com,bbc.com,nypost.com&apiKey=\(apiKey)&pageSize=25&language=en") {
             headLines = downloadedHeadlines.articles
             headLines.forEach{ modelContext.insert($0) }
             
             loadingState = LoadingStateManager.success
-            print("------> Successfully fetched headlines data.")
+            print("------> Successfully fetched headlines data from api.")
         } else {
             loadingState = LoadingStateManager.failed
             print("Failed to load headlines!")

@@ -17,6 +17,7 @@ struct AddOrEditLinkView: View {
     
     @ObservedObject var photoPickerVM: PhotoPickerVM
     @State var selectedPage: Shortcut?
+    @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
         ZStack {
@@ -116,6 +117,8 @@ struct AddOrEditLinkView: View {
                         .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                         .padding(.horizontal)
                         .disabled(vm.showingAlert)
+                        .focused($isTextFieldFocused)
+                    
                     
                     // Weblink
                     TextField("", text: $urlString, prompt: Text("Your web link").foregroundColor(.white.opacity(0.7))).padding(6)
@@ -129,10 +132,11 @@ struct AddOrEditLinkView: View {
                         .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
                         .padding(.horizontal)
                         .disabled(vm.showingAlert)
+                        .focused($isTextFieldFocused)
                     
                     // Photo Picker
                     PhotoPickerView(vm: photoPickerVM) {
-                        
+                        isTextFieldFocused = false
                     }
                     .disabled(vm.showingAlert)
                     
@@ -168,6 +172,7 @@ struct AddOrEditLinkView: View {
                             urlString = ""
                             webPageTitle = ""
                             photoPickerVM.clear()
+                            isTextFieldFocused = false
                         } label: {
                             Text("Clear")
                                 .foregroundColor(.white)

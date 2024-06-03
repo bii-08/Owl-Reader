@@ -16,6 +16,7 @@ class RewardAdsManager: NSObject, GADFullScreenContentDelegate, ObservableObject
     
     override init() {
         super.init()
+        loadAd()
     }
     
     // Load reward ads
@@ -41,6 +42,7 @@ class RewardAdsManager: NSObject, GADFullScreenContentDelegate, ObservableObject
             ad.present(fromRootViewController: root) {
                 print("You earned a reward")
                 self.rewardLoaded = true
+                self.rewardAd = nil
             }
         } else {
             print("Ad wasn't ready")

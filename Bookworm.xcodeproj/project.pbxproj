@@ -33,6 +33,9 @@
 		7863F3E72C0AF5F000EE828B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7863F3E62C0AF5F000EE828B /* GoogleMobileAds */; };
 		7863F3ED2C0AF93300EE828B /* RewardAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7863F3EC2C0AF93300EE828B /* RewardAdsManager.swift */; };
 		787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787AD29A2C00416E00910ADD /* Shortcut.swift */; };
+		788B03672C0D323E006338B3 /* RewardedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B03662C0D323E006338B3 /* RewardedView.swift */; };
+		788B03692C0D91AB006338B3 /* WordRequestCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */; };
+		788B036D2C0DD034006338B3 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B036C2C0DD034006338B3 /* RequestManager.swift */; };
 		789D8AB72BE3694F004E0EA5 /* Word.json in Resources */ = {isa = PBXBuildFile; fileRef = 789D8AB62BE3694F004E0EA5 /* Word.json */; };
 		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
 		789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */; };
@@ -45,7 +48,6 @@
 		78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */; };
 		78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */; };
 		78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */; };
-		78FE730C2BFC01E4006A23D4 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE730B2BFC01E4006A23D4 /* ProgressBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +78,10 @@
 		7863F3E82C0AF69100EE828B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7863F3EC2C0AF93300EE828B /* RewardAdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardAdsManager.swift; sourceTree = "<group>"; };
 		787AD29A2C00416E00910ADD /* Shortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcut.swift; sourceTree = "<group>"; };
+		788B03652C0C69D9006338B3 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		788B03662C0D323E006338B3 /* RewardedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedView.swift; sourceTree = "<group>"; };
+		788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRequestCounterView.swift; sourceTree = "<group>"; };
+		788B036C2C0DD034006338B3 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		789D8AB62BE3694F004E0EA5 /* Word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Word.json; sourceTree = "<group>"; };
 		789D8AB82BE43959004E0EA5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionVM.swift; sourceTree = "<group>"; };
@@ -87,7 +93,6 @@
 		78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogView.swift; sourceTree = "<group>"; };
 		78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateManager.swift; sourceTree = "<group>"; };
 		78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVM.swift; sourceTree = "<group>"; };
-		78FE730B2BFC01E4006A23D4 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +153,7 @@
 				781C5B122BE0652D00FB394B /* Service */,
 				781C5B1B2BE0766500FB394B /* Extension */,
 				785664C92BD66FC1008A9EF1 /* Assets.xcassets */,
+				788B03652C0C69D9006338B3 /* Config.xcconfig */,
 				785664CB2BD66FC1008A9EF1 /* Preview Content */,
 			);
 			path = Bookworm;
@@ -177,8 +183,9 @@
 				781C5B0E2BDF2BAD00FB394B /* AlertView.swift */,
 				781C5B1E2BE078C700FB394B /* HeadlineView.swift */,
 				781C5B242BE1C43A00FB394B /* PhotoPickerView.swift */,
-				78FE730B2BFC01E4006A23D4 /* ProgressBarView.swift */,
 				7837A8482C096E0900104E5E /* ProgressHeadLineView.swift */,
+				788B03662C0D323E006338B3 /* RewardedView.swift */,
+				788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */,
 				789D8AC72BE84A6B004E0EA5 /* TabBar.swift */,
 			);
 			path = Views;
@@ -208,6 +215,7 @@
 				789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */,
 				789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */,
 				78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */,
+				788B036C2C0DD034006338B3 /* RequestManager.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -312,6 +320,7 @@
 				785664E12BD88356008A9EF1 /* HomeVM.swift in Sources */,
 				7863F3ED2C0AF93300EE828B /* RewardAdsManager.swift in Sources */,
 				781C5B1A2BE075A700FB394B /* MockDataService.swift in Sources */,
+				788B03672C0D323E006338B3 /* RewardedView.swift in Sources */,
 				789D8AB92BE43959004E0EA5 /* Word.swift in Sources */,
 				785664C82BD66FBF008A9EF1 /* HomeView.swift in Sources */,
 				789D8AC82BE84A6B004E0EA5 /* TabBar.swift in Sources */,
@@ -321,10 +330,10 @@
 				789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */,
 				789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */,
 				7837A8492C096E0900104E5E /* ProgressHeadLineView.swift in Sources */,
-				78FE730C2BFC01E4006A23D4 /* ProgressBarView.swift in Sources */,
 				781C5B1D2BE0768600FB394B /* Extension.swift in Sources */,
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
 				789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */,
+				788B036D2C0DD034006338B3 /* RequestManager.swift in Sources */,
 				785664DE2BD88240008A9EF1 /* Link.swift in Sources */,
 				785664C62BD66FBF008A9EF1 /* BookwormApp.swift in Sources */,
 				78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */,
@@ -333,6 +342,7 @@
 				789D8AC02BE70044004E0EA5 /* WordBookView.swift in Sources */,
 				785664D82BD71C0F008A9EF1 /* DefinitionView.swift in Sources */,
 				787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */,
+				788B03692C0D91AB006338B3 /* WordRequestCounterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +351,7 @@
 /* Begin XCBuildConfiguration section */
 		785664CE2BD66FC1008A9EF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 788B03652C0C69D9006338B3 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -404,6 +415,7 @@
 		};
 		785664CF2BD66FC1008A9EF1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 788B03652C0C69D9006338B3 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -550,7 +562,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
 			requirement = {
-				kind = upToNextMajorVersion;
+				kind = upToNextMinorVersion;
 				minimumVersion = 11.5.0;
 			};
 		};
@@ -558,8 +570,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.2;
+				kind = exactVersion;
+				version = 5.0.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

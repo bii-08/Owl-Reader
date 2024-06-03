@@ -72,6 +72,72 @@ struct HomeView: View {
 }
 
 extension HomeView {
+    private var navigationBarOnWebPage: some View {
+        ZStack {
+            HStack(spacing: 15) {
+                
+                HStack {
+                    
+                    // Reload button
+                    Button {
+                        webView?.reload()
+                    } label: {
+                        Image(systemName: "arrow.counterclockwise.circle.fill")
+                            .tint(.orange)
+                            .font(.system(size: 22))
+                    }
+                    .padding(.horizontal, 3)
+                    
+                    // Go back button
+                    Button {
+                        webView?.goBack()
+                    } label: {
+                        Image(systemName: "arrowshape.turn.up.backward.fill")
+                            .tint(.orange)
+                            .font(.system(size: 22))
+                    }
+                    .disabled(!(webView?.canGoBack ?? false))
+                    .padding(.horizontal, 3)
+                    
+                    // Go forward button
+                    Button {
+                        webView?.goForward()
+                    } label: {
+                        Image(systemName: "arrowshape.turn.up.right.fill")
+                            .tint(.orange)
+                            .font(.system(size: 22))
+                    }
+                    .disabled(!(webView?.canGoForward ?? false))
+                    .padding(.horizontal, 3)
+                }
+                .frame(width: 150, height: 30)
+                .background(Color.teal.opacity(0.2))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .padding(.horizontal, 20)
+              
+                Spacer()
+                
+                // Show or hide tabbar
+                Button {
+                    if tabBarVisibility == .visible {
+                        tabBarVisibility = .hidden
+                    } else {
+                        tabBarVisibility = .visible
+                    }
+                } label: {
+                    Image(systemName: (tabBarVisibility == .visible) ? "eyeglasses" : "eyeglasses.slash")
+                        .font(.system(size: 22))
+                }
+                
+                // Request Counter
+                WordRequestCounterView()
+            }
+            .padding(.horizontal)
+        }
+        .frame(height: 30)
+        .clipShape(RoundedRectangle(cornerRadius: 5))
+        .padding(.horizontal)
+    }
     
     private var header: some View {
         ZStack {
@@ -137,6 +203,9 @@ extension HomeView {
                         }
                         .frame(height: 4)
                         VStack {
+                            // Navigation bar
+                            navigationBarOnWebPage
+                            
                             WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                 urlToDisplay = link?.url.absoluteString ?? ""
                             }) { word in
@@ -154,7 +223,11 @@ extension HomeView {
                             }
                         }
                         .toolbar{
-                            navigationBarOnWebPage
+                            TextField("Loading url....", text: $urlToDisplay, onCommit: {
+                                
+                            })
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(width: 300)
                         }
                         //.edgesIgnoringSafeArea(.all)
                     }
@@ -163,56 +236,6 @@ extension HomeView {
                 }
             }
         }
-    }
-    private var navigationBarOnWebPage: some View {
-        
-        ZStack {
-            HStack(spacing: 2) {
-                // Reload button
-                Button {
-                    webView?.reload()
-                } label: {
-                    Image(systemName: "arrow.counterclockwise.circle.fill")
-                        .tint(.orange.opacity(0.7))
-                        .font(.system(size: 15))
-                }
-                
-                TextField("Loading url....", text: $urlToDisplay, onCommit: {
-                    
-                })
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                // Go back button
-                Button {
-                    webView?.goBack()
-                } label: {
-                    Image(systemName: "arrowshape.turn.up.backward.fill")
-                        .tint(.orange.opacity(0.7))
-                        .font(.system(size: 15))
-                }
-                .disabled(!(webView?.canGoBack ?? false))
-                
-                // Go forward button
-                Button {
-                    webView?.goForward()
-                } label: {
-                    Image(systemName: "arrowshape.turn.up.right.fill")
-                        .tint(.orange.opacity(0.7))
-                        .font(.system(size: 15))
-                }
-                .disabled(!(webView?.canGoForward ?? false))
-                
-                Button {
-                    if tabBarVisibility == .visible {
-                        tabBarVisibility = .hidden
-                    } else {
-                        tabBarVisibility = .visible
-                    }
-                } label: {
-                    Image(systemName: (tabBarVisibility == .visible) ? "eyeglasses" : "eyeglasses.slash")
-                }
-            }
-        }
-        .frame(height: 50)
     }
     private var breakingNews: some View {
         VStack(spacing: 5) {
@@ -255,6 +278,9 @@ extension HomeView {
                         }
                         .frame(height: 4)
                         VStack {
+                            // Navigation bar
+                            navigationBarOnWebPage
+                            
                             WebView(url: URL(string: headline.url),viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                 urlToDisplay = link?.url.absoluteString ?? ""
                             }) { word in
@@ -272,7 +298,11 @@ extension HomeView {
                             }
                         }
                         .toolbar{
-                            navigationBarOnWebPage
+                            TextField("Loading url....", text: $urlToDisplay, onCommit: {
+                                
+                            })
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(width: 300)
                         }
                         .edgesIgnoringSafeArea(.all)
                     }
@@ -306,6 +336,11 @@ extension HomeView {
                 .padding(.horizontal)
                 
             case .restricted:
+                VStack {
+                    Text("")
+                }
+                
+            case .rewarded:
                 VStack {
                     Text("")
                 }
@@ -374,6 +409,9 @@ extension HomeView {
                             }
                             .frame(height: 4)
                             VStack {
+                                // Navigation bar
+                                navigationBarOnWebPage
+                                
                                 WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                     urlToDisplay = link?.url.absoluteString ?? ""
                                 }) { word in
@@ -391,7 +429,12 @@ extension HomeView {
                                 }
                             }
                             .toolbar{
-                                navigationBarOnWebPage
+                                TextField("Loading url....", text: $urlToDisplay, onCommit: {
+                                    
+                                })
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .frame(width: 300)
+
                             }
                             .edgesIgnoringSafeArea(.all)
                         }
@@ -490,6 +533,9 @@ extension HomeView {
                     }
                     .frame(height: 4)
                     VStack {
+                        // Navigation bar
+                        navigationBarOnWebPage
+                        
                         WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                             urlToDisplay = link?.url.absoluteString ?? ""
                         }) { word in
@@ -507,7 +553,11 @@ extension HomeView {
                         }
                     }
                     .toolbar{
-                        navigationBarOnWebPage
+                        TextField("Loading url....", text: $urlToDisplay, onCommit: {
+                            
+                        })
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 300)
                     }
                     .edgesIgnoringSafeArea(.all)
                 }

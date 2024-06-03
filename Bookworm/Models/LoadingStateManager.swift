@@ -12,6 +12,7 @@ enum LoadingStateManager {
     case success
     case failed
     case restricted
+    case rewarded
 }
 
 
