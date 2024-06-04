@@ -12,16 +12,12 @@ import NaturalLanguage
 
 @MainActor
 class DefinitionVM: ObservableObject {
-    @ObservedObject var requestManager = RequestManager.shared
+    @ObservedObject private var requestManager = RequestManager.shared
     private let dictionaryService: DictionaryServiceDelegate
     @Published var word: Word?
     var selectedWord: String
     var isNewWord = false
     var stemForm = ""
-
-    private let requestCountKey = "requestCount"
-    private let requestRemaningKey = "requestRemaining"
-    private let lastFetchDate = "lastFetchDateForDefinition"
     
     @Published var loadingState = LoadingStateManager.loading
     
@@ -29,7 +25,7 @@ class DefinitionVM: ObservableObject {
     init(selectedWord: String, dictionaryService: DictionaryServiceDelegate = DictionaryService()) {
         self.selectedWord = selectedWord
         self.dictionaryService = dictionaryService
-        resetCountIfNeeded()
+        requestManager.resetCountIfNeeded()
     }
     
     // FUNCTION: to fetch word from dictionary api
@@ -45,7 +41,7 @@ class DefinitionVM: ObservableObject {
             if let targetWord: Word = await dictionaryService.downloadWord(word: selectedWord.lemmatize()) {
                 word = targetWord
                 loadingState = LoadingStateManager.success
-                calculateRequestCountAndRequestLimit()
+                requestManager.calculateRequestCountAndRequestLimit()
                 print("Successfully downloaded this word from api.")
                 print("new request limit = \(requestManager.requestRemaning)")
             } else {
@@ -82,27 +78,5 @@ class DefinitionVM: ObservableObject {
             return false
         }
         return true
-    }
-    
-    // FUNCTION: to calculate request count and request limit
-    func calculateRequestCountAndRequestLimit() {
-        requestManager.requestCount += 1
-        requestManager.requestRemaning -= 1
-        UserDefaults.standard.set(requestManager.requestCount, forKey: requestCountKey)
-        UserDefaults.standard.set(requestManager.requestRemaning, forKey: requestRemaningKey)
-    }
-    
-    // FUNCTION: to reset requestCount and requestLimit if needed
-    func resetCountIfNeeded() {
-        let today = Date().formatted(date: .numeric, time: .omitted)
-        let lastFetchDate = UserDefaults.standard.string(forKey: lastFetchDate)
-        print("the last fetch date: \(String(describing: lastFetchDate))")
-        if lastFetchDate != today || lastFetchDate == nil {
-            UserDefaults.standard.set(0, forKey: requestCountKey)
-            requestManager.requestCount = 0
-            UserDefaults.standard.set(1, forKey: requestRemaningKey)
-            requestManager.requestRemaning = 1
-            UserDefaults.standard.set(today, forKey: "lastFetchDateForDefinition")
-        }
     }
 }

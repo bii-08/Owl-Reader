@@ -60,6 +60,8 @@ struct WordBookView: View {
                     .sheet(isPresented: $vm.showingSheet) {
                         changingWordBookSheetView
                     }
+//                    BannerView()
+//                        .frame(height: 60)
                 }
                 .navigationDestination(for: WordBook.self) { wordBook in
                     SavedWordsListView(wordBook: wordBook)

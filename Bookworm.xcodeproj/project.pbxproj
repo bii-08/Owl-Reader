@@ -36,6 +36,10 @@
 		788B03672C0D323E006338B3 /* RewardedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B03662C0D323E006338B3 /* RewardedView.swift */; };
 		788B03692C0D91AB006338B3 /* WordRequestCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */; };
 		788B036D2C0DD034006338B3 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B036C2C0DD034006338B3 /* RequestManager.swift */; };
+		788B03792C0E9C77006338B3 /* CustomHeadlinePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B03782C0E9C77006338B3 /* CustomHeadlinePageControl.swift */; };
+		788B037B2C0EA3EA006338B3 /* DailyStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B037A2C0EA3EA006338B3 /* DailyStoryView.swift */; };
+		788B037D2C0EC8FE006338B3 /* HighlightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B037C2C0EC8FE006338B3 /* HighlightTextView.swift */; };
+		788B037F2C0ED3E2006338B3 /* BannerAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B037E2C0ED3E2006338B3 /* BannerAdsManager.swift */; };
 		789D8AB72BE3694F004E0EA5 /* Word.json in Resources */ = {isa = PBXBuildFile; fileRef = 789D8AB62BE3694F004E0EA5 /* Word.json */; };
 		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
 		789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */; };
@@ -82,6 +86,10 @@
 		788B03662C0D323E006338B3 /* RewardedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedView.swift; sourceTree = "<group>"; };
 		788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRequestCounterView.swift; sourceTree = "<group>"; };
 		788B036C2C0DD034006338B3 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		788B03782C0E9C77006338B3 /* CustomHeadlinePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeadlinePageControl.swift; sourceTree = "<group>"; };
+		788B037A2C0EA3EA006338B3 /* DailyStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStoryView.swift; sourceTree = "<group>"; };
+		788B037C2C0EC8FE006338B3 /* HighlightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextView.swift; sourceTree = "<group>"; };
+		788B037E2C0ED3E2006338B3 /* BannerAdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdsManager.swift; sourceTree = "<group>"; };
 		789D8AB62BE3694F004E0EA5 /* Word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Word.json; sourceTree = "<group>"; };
 		789D8AB82BE43959004E0EA5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		789D8ABA2BE43F92004E0EA5 /* DefinitionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefinitionVM.swift; sourceTree = "<group>"; };
@@ -187,6 +195,9 @@
 				788B03662C0D323E006338B3 /* RewardedView.swift */,
 				788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */,
 				789D8AC72BE84A6B004E0EA5 /* TabBar.swift */,
+				788B03782C0E9C77006338B3 /* CustomHeadlinePageControl.swift */,
+				788B037A2C0EA3EA006338B3 /* DailyStoryView.swift */,
+				788B037C2C0EC8FE006338B3 /* HighlightTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				7863F3EC2C0AF93300EE828B /* RewardAdsManager.swift */,
+				788B037E2C0ED3E2006338B3 /* BannerAdsManager.swift */,
 			);
 			path = "AdMod Ads";
 			sourceTree = "<group>";
@@ -310,6 +322,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				781C5B162BE0732400FB394B /* WebService.swift in Sources */,
+				788B03792C0E9C77006338B3 /* CustomHeadlinePageControl.swift in Sources */,
+				788B037D2C0EC8FE006338B3 /* HighlightTextView.swift in Sources */,
 				78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */,
 				78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */,
 				785664DA2BD871C1008A9EF1 /* ShortcutView.swift in Sources */,
@@ -330,8 +344,10 @@
 				789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */,
 				789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */,
 				7837A8492C096E0900104E5E /* ProgressHeadLineView.swift in Sources */,
+				788B037B2C0EA3EA006338B3 /* DailyStoryView.swift in Sources */,
 				781C5B1D2BE0768600FB394B /* Extension.swift in Sources */,
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
+				788B037F2C0ED3E2006338B3 /* BannerAdsManager.swift in Sources */,
 				789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */,
 				788B036D2C0DD034006338B3 /* RequestManager.swift in Sources */,
 				785664DE2BD88240008A9EF1 /* Link.swift in Sources */,

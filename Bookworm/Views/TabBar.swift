@@ -31,6 +31,12 @@ struct TabBar: View {
                 Label("All words", systemImage: "heart")
             }
             .tag(2)
+            
+            DailyStoryView()
+                .tabItem {
+                    Label("Daily story", systemImage: "newspaper")
+                }
+                .tag(3)
         }
         .accentColor(.tabBarButton)
     }

@@ -13,10 +13,12 @@ struct HomeView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var vm: HomeVM
+    @ObservedObject private var requestManager = RequestManager.shared
     @Environment(\.modelContext) var modelContext
     @StateObject var viewModel = ProgressVM()
     
     @State var tabBarVisibility: Visibility = .visible
+    @State private var selectedPage = 1
     
     @State private var urlString = ""
     @State private var selectedWord: String? = nil
@@ -74,8 +76,8 @@ struct HomeView: View {
 extension HomeView {
     private var navigationBarOnWebPage: some View {
         ZStack {
+            
             HStack(spacing: 15) {
-                
                 HStack {
                     
                     // Reload button
@@ -114,7 +116,7 @@ extension HomeView {
                 .background(Color.teal.opacity(0.2))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.horizontal, 20)
-              
+                
                 Spacer()
                 
                 // Show or hide tabbar
@@ -131,6 +133,9 @@ extension HomeView {
                 
                 // Request Counter
                 WordRequestCounterView()
+                    .onLoad {
+                        requestManager.resetCountIfNeeded()
+                    }
             }
             .padding(.horizontal)
         }
@@ -205,6 +210,8 @@ extension HomeView {
                         VStack {
                             // Navigation bar
                             navigationBarOnWebPage
+                            BannerView()
+                                .frame(height: 60)
                             
                             WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                 urlToDisplay = link?.url.absoluteString ?? ""
@@ -257,7 +264,7 @@ extension HomeView {
                 ProgressHeadLineView() 
             case .success:
                 // Tab View
-                TabView {
+                TabView(selection: $selectedPage) {
                     ForEach(0..<vm.headLines.count, id: \.self) { index in
                         HeadlineView(headline: vm.headLines[index]) {
                             selectedHeadline = vm.headLines[index]
@@ -280,6 +287,9 @@ extension HomeView {
                         VStack {
                             // Navigation bar
                             navigationBarOnWebPage
+                            BannerView()
+                                .frame(height: 60)
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
                             
                             WebView(url: URL(string: headline.url),viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                 urlToDisplay = link?.url.absoluteString ?? ""
@@ -299,7 +309,6 @@ extension HomeView {
                         }
                         .toolbar{
                             TextField("Loading url....", text: $urlToDisplay, onCommit: {
-                                
                             })
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .frame(width: 300)
@@ -309,6 +318,10 @@ extension HomeView {
                     .toolbarBackground(tabBarVisibility, for: .tabBar)
                     .toolbarBackground(colorScheme == .light ? Color.white.opacity(0.7) : Color.black.opacity(0.7), for: .tabBar)
                 }
+                
+                CustomPageControl(numberOfPages: vm.headLines.count, currentPage: $selectedPage)
+                    .frame(height: UIScreen.main.bounds.height <= 812 && UIScreen.main.bounds.width <= 375 ? 12 : 23)
+                
             case .failed:
                 ZStack {
                     Color.gray.opacity(0.1)
@@ -411,6 +424,8 @@ extension HomeView {
                             VStack {
                                 // Navigation bar
                                 navigationBarOnWebPage
+                                BannerView()
+                                    .frame(height: 60)
                                 
                                 WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                     urlToDisplay = link?.url.absoluteString ?? ""
@@ -535,6 +550,8 @@ extension HomeView {
                     VStack {
                         // Navigation bar
                         navigationBarOnWebPage
+                        BannerView()
+                            .frame(height: 60)
                         
                         WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                             urlToDisplay = link?.url.absoluteString ?? ""

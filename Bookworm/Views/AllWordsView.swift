@@ -111,14 +111,22 @@ struct AllWordsView: View {
         }
         .navigationTitle("All words (\(allWords.count))")
         .toolbar {
-            Button {
-                showingSheet = true
-            } label: {
-                Image(systemName: "plus")
-                    .scaleEffect(1.2)
+            
+            ToolbarItem(placement: .topBarLeading) {
+                WordRequestCounterView()
             }
-            .tint(.red)
-            .disabled(showingConfirmation)
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showingSheet = true
+                } label: {
+                    Image(systemName: "plus")
+                        .scaleEffect(1.2)
+                }
+                .tint(.red)
+                .disabled(showingConfirmation)
+            }
+            
         }
         .navigationBarTitleDisplayMode(.inline)
     }
