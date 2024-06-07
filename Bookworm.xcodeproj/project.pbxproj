@@ -37,8 +37,7 @@
 		788B03692C0D91AB006338B3 /* WordRequestCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */; };
 		788B036D2C0DD034006338B3 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B036C2C0DD034006338B3 /* RequestManager.swift */; };
 		788B03792C0E9C77006338B3 /* CustomHeadlinePageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B03782C0E9C77006338B3 /* CustomHeadlinePageControl.swift */; };
-		788B037B2C0EA3EA006338B3 /* DailyStoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B037A2C0EA3EA006338B3 /* DailyStoryView.swift */; };
-		788B037D2C0EC8FE006338B3 /* HighlightTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B037C2C0EC8FE006338B3 /* HighlightTextView.swift */; };
+		788B037D2C0EC8FE006338B3 /* StoryReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B037C2C0EC8FE006338B3 /* StoryReadingView.swift */; };
 		788B037F2C0ED3E2006338B3 /* BannerAdsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788B037E2C0ED3E2006338B3 /* BannerAdsManager.swift */; };
 		789D8AB72BE3694F004E0EA5 /* Word.json in Resources */ = {isa = PBXBuildFile; fileRef = 789D8AB62BE3694F004E0EA5 /* Word.json */; };
 		789D8AB92BE43959004E0EA5 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AB82BE43959004E0EA5 /* Word.swift */; };
@@ -49,6 +48,14 @@
 		789D8AC42BE7074F004E0EA5 /* SavedWordsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC32BE7074F004E0EA5 /* SavedWordsListView.swift */; };
 		789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */; };
 		789D8AC82BE84A6B004E0EA5 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC72BE84A6B004E0EA5 /* TabBar.swift */; };
+		78B99B702C0FF04800988955 /* DailyStoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B6F2C0FF04800988955 /* DailyStoryListView.swift */; };
+		78B99B722C102EEB00988955 /* BookRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B712C102EEB00988955 /* BookRowView.swift */; };
+		78B99B752C102FA000988955 /* The Monkey’s paw.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B742C102FA000988955 /* The Monkey’s paw.txt */; };
+		78B99B772C1033E700988955 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B762C1033E700988955 /* Book.swift */; };
+		78B99B792C10365F00988955 /* The Gift of The Magi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B782C10365F00988955 /* The Gift of The Magi.txt */; };
+		78B99B7B2C10367000988955 /* Metamorphosis.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B7A2C10367000988955 /* Metamorphosis.txt */; };
+		78B99B7D2C10367C00988955 /* The Yellow Wallpaper.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B7C2C10367C00988955 /* The Yellow Wallpaper.txt */; };
+		78B99B7F2C1129AC00988955 /* StoryReadingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */; };
 		78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */; };
 		78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */; };
 		78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */; };
@@ -87,8 +94,7 @@
 		788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRequestCounterView.swift; sourceTree = "<group>"; };
 		788B036C2C0DD034006338B3 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
 		788B03782C0E9C77006338B3 /* CustomHeadlinePageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeadlinePageControl.swift; sourceTree = "<group>"; };
-		788B037A2C0EA3EA006338B3 /* DailyStoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStoryView.swift; sourceTree = "<group>"; };
-		788B037C2C0EC8FE006338B3 /* HighlightTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightTextView.swift; sourceTree = "<group>"; };
+		788B037C2C0EC8FE006338B3 /* StoryReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryReadingView.swift; sourceTree = "<group>"; };
 		788B037E2C0ED3E2006338B3 /* BannerAdsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdsManager.swift; sourceTree = "<group>"; };
 		789D8AB62BE3694F004E0EA5 /* Word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Word.json; sourceTree = "<group>"; };
 		789D8AB82BE43959004E0EA5 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
@@ -98,6 +104,14 @@
 		789D8AC32BE7074F004E0EA5 /* SavedWordsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedWordsListView.swift; sourceTree = "<group>"; };
 		789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBookVM.swift; sourceTree = "<group>"; };
 		789D8AC72BE84A6B004E0EA5 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		78B99B6F2C0FF04800988955 /* DailyStoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStoryListView.swift; sourceTree = "<group>"; };
+		78B99B712C102EEB00988955 /* BookRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRowView.swift; sourceTree = "<group>"; };
+		78B99B742C102FA000988955 /* The Monkey’s paw.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Monkey’s paw.txt"; sourceTree = "<group>"; };
+		78B99B762C1033E700988955 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		78B99B782C10365F00988955 /* The Gift of The Magi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Gift of The Magi.txt"; sourceTree = "<group>"; };
+		78B99B7A2C10367000988955 /* Metamorphosis.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Metamorphosis.txt; sourceTree = "<group>"; };
+		78B99B7C2C10367C00988955 /* The Yellow Wallpaper.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Yellow Wallpaper.txt"; sourceTree = "<group>"; };
+		78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryReadingVM.swift; sourceTree = "<group>"; };
 		78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogView.swift; sourceTree = "<group>"; };
 		78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateManager.swift; sourceTree = "<group>"; };
 		78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVM.swift; sourceTree = "<group>"; };
@@ -160,6 +174,7 @@
 				785664DC2BD881F5008A9EF1 /* Models */,
 				781C5B122BE0652D00FB394B /* Service */,
 				781C5B1B2BE0766500FB394B /* Extension */,
+				78B99B732C102F5600988955 /* Book files */,
 				785664C92BD66FC1008A9EF1 /* Assets.xcassets */,
 				788B03652C0C69D9006338B3 /* Config.xcconfig */,
 				785664CB2BD66FC1008A9EF1 /* Preview Content */,
@@ -196,8 +211,9 @@
 				788B03682C0D91AB006338B3 /* WordRequestCounterView.swift */,
 				789D8AC72BE84A6B004E0EA5 /* TabBar.swift */,
 				788B03782C0E9C77006338B3 /* CustomHeadlinePageControl.swift */,
-				788B037A2C0EA3EA006338B3 /* DailyStoryView.swift */,
-				788B037C2C0EC8FE006338B3 /* HighlightTextView.swift */,
+				78B99B6F2C0FF04800988955 /* DailyStoryListView.swift */,
+				788B037C2C0EC8FE006338B3 /* StoryReadingView.swift */,
+				78B99B712C102EEB00988955 /* BookRowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,6 +227,7 @@
 				789D8AB82BE43959004E0EA5 /* Word.swift */,
 				789D8AC12BE70252004E0EA5 /* WordBook.swift */,
 				78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */,
+				78B99B762C1033E700988955 /* Book.swift */,
 				781C5B132BE06EEB00FB394B /* Headlines.json */,
 				789D8AB62BE3694F004E0EA5 /* Word.json */,
 				7837A8462C06AD5900104E5E /* testing.json */,
@@ -227,6 +244,7 @@
 				789D8AC52BE70CB8004E0EA5 /* WordBookVM.swift */,
 				78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */,
 				788B036C2C0DD034006338B3 /* RequestManager.swift */,
+				78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -238,6 +256,17 @@
 				788B037E2C0ED3E2006338B3 /* BannerAdsManager.swift */,
 			);
 			path = "AdMod Ads";
+			sourceTree = "<group>";
+		};
+		78B99B732C102F5600988955 /* Book files */ = {
+			isa = PBXGroup;
+			children = (
+				78B99B742C102FA000988955 /* The Monkey’s paw.txt */,
+				78B99B782C10365F00988955 /* The Gift of The Magi.txt */,
+				78B99B7A2C10367000988955 /* Metamorphosis.txt */,
+				78B99B7C2C10367C00988955 /* The Yellow Wallpaper.txt */,
+			);
+			path = "Book files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,10 +335,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78B99B792C10365F00988955 /* The Gift of The Magi.txt in Resources */,
+				78B99B7D2C10367C00988955 /* The Yellow Wallpaper.txt in Resources */,
 				781C5B142BE06EEB00FB394B /* Headlines.json in Resources */,
+				78B99B7B2C10367000988955 /* Metamorphosis.txt in Resources */,
 				785664CD2BD66FC1008A9EF1 /* Preview Assets.xcassets in Resources */,
 				7837A8472C06AD5900104E5E /* testing.json in Resources */,
 				785664CA2BD66FC1008A9EF1 /* Assets.xcassets in Resources */,
+				78B99B752C102FA000988955 /* The Monkey’s paw.txt in Resources */,
 				789D8AB72BE3694F004E0EA5 /* Word.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,16 +356,18 @@
 			files = (
 				781C5B162BE0732400FB394B /* WebService.swift in Sources */,
 				788B03792C0E9C77006338B3 /* CustomHeadlinePageControl.swift in Sources */,
-				788B037D2C0EC8FE006338B3 /* HighlightTextView.swift in Sources */,
+				788B037D2C0EC8FE006338B3 /* StoryReadingView.swift in Sources */,
 				78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */,
 				78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */,
 				785664DA2BD871C1008A9EF1 /* ShortcutView.swift in Sources */,
 				785664D42BD6728A008A9EF1 /* WebView.swift in Sources */,
+				78B99B7F2C1129AC00988955 /* StoryReadingVM.swift in Sources */,
 				781C5B212BE0791100FB394B /* Headline.swift in Sources */,
 				781C5B0F2BDF2BAD00FB394B /* AlertView.swift in Sources */,
 				781C5B232BE1C3A300FB394B /* PhotoPickerVM.swift in Sources */,
 				785664E12BD88356008A9EF1 /* HomeVM.swift in Sources */,
 				7863F3ED2C0AF93300EE828B /* RewardAdsManager.swift in Sources */,
+				78B99B772C1033E700988955 /* Book.swift in Sources */,
 				781C5B1A2BE075A700FB394B /* MockDataService.swift in Sources */,
 				788B03672C0D323E006338B3 /* RewardedView.swift in Sources */,
 				789D8AB92BE43959004E0EA5 /* Word.swift in Sources */,
@@ -342,10 +377,11 @@
 				781C5B1F2BE078C700FB394B /* HeadlineView.swift in Sources */,
 				781C5B112BDF6A3000FB394B /* EditingView.swift in Sources */,
 				789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */,
+				78B99B702C0FF04800988955 /* DailyStoryListView.swift in Sources */,
 				789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */,
 				7837A8492C096E0900104E5E /* ProgressHeadLineView.swift in Sources */,
-				788B037B2C0EA3EA006338B3 /* DailyStoryView.swift in Sources */,
 				781C5B1D2BE0768600FB394B /* Extension.swift in Sources */,
+				78B99B722C102EEB00988955 /* BookRowView.swift in Sources */,
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
 				788B037F2C0ED3E2006338B3 /* BannerAdsManager.swift in Sources */,
 				789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */,

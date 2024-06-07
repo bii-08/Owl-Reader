@@ -32,7 +32,7 @@ struct TabBar: View {
             }
             .tag(2)
             
-            DailyStoryView()
+            DailyStoryListView()
                 .tabItem {
                     Label("Daily story", systemImage: "newspaper")
                 }
