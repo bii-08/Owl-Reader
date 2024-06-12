@@ -16,6 +16,7 @@ struct ShortcutView: View {
     var body: some View {
         Button {
             action()
+            AnalyticsManager.shared.logEvent(name: "HomeView_Shortcuts_ShortcutButtonClick")
         } label: {
             // Webpage icon
             VStack {

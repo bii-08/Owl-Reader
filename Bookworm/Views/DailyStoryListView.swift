@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DailyStoryListView: View {
+    @State private var showingDefinition = false
     var books: [Book] = Book.defaults
     var body: some View {
         NavigationStack {
@@ -21,10 +22,16 @@ struct DailyStoryListView: View {
                 }
                 .scrollContentBackground(.hidden)
                 .background(Color("background").edgesIgnoringSafeArea(.all))
-                .navigationTitle("Daily Story")
+                .navigationTitle(Localized.Daily_Story)
                 .navigationDestination(for: Book.self) { book in
-                    StoryReadingView(storyReadingVM: StoryReadingVM(book: book))
+                    StoryReadingView(storyReadingVM: StoryReadingVM(book: book), showingDefinition: $showingDefinition)
                 }
+        }
+        .onAppear {
+            AnalyticsManager.shared.logEvent(name: "DailyStoryListView_Appear")
+        }
+        .onDisappear {
+            AnalyticsManager.shared.logEvent(name: "DailyStoryListView_Disappear")
         }
     }
 }

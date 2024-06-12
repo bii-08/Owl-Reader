@@ -31,7 +31,8 @@ struct HomeView: View {
     @State private var selectedHeadline: Headline?
     @State private var urlToDisplay = ""
     @FocusState private var isTextFieldFocused: Bool
-    
+    let requestCounterTip = RequestCounterTip()
+    var deviceType = DeviceInfo.shared.getDeviceType()
     var body: some View {
         NavigationStack {
             ZStack {
@@ -65,6 +66,7 @@ struct HomeView: View {
                 Task {
                     await vm.handleHeadlines(modelContext: modelContext)
                 }
+                AnalyticsManager.shared.logEvent(name: "HomeView_Appear")
             }
         }
         .toolbar(tabBarVisibility, for: .tabBar)
@@ -133,6 +135,7 @@ extension HomeView {
                 
                 // Request Counter
                 WordRequestCounterView()
+                    .popoverTip(requestCounterTip)
                     .onLoad {
                         requestManager.resetCountIfNeeded()
                     }
@@ -142,6 +145,12 @@ extension HomeView {
         .frame(height: 30)
         .clipShape(RoundedRectangle(cornerRadius: 5))
         .padding(.horizontal)
+        .onAppear {
+            AnalyticsManager.shared.logEvent(name: "WebView_Appear")
+        }
+        .onDisappear {
+            AnalyticsManager.shared.logEvent(name: "WebView_Disappear")
+        }
     }
     
     private var header: some View {
@@ -156,7 +165,7 @@ extension HomeView {
             
             VStack(alignment: .leading) {
                 // App's name
-                Text("Owl Read")
+                Text("Owl Reader")
                     .foregroundColor(.black)
                     .font(Font.custom("Marker Felt", size: 27))
                     .bold()
@@ -168,10 +177,11 @@ extension HomeView {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
                             .padding(.horizontal, 10)
-                        TextField("", text: $urlString, prompt: Text("Enter your web link").foregroundColor(.white.opacity(0.7)))
+                        TextField("", text: $urlString, prompt: Text(Localized.Enter_your_web_link).foregroundColor(.white.opacity(0.7)))
                             .foregroundColor(.white)
                             .onSubmit {
                                 processingLink = true
+                                AnalyticsManager.shared.logEvent(name: "HomeView_header_SearchButtonClick")
                             }
                             .submitLabel(.done)
                             .textInputAutocapitalization(.never)
@@ -181,12 +191,11 @@ extension HomeView {
                     .frame(maxHeight: 35)
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.6)))
                     
-                    
                     Button {
                         urlString = ""
                         isTextFieldFocused = false
                     } label: {
-                        Text("Cancel")
+                        Text(Localized.Cancel)
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxHeight: 35)
@@ -220,23 +229,22 @@ extension HomeView {
                                 selectedWord = word
                                 showingDefinition = true
                             }
-                            .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                            .popover(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 }),attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))),arrowEdge: .bottom) {
                                 if let word = selectedWord {
-                                    DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                    DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
                                         .presentationBackground(.thinMaterial)
                                         .presentationCornerRadius(15)
+                                        .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
                                         .presentationDetents([.large, .height(300)])
                                 }
                             }
                         }
                         .toolbar{
-                            TextField("Loading url....", text: $urlToDisplay, onCommit: {
-                                
+                            TextField(Localized.Loading_url, text: $urlToDisplay, onCommit: {
                             })
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .frame(width: 300)
                         }
-                        //.edgesIgnoringSafeArea(.all)
                     }
                     .toolbarBackground(tabBarVisibility, for: .tabBar)
                     .toolbarBackground(colorScheme == .light ? Color.white.opacity(0.7) : Color.black.opacity(0.7), for: .tabBar)
@@ -247,7 +255,7 @@ extension HomeView {
     private var breakingNews: some View {
         VStack(spacing: 5) {
             HStack {
-                Text("Breaking News")
+                Text(Localized.Breaking_News)
                     .font(Font.custom("DIN Condensed", size: 30))
                     .foregroundColor(.primary.opacity(0.8))
                     .bold()
@@ -266,13 +274,13 @@ extension HomeView {
                 // Tab View
                 TabView(selection: $selectedPage) {
                     ForEach(0..<vm.headLines.count, id: \.self) { index in
-                        HeadlineView(headline: vm.headLines[index]) {
+                        HeadlineView(headline: vm.headLines[index], deviceType: deviceType) {
                             selectedHeadline = vm.headLines[index]
                         }
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                .frame(height: 200)
+                .frame(height: deviceType == .pad ? 400 : 200)
                 .navigationDestination(item: $selectedHeadline) { headline in
                     VStack {
                         ZStack{
@@ -298,17 +306,18 @@ extension HomeView {
                                 selectedWord = word
                                 showingDefinition = true
                             }
-                            .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                            .popover(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 }), attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))), arrowEdge: .bottom) {
                                 if let word = selectedWord {
-                                    DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                    DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
                                         .presentationBackground(.thickMaterial)
                                         .presentationCornerRadius(15)
+                                        .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
                                         .presentationDetents([.large, .height(300)])
                                 }
                             }
                         }
                         .toolbar{
-                            TextField("Loading url....", text: $urlToDisplay, onCommit: {
+                            TextField(Localized.Loading_url, text: $urlToDisplay, onCommit: {
                             })
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .frame(width: 300)
@@ -331,16 +340,17 @@ extension HomeView {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 50, height: 50)
-                            Text("Error loading headlines")
+                            Text(Localized.Error_loading_headlines)
                                 .bold()
                         }
                     } description: {
-                        Text("An error occurred while loading headlines.")
+                        Text(Localized.An_error_occurred_while_loading_headlines)
                     } actions: {
-                        Button("Retry") {
-//                            Task {
-//                                await vm.fetchHeadlinesFromAPI(modelContext: modelContext)
-//                            }
+                        Button(Localized.Retry) {
+                            Task {
+                                await vm.fetchHeadlinesFromAPI(modelContext: modelContext)
+                            }
+                            AnalyticsManager.shared.logEvent(name: "HomeView_BreakingNews_HeadlineRetryButtonClick")
                         }
                         .buttonStyle(BorderedButtonStyle())
                     }
@@ -363,7 +373,7 @@ extension HomeView {
     private var shotcuts: some View {
         VStack(spacing: 5) {
             HStack {
-                Text("Shortcuts")
+                Text(Localized.Shortcuts)
                     .font(Font.custom("DIN Condensed", size: 30))
                     .foregroundColor(.primary.opacity(0.8))
                     .bold()
@@ -391,7 +401,7 @@ extension HomeView {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(radius: 1)
                         
-                        Text("Add / Edit Link")
+                        Text(Localized.Add_Edit_Link)
                             .foregroundColor(.primary.opacity(0.5))
                             .padding(12)
                     }
@@ -434,17 +444,18 @@ extension HomeView {
                                     selectedWord = word
                                     showingDefinition = true
                                 }
-                                .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                                .popover(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 }), attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))), arrowEdge: .bottom) {
                                     if let word = selectedWord {
-                                        DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                        DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
                                             .presentationBackground(.thickMaterial)
                                             .presentationCornerRadius(15)
+                                            .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
                                             .presentationDetents([.large, .height(300)])
                                     }
                                 }
                             }
                             .toolbar{
-                                TextField("Loading url....", text: $urlToDisplay, onCommit: {
+                                TextField(Localized.Loading_url, text: $urlToDisplay, onCommit: {
                                     
                                 })
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -463,13 +474,13 @@ extension HomeView {
     private var recentlyRead: some View {
         VStack(spacing: 5) {
             HStack {
-                Text("Recently Read" + " " + "(\(vm.recentlyReadURLs.count))")
+                Text(Localized.Recently_Read + " " + "(\(vm.recentlyReadURLs.count))")
                     .font(Font.custom("DIN Condensed", size: 30))
                     .foregroundColor(.primary.opacity(0.8))
                     .bold()
                 Spacer()
                 if vm.recentlyReadURLs.count >= 2 {
-                    Button("Clear all") {
+                    Button(Localized.Clear_all) {
                         for url in vm.recentlyReadURLs {
                             modelContext.delete(url)
                         }
@@ -485,7 +496,7 @@ extension HomeView {
                 .padding(.horizontal)
             
             if vm.recentlyReadURLs == [] {
-                Text("No history")
+                Text(Localized.No_history)
                     .font(Font.custom("Avenir Next Condensed", size: 20))
                     .foregroundColor(.secondary)
                     .padding(40)
@@ -495,6 +506,7 @@ extension HomeView {
                         Button {
                             urlString = link.url.absoluteString
                             showingRecentlyReadWebPage = true
+                            AnalyticsManager.shared.logEvent(name: "HomeView_RecentlyRead_HeadlineLinkClick")
                         } label: {
                             VStack {
                                 HStack {
@@ -560,17 +572,18 @@ extension HomeView {
                             selectedWord = word
                             showingDefinition = true
                         }
-                        .sheet(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 })) {
+                        .popover(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 }), attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))),arrowEdge: .bottom) {
                             if let word = selectedWord {
-                                DefinitionView(vm: DefinitionVM(selectedWord: word))
+                                DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
                                     .presentationBackground(.thickMaterial)
                                     .presentationCornerRadius(15)
+                                    .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
                                     .presentationDetents([.large, .height(300)])
                             }
                         }
                     }
                     .toolbar{
-                        TextField("Loading url....", text: $urlToDisplay, onCommit: {
+                        TextField(Localized.Loading_url, text: $urlToDisplay, onCommit: {
                             
                         })
                         .textFieldStyle(RoundedBorderTextFieldStyle())

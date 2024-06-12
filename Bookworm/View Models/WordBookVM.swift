@@ -104,6 +104,7 @@ class WordBookVM: ObservableObject {
     }
     
     // FUNCTION: to fetch saved wordBook list from model context.
+    
     func fetchWordBookList(modelContext: ModelContext) {
         do {
             let descriptor = FetchDescriptor<WordBook>(sortBy: [SortDescriptor(\.name)])

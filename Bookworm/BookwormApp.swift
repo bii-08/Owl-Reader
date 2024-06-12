@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftData
 import GoogleMobileAds
+import TipKit
+import Firebase
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
     GADMobileAds.sharedInstance().start(completionHandler: nil)
-
+    FirebaseApp.configure()
     return true
   }
 }
@@ -46,11 +48,28 @@ struct BookwormApp: App {
           // print the SQL file's path (SwiftData)
           print(URL.applicationSupportDirectory.path(percentEncoded: false))
 //          UserDefaults.standard.removeObject(forKey: "isFirstTimeLaunch")  // For testing
+          
+          // Purge all Tipkit related data.
+//          try? Tips.resetDatastore()
+          
+          // Some some tips for testing(not all)
+//          Tips.showTipsForTesting([SwipeActionInWordBookTip.self])
+          
+          // Hide some tips for testing(not all)
+//          Tips.hideTipsForTesting([SwipeActionTip.self])
+          
+          // Show all defined tips in the app.
+//          Tips.showAllTipsForTesting()
+          
+          // Hide all defined tips in the app.
+//          Tips.hideAllTipsForTesting()
+          
+          try? Tips.configure()
       }
     
     var body: some Scene {
         WindowGroup {
-            TabBar()
+            SplashView()
                 .environmentObject(HomeVM())
                 .environmentObject(WordBookVM())
         }

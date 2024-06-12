@@ -44,12 +44,12 @@ struct SavedWordsListView: View {
                 .listRowBackground(RoundedRectangle(cornerRadius: 10).fill(Color(.savedWordRectangle)).padding(.horizontal))
                 .listRowSeparator(.hidden)
             }
-            .searchable(text: $searchQuery, prompt: Text("Search by word"))
+            .searchable(text: $searchQuery, prompt: Text(Localized.Search_by_word))
             .overlay {
                 if filteredWords.isEmpty && searchQuery != "" {
                     ContentUnavailableView.search(text: searchQuery)
                 } else if filteredWords.isEmpty {
-                    ContentUnavailableView("Empty Words", systemImage: "books.vertical.fill", description: Text("Start browsing your webpages to add new words."))
+                    ContentUnavailableView(Localized.Empty_Words, systemImage: "books.vertical.fill", description: Text(Localized.Start_browsing_your_webpages_to_add_new_words))
                 }
             }
             .listStyle(.plain)
@@ -60,6 +60,12 @@ struct SavedWordsListView: View {
         }
         .navigationTitle("\(wordBook.name.truncatedText())" + " " + "(\(wordBook.savedWords.count))")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            AnalyticsManager.shared.logEvent(name: "SavedWordsListView_Appear")
+        }
+        .onDisappear {
+            AnalyticsManager.shared.logEvent(name: "SavedWordsListView_Disappear")
+        }
     }
 }
 

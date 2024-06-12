@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import TipKit
 
 struct AllWordsView: View {
     @Environment(\.dismiss) var dismiss
@@ -23,7 +24,8 @@ struct AllWordsView: View {
     @State private var searchWord = ""
     @State private var showingConfirmation = false
     @State private var wordNeedToDelete: Word?
-    
+    let searchForAWordTip = DictionaryTip()
+//    let requestCounterTip = RequestCounterTip()
     var filteredWords: [Word] {
         if searchQuery.isEmpty {
             return allWords
@@ -39,40 +41,9 @@ struct AllWordsView: View {
         ZStack {
             Color.background.ignoresSafeArea()
             
-            List(filteredWords, id: \.self) { word in
-                NavigationLink(value: word) {
-                    VStack(alignment: .leading) {
-                        Text(word.word)
-                            .bold()
-                        
-                        if let definition = word.results?.first?.definition {
-                            Text(definition)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .padding(.horizontal)
-                }
-                .listRowBackground(RoundedRectangle(cornerRadius: 10).fill(Color(.savedWordRectangle)).padding(.horizontal))
-                .listRowSeparator(.hidden)
-                .swipeActions(allowsFullSwipe: false) {
-                    Button {
-                        if !allowToDeleteWithoutAsking {
-                            wordNeedToDelete = word
-                            showingConfirmation = true
-                        } else {
-                            modelContext.delete(word)
-                        }
-                        
-                    } label: {
-                        Label("", image: "trash")
-                    }
-                    .tint(.clear)
-                }
-                .disabled(showingConfirmation)
-            }
-            .searchable(text: $searchQuery, prompt: Text("Search by word")).disabled(showingConfirmation)
+            listView
             .customDialog(isShowing: $showingConfirmation, dialogContent: {
-                AlertView(title: "Delete word", message: "Permanently delete your word?" + "\n" + "\n" + "Deleting words from here will make your words disappeared from all your word books also.", primaryButtonTitle: "Cancel", secondaryButtonTitle: "Allow." + "\n" + "Don't ask again.", action1: {
+                AlertView(title: Localized.Delete_word, message: Localized.Permanently_delete_your_word + "\n" + "\n" + Localized.Deleting_words_from_here_will_make_them_disappear_from_all_your_word_books_as_well, primaryButtonTitle: Localized.Cancel, secondaryButtonTitle: Localized.Allow + "\n" + Localized.Dont_ask_again, action1: {
                     showingConfirmation = false
                     
                 }, action2: {
@@ -88,7 +59,7 @@ struct AllWordsView: View {
                 if filteredWords.isEmpty && searchQuery != "" {
                     ContentUnavailableView.search(text: searchQuery)
                 } else if filteredWords.isEmpty {
-                    ContentUnavailableView("Empty Words", systemImage: "books.vertical.fill", description: Text("Click plus button or start browsing your webpages to add new words."))
+                    ContentUnavailableView(Localized.Empty_Words, systemImage: "books.vertical.fill", description: Text(Localized.Click_plus_button_or_start_browsing_your_webpages_to_add_new_words))
                 }
             }
             .listStyle(.plain)
@@ -97,7 +68,7 @@ struct AllWordsView: View {
                 DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: DictionaryService()))
             }
             .sheet(isPresented: Binding(get: { showingSheet }, set: { showingSheet = $0 })) {
-                searchByDictionarySheet
+                searchByDictionarySheet(searchForAWord: searchForAWordTip)
             }
         }
         .navigationDestination(isPresented: $showingDefinition, destination: {
@@ -108,8 +79,9 @@ struct AllWordsView: View {
             if testing {
                 UserDefaults.standard.removeObject(forKey: "allowToDeleteWithoutAsking")
             }
+            AnalyticsManager.shared.logEvent(name: "AllWordsView_Appear")
         }
-        .navigationTitle("All words (\(allWords.count))")
+        .navigationTitle(Localized.All_words_lld + " " + "(\(allWords.count))")
         .toolbar {
             
             ToolbarItem(placement: .topBarLeading) {
@@ -123,6 +95,7 @@ struct AllWordsView: View {
                     Image(systemName: "plus")
                         .scaleEffect(1.2)
                 }
+                .popoverTip(searchForAWordTip, arrowEdge: .top)
                 .tint(.red)
                 .disabled(showingConfirmation)
             }
@@ -133,12 +106,46 @@ struct AllWordsView: View {
 }
 
 extension AllWordsView {
-    private var searchByDictionarySheet: some View {
+    private var listView: some View {
+        List(filteredWords, id: \.self) { word in
+            NavigationLink(value: word) {
+                VStack(alignment: .leading) {
+                    Text(word.word)
+                        .bold()
+                    
+                    if let definition = word.results?.first?.definition {
+                        Text(definition)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding(.horizontal)
+            }
+            .listRowBackground(RoundedRectangle(cornerRadius: 10).fill(Color(.savedWordRectangle)).padding(.horizontal))
+            .listRowSeparator(.hidden)
+            .swipeActions(allowsFullSwipe: false) {
+                Button {
+                    if !allowToDeleteWithoutAsking {
+                        wordNeedToDelete = word
+                        showingConfirmation = true
+                    } else {
+                        modelContext.delete(word)
+                    }
+                    
+                } label: {
+                    Label("", image: "trash")
+                }
+                .tint(.clear)
+            }
+            .disabled(showingConfirmation)
+        }
+        .searchable(text: $searchQuery, prompt: Text(Localized.Search_by_word)).disabled(showingConfirmation)
+    }
+    private func searchByDictionarySheet(searchForAWord: DictionaryTip) -> some View {
         VStack(alignment: .leading) {
-            Text("Add new word")
+            Text(Localized.Add_new_word)
                 .font(Font.custom("DIN Condensed", size: 25))
                 .padding()
-            TextField("", text: $searchWord, prompt: Text("Type any word...").foregroundColor(.white.opacity(0.7))).padding(6)
+            TextField("", text: $searchWord, prompt: Text(Localized.Type_any_word).foregroundColor(.white.opacity(0.7))).padding(6)
                 .foregroundColor(.white)
                 .submitLabel(.done)
                 .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
@@ -150,10 +157,12 @@ extension AllWordsView {
             HStack {
                 Spacer()
                 Button {
+                    searchForAWord.invalidate(reason: .actionPerformed)
                     showingSheet = false
                     showingDefinition = true
+                    AnalyticsManager.shared.logEvent(name: "AllWordsView_DictionarySearchPlusButtonClick")
                 } label: {
-                    Text("Search")
+                    Text(Localized.Search)
                         .foregroundColor(.white)
                         .frame(width: 100, height: 40)
                         .background(RoundedRectangle(cornerRadius: 5).fill(!HomeVM.isTitleValid(title: searchWord) ? Color.orange.opacity(0.2) : Color.orange))

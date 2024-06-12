@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RewardedView: View {
     @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject private var requestManager = RequestManager.shared
     var action: () -> ()
     var body: some View {
         ZStack {
@@ -28,6 +29,12 @@ struct RewardedView: View {
                     .scaledToFill()
                     .frame(width: 100, height: 80)
             }
+            .onAppear {
+                let requestRemaining = UserDefaults.standard.integer(forKey: "requestLimit")
+                let newRemaining = requestRemaining + 25
+                UserDefaults.standard.set(newRemaining, forKey: "requestRemaining")
+                requestManager.requestRemaning += 25
+            }
             .overlay {
                 VStack {
                     Spacer()
@@ -42,12 +49,8 @@ struct RewardedView: View {
                             .frame(width: 80, height: 30)
                     }
                 }
-                
             }
-             
-            
         }
-    
     }
 }
 

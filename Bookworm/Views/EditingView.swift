@@ -24,10 +24,12 @@ struct EditingView: View {
     @State private var showingAlert = false
     @State private var defaultURL: URL
     @FocusState private var isTextFieldFocused: Bool
+    let swipeActionTip: SwipeActionInAddOrEditLinkTip
     
-    init(link: Shortcut, photoPiker: PhotoPickerVM) {
+    init(link: Shortcut, photoPiker: PhotoPickerVM, swipeActionTip: SwipeActionInAddOrEditLinkTip) {
         self.link = link
         self.photoPikerVM = photoPiker
+        self.swipeActionTip = swipeActionTip
         self.defaultURL = link.url
     }
     
@@ -36,14 +38,14 @@ struct EditingView: View {
             Color("background").ignoresSafeArea()
             VStack {
                 HStack {
-                    Text("Editing shortcut")
+                    Text(Localized.Editing_shortcut)
                         .font(Font.custom("DIN Condensed", size: 25))
                     Spacer()
                 }
                 .padding(.horizontal)
                 
                 // Textfield : editing title
-                TextField("", text: $editingTitle, prompt: Text("Add web page title").foregroundColor(.white.opacity(0.7))).padding(6)
+                TextField("", text: $editingTitle, prompt: Text(Localized.Add_web_page_title).foregroundColor(.white.opacity(0.7))).padding(6)
                     .foregroundColor(.white)
                     .submitLabel(.done)
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
@@ -52,7 +54,7 @@ struct EditingView: View {
                     .focused($isTextFieldFocused)
                 
                 // Textfield : editing URL
-                TextField("", text: $editingURL, prompt: Text("Add your web link").foregroundColor(.white.opacity(0.7))).padding(6)
+                TextField("", text: $editingURL, prompt: Text(Localized.Add_your_web_link).foregroundColor(.white.opacity(0.7))).padding(6)
                     .textInputAutocapitalization(.never)
                     .foregroundColor(.white)
                     .submitLabel(.done)
@@ -68,7 +70,7 @@ struct EditingView: View {
                             .scaledToFill()
                             .frame(width: 200, height: 200)
                             .cornerRadius(10)
-                        Button("Change Image") {
+                        Button(Localized.Change_Image) {
                             isTextFieldFocused = false
                             showingPhotoPiker = true
                             photoPikerVM.selectedImage = editingImage
@@ -77,7 +79,7 @@ struct EditingView: View {
                     }
                     
                 } else {
-                    Button("Add Image") {
+                    Button(Localized.Add_Image) {
                         isTextFieldFocused = false
                         showingPhotoPiker = true
                         photoPikerVM.selectedImage = editingImage
@@ -96,12 +98,13 @@ struct EditingView: View {
                         link.url = URL(string: editingURL) ?? defaultURL
                         link.favicon = editingImage?.pngData()
                         link.webPageTitle = editingTitle
+                        swipeActionTip.invalidate(reason: .actionPerformed)
                         dismiss()
                     } else {
                         showingAlert = true
                     }
                 } label: {
-                    Text("Save changes")
+                    Text(Localized.Save_changes)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(10)
@@ -121,15 +124,13 @@ struct EditingView: View {
             }
             
             if showingAlert {
-                
-                AlertView(title: !vm.isTitleValid || !vm.isValidURL ? "Invalid" : "Error", message: !vm.isTitleValid || !vm.isValidURL ? "Please ensure your link or title is correct." : "This title or link is already exists.", primaryButtonTitle: "Got it") {
+                AlertView(title: !vm.isTitleValid || !vm.isValidURL ? Localized.Invalid : Localized.Error, message: !vm.isTitleValid || !vm.isValidURL ? Localized.Please_ensure_your_link_or_title_is_correct : Localized.This_title_or_link_is_already_exists, primaryButtonTitle: Localized.Got_it) {
                     withAnimation {
                         showingAlert = false
                     }
                 }
                 .zIndex(5)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
-                
             }
         }
         .onLoad {
@@ -141,6 +142,6 @@ struct EditingView: View {
 }
 
 #Preview {
-    EditingView(link: Shortcut(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopedia"), photoPiker: PhotoPickerVM())
+    EditingView(link: Shortcut(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopedia"), photoPiker: PhotoPickerVM(), swipeActionTip: SwipeActionInAddOrEditLinkTip())
         .environmentObject(HomeVM())
 }

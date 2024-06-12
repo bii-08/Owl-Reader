@@ -15,6 +15,7 @@ struct AlertView: View {
     var action1: () -> ()
     var action2: (() -> ())?
     @State private var offset: CGFloat = 0
+    let language = Locale.current.region?.identifier
     
     var body: some View {
         ZStack {
@@ -41,9 +42,9 @@ struct AlertView: View {
                                     .frame(width: 150, height: 55)
                                     .foregroundColor(Color.blue.opacity(0.5))
                                 Text(secondaryButtonTitle ?? "")
-                                    .font(.custom("DIN Condensed", size: 20))
+                                    .font(.customFont(for: language ?? ""))
+//                                    .font(.custom("DIN Condensed", size: 20))
                                     .foregroundColor(.white)
-                                   
                             }
                             .padding()
                         }
@@ -57,7 +58,8 @@ struct AlertView: View {
                                 .frame(width: 100, height: 55)
                                 .foregroundColor(Color.orange.opacity(0.5))
                             Text(primaryButtonTitle)
-                                .font(.custom("DIN Condensed", size: 20))
+                                .font(.customFont(for: language ?? ""))
+//                                .font(.custom("DIN Condensed", size: 20))
                                 .foregroundColor(.white)
                                
                         }

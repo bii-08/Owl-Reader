@@ -56,6 +56,20 @@
 		78B99B7B2C10367000988955 /* Metamorphosis.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B7A2C10367000988955 /* Metamorphosis.txt */; };
 		78B99B7D2C10367C00988955 /* The Yellow Wallpaper.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B7C2C10367C00988955 /* The Yellow Wallpaper.txt */; };
 		78B99B7F2C1129AC00988955 /* StoryReadingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */; };
+		78B99B812C1438A600988955 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B802C1438A600988955 /* SplashView.swift */; };
+		78B99B842C1464DC00988955 /* CreateWordBookTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B832C1464DC00988955 /* CreateWordBookTip.swift */; };
+		78B99B862C146FAD00988955 /* SwipeActionInWordBookTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B852C146FAD00988955 /* SwipeActionInWordBookTip.swift */; };
+		78B99B882C147B6000988955 /* SwipeActionInAddOrEditLinkTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B872C147B6000988955 /* SwipeActionInAddOrEditLinkTip.swift */; };
+		78B99B8A2C14889900988955 /* DictionaryTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B892C14889900988955 /* DictionaryTip.swift */; };
+		78B99B8C2C148CFD00988955 /* RequestCounterTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B8B2C148CFD00988955 /* RequestCounterTip.swift */; };
+		78B99B912C168FFC00988955 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B8F2C168FFC00988955 /* Localizable.strings */; };
+		78B99B982C16C11C00988955 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B972C16C11C00988955 /* Localization.swift */; };
+		78B99B9B2C187E4E00988955 /* DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B9A2C187E4E00988955 /* DeviceType.swift */; };
+		78B99B9D2C19564300988955 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B9C2C19564300988955 /* DeviceInfo.swift */; };
+		78B99B9F2C197E0A00988955 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B9E2C197E0A00988955 /* GoogleService-Info.plist */; };
+		78B99BA22C19801700988955 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 78B99BA12C19801700988955 /* FirebaseAnalytics */; };
+		78B99BA62C198D0000988955 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B99BA52C198D0000988955 /* AdSupport.framework */; };
+		78B99BA82C198D7F00988955 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99BA72C198D7F00988955 /* AnalyticsManager.swift */; };
 		78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */; };
 		78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */; };
 		78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */; };
@@ -112,6 +126,24 @@
 		78B99B7A2C10367000988955 /* Metamorphosis.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Metamorphosis.txt; sourceTree = "<group>"; };
 		78B99B7C2C10367C00988955 /* The Yellow Wallpaper.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Yellow Wallpaper.txt"; sourceTree = "<group>"; };
 		78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryReadingVM.swift; sourceTree = "<group>"; };
+		78B99B802C1438A600988955 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		78B99B832C1464DC00988955 /* CreateWordBookTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWordBookTip.swift; sourceTree = "<group>"; };
+		78B99B852C146FAD00988955 /* SwipeActionInWordBookTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeActionInWordBookTip.swift; sourceTree = "<group>"; };
+		78B99B872C147B6000988955 /* SwipeActionInAddOrEditLinkTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeActionInAddOrEditLinkTip.swift; sourceTree = "<group>"; };
+		78B99B892C14889900988955 /* DictionaryTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryTip.swift; sourceTree = "<group>"; };
+		78B99B8B2C148CFD00988955 /* RequestCounterTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCounterTip.swift; sourceTree = "<group>"; };
+		78B99B902C168FFC00988955 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		78B99B922C16900600988955 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		78B99B932C16906700988955 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		78B99B942C16906700988955 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		78B99B952C16906800988955 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		78B99B962C16906B00988955 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		78B99B972C16C11C00988955 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		78B99B9A2C187E4E00988955 /* DeviceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceType.swift; sourceTree = "<group>"; };
+		78B99B9C2C19564300988955 /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
+		78B99B9E2C197E0A00988955 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		78B99BA52C198D0000988955 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		78B99BA72C198D7F00988955 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogView.swift; sourceTree = "<group>"; };
 		78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateManager.swift; sourceTree = "<group>"; };
 		78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVM.swift; sourceTree = "<group>"; };
@@ -123,7 +155,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7863F3E72C0AF5F000EE828B /* GoogleMobileAds in Frameworks */,
+				78B99BA62C198D0000988955 /* AdSupport.framework in Frameworks */,
 				789D8ABE2BE4B250004E0EA5 /* SwiftyJSON in Frameworks */,
+				78B99BA22C19801700988955 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,8 +184,10 @@
 		785664B92BD66FBF008A9EF1 = {
 			isa = PBXGroup;
 			children = (
+				78B99B992C17C43E00988955 /* Localization */,
 				785664C42BD66FBF008A9EF1 /* Bookworm */,
 				785664C32BD66FBF008A9EF1 /* Products */,
+				78B99BA42C198D0000988955 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -168,12 +204,15 @@
 			children = (
 				785664C52BD66FBF008A9EF1 /* BookwormApp.swift */,
 				7863F3E82C0AF69100EE828B /* Info.plist */,
+				78B99B9E2C197E0A00988955 /* GoogleService-Info.plist */,
 				7863F3E92C0AF75300EE828B /* AdMod Ads */,
+				78B99BA32C198C7300988955 /* Analytics */,
 				785664DB2BD881E2008A9EF1 /* Views */,
 				785664DF2BD88313008A9EF1 /* View Models */,
 				785664DC2BD881F5008A9EF1 /* Models */,
 				781C5B122BE0652D00FB394B /* Service */,
 				781C5B1B2BE0766500FB394B /* Extension */,
+				78B99B822C14647D00988955 /* Tips */,
 				78B99B732C102F5600988955 /* Book files */,
 				785664C92BD66FC1008A9EF1 /* Assets.xcassets */,
 				788B03652C0C69D9006338B3 /* Config.xcconfig */,
@@ -193,6 +232,7 @@
 		785664DB2BD881E2008A9EF1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				78B99B802C1438A600988955 /* SplashView.swift */,
 				785664C72BD66FBF008A9EF1 /* HomeView.swift */,
 				789D8ABF2BE70044004E0EA5 /* WordBookView.swift */,
 				7825C1102BEDF9130049E53D /* AllWordsView.swift */,
@@ -228,6 +268,7 @@
 				789D8AC12BE70252004E0EA5 /* WordBook.swift */,
 				78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */,
 				78B99B762C1033E700988955 /* Book.swift */,
+				78B99B9A2C187E4E00988955 /* DeviceType.swift */,
 				781C5B132BE06EEB00FB394B /* Headlines.json */,
 				789D8AB62BE3694F004E0EA5 /* Word.json */,
 				7837A8462C06AD5900104E5E /* testing.json */,
@@ -245,6 +286,7 @@
 				78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */,
 				788B036C2C0DD034006338B3 /* RequestManager.swift */,
 				78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */,
+				78B99B9C2C19564300988955 /* DeviceInfo.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -269,6 +311,43 @@
 			path = "Book files";
 			sourceTree = "<group>";
 		};
+		78B99B822C14647D00988955 /* Tips */ = {
+			isa = PBXGroup;
+			children = (
+				78B99B832C1464DC00988955 /* CreateWordBookTip.swift */,
+				78B99B8B2C148CFD00988955 /* RequestCounterTip.swift */,
+				78B99B892C14889900988955 /* DictionaryTip.swift */,
+				78B99B852C146FAD00988955 /* SwipeActionInWordBookTip.swift */,
+				78B99B872C147B6000988955 /* SwipeActionInAddOrEditLinkTip.swift */,
+			);
+			path = Tips;
+			sourceTree = "<group>";
+		};
+		78B99B992C17C43E00988955 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				78B99B972C16C11C00988955 /* Localization.swift */,
+				78B99B8F2C168FFC00988955 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		78B99BA32C198C7300988955 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				78B99BA72C198D7F00988955 /* AnalyticsManager.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		78B99BA42C198D0000988955 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				78B99BA52C198D0000988955 /* AdSupport.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -288,6 +367,7 @@
 			packageProductDependencies = (
 				789D8ABD2BE4B250004E0EA5 /* SwiftyJSON */,
 				7863F3E62C0AF5F000EE828B /* GoogleMobileAds */,
+				78B99BA12C19801700988955 /* FirebaseAnalytics */,
 			);
 			productName = Bookworm;
 			productReference = 785664C22BD66FBF008A9EF1 /* Bookworm.app */;
@@ -315,11 +395,17 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
+				ko,
+				vi,
+				de,
+				fr,
 			);
 			mainGroup = 785664B92BD66FBF008A9EF1;
 			packageReferences = (
 				789D8ABC2BE4B250004E0EA5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				7863F3E52C0AF5F000EE828B /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				78B99BA02C19801700988955 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 785664C32BD66FBF008A9EF1 /* Products */;
 			projectDirPath = "";
@@ -340,8 +426,10 @@
 				781C5B142BE06EEB00FB394B /* Headlines.json in Resources */,
 				78B99B7B2C10367000988955 /* Metamorphosis.txt in Resources */,
 				785664CD2BD66FC1008A9EF1 /* Preview Assets.xcassets in Resources */,
+				78B99B912C168FFC00988955 /* Localizable.strings in Resources */,
 				7837A8472C06AD5900104E5E /* testing.json in Resources */,
 				785664CA2BD66FC1008A9EF1 /* Assets.xcassets in Resources */,
+				78B99B9F2C197E0A00988955 /* GoogleService-Info.plist in Resources */,
 				78B99B752C102FA000988955 /* The Monkey’s paw.txt in Resources */,
 				789D8AB72BE3694F004E0EA5 /* Word.json in Resources */,
 			);
@@ -354,12 +442,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78B99B842C1464DC00988955 /* CreateWordBookTip.swift in Sources */,
 				781C5B162BE0732400FB394B /* WebService.swift in Sources */,
 				788B03792C0E9C77006338B3 /* CustomHeadlinePageControl.swift in Sources */,
 				788B037D2C0EC8FE006338B3 /* StoryReadingView.swift in Sources */,
 				78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */,
 				78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */,
 				785664DA2BD871C1008A9EF1 /* ShortcutView.swift in Sources */,
+				78B99B8A2C14889900988955 /* DictionaryTip.swift in Sources */,
 				785664D42BD6728A008A9EF1 /* WebView.swift in Sources */,
 				78B99B7F2C1129AC00988955 /* StoryReadingVM.swift in Sources */,
 				781C5B212BE0791100FB394B /* Headline.swift in Sources */,
@@ -369,13 +459,16 @@
 				7863F3ED2C0AF93300EE828B /* RewardAdsManager.swift in Sources */,
 				78B99B772C1033E700988955 /* Book.swift in Sources */,
 				781C5B1A2BE075A700FB394B /* MockDataService.swift in Sources */,
+				78B99B9B2C187E4E00988955 /* DeviceType.swift in Sources */,
 				788B03672C0D323E006338B3 /* RewardedView.swift in Sources */,
 				789D8AB92BE43959004E0EA5 /* Word.swift in Sources */,
 				785664C82BD66FBF008A9EF1 /* HomeView.swift in Sources */,
 				789D8AC82BE84A6B004E0EA5 /* TabBar.swift in Sources */,
 				7825C1112BEDF9130049E53D /* AllWordsView.swift in Sources */,
 				781C5B1F2BE078C700FB394B /* HeadlineView.swift in Sources */,
+				78B99B862C146FAD00988955 /* SwipeActionInWordBookTip.swift in Sources */,
 				781C5B112BDF6A3000FB394B /* EditingView.swift in Sources */,
+				78B99B812C1438A600988955 /* SplashView.swift in Sources */,
 				789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */,
 				78B99B702C0FF04800988955 /* DailyStoryListView.swift in Sources */,
 				789D8ABB2BE43F92004E0EA5 /* DefinitionVM.swift in Sources */,
@@ -383,22 +476,43 @@
 				781C5B1D2BE0768600FB394B /* Extension.swift in Sources */,
 				78B99B722C102EEB00988955 /* BookRowView.swift in Sources */,
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
+				78B99B8C2C148CFD00988955 /* RequestCounterTip.swift in Sources */,
 				788B037F2C0ED3E2006338B3 /* BannerAdsManager.swift in Sources */,
 				789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */,
 				788B036D2C0DD034006338B3 /* RequestManager.swift in Sources */,
 				785664DE2BD88240008A9EF1 /* Link.swift in Sources */,
+				78B99B982C16C11C00988955 /* Localization.swift in Sources */,
 				785664C62BD66FBF008A9EF1 /* BookwormApp.swift in Sources */,
 				78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */,
 				789D8AC42BE7074F004E0EA5 /* SavedWordsListView.swift in Sources */,
 				785664E32BD8E13B008A9EF1 /* AddOrEditLinkView.swift in Sources */,
+				78B99B882C147B6000988955 /* SwipeActionInAddOrEditLinkTip.swift in Sources */,
+				78B99BA82C198D7F00988955 /* AnalyticsManager.swift in Sources */,
 				789D8AC02BE70044004E0EA5 /* WordBookView.swift in Sources */,
 				785664D82BD71C0F008A9EF1 /* DefinitionView.swift in Sources */,
 				787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */,
 				788B03692C0D91AB006338B3 /* WordRequestCounterView.swift in Sources */,
+				78B99B9D2C19564300988955 /* DeviceInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		78B99B8F2C168FFC00988955 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				78B99B902C168FFC00988955 /* en */,
+				78B99B922C16900600988955 /* fr */,
+				78B99B932C16906700988955 /* de */,
+				78B99B942C16906700988955 /* ja */,
+				78B99B952C16906800988955 /* ko */,
+				78B99B962C16906B00988955 /* vi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		785664CE2BD66FC1008A9EF1 /* Debug */ = {
@@ -626,6 +740,14 @@
 				version = 5.0.2;
 			};
 		};
+		78B99BA02C19801700988955 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 10.27.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -638,6 +760,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 789D8ABC2BE4B250004E0EA5 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		78B99BA12C19801700988955 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78B99BA02C19801700988955 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

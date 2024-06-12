@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 class StoryReadingVM: ObservableObject {
     @Published var selectedWord: String?
     @Published var content: String?
@@ -44,16 +45,5 @@ class StoryReadingVM: ObservableObject {
         } else {
             print("---> File not found")
         }
-
     }
-    
-    private func splitTextIntoWords(_ text: String) -> [String] {
-            return text.split { $0.isWhitespace || $0.isNewline }.map { String($0) }
-        }
-    
-    func processText(_ text: String) -> String {
-            // Normalize the text by replacing \r\n with \n
-            let normalizedText = text.replacingOccurrences(of: "\r\n", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
-            return normalizedText
-        }
 }

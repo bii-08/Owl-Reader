@@ -14,7 +14,7 @@ struct PhotoPickerView: View {
     var body: some View {
             VStack(spacing: 5) {
                 PhotosPicker(selection: $vm.imageSelection, matching: .images) {
-                    Text("Upload your webpage's icon")
+                    Text(Localized.Upload_your_webpage_icon)
                         .foregroundColor(.white)
                         .padding()
                         .frame(height: 35)

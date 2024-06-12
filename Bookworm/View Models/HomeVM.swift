@@ -21,15 +21,16 @@ class HomeVM: ObservableObject {
     var isTitleAlreadyExists = false
     
     var loadingState = LoadingStateManager.loading
-    
+    let locale = Locale.current
     @Published var showingAlert = false
     @Published var showingEditingView = false
-    
     var testing = false // true: api, false: database
+    
     // NOTE: Replace MockdataWebService() with WebService() to fetch headlines data from real API
     init(webService: WebServiceDelegate = MockdataWebService()) {
         self.webService = webService
         print(Date.distantPast)
+        print(Locale.current.region?.identifier ?? "")
     }
     
     // FUNCTION: to validate the given URL

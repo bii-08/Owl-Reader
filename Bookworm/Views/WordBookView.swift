@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import TipKit
 
 struct WordBookView: View {
     @EnvironmentObject var vm: WordBookVM
@@ -15,6 +16,8 @@ struct WordBookView: View {
     @State private var addingWordBookTitle: String = ""
     
     var title: String?
+    let createWordbookTip = CreateWordBookTip()
+    let swipeActionTip = SwipeActionInWordBookTip()
     
     var body: some View {
         NavigationStack {
@@ -22,6 +25,12 @@ struct WordBookView: View {
                 Color("background").ignoresSafeArea()
                 VStack {
                     List {
+                        if vm.listWordBook.count == 2 {
+                            TipView(swipeActionTip)
+                                .tipBackground(Color("headlineRounded"))
+                                .listRowBackground(Color("background"))
+                        }
+                        
                         ForEach(vm.listWordBook, id: \.self) { wordBook in
                             NavigationLink(value: wordBook) {
                                 HStack {
@@ -40,7 +49,7 @@ struct WordBookView: View {
                                     Button(role: .destructive) {
                                         vm.deleteWordBook(wordBook: wordBook, modelContext: modelContext)
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        Label(Localized.Delete, systemImage: "trash")
                                     }
                                     .tint(.red)
                                     
@@ -49,7 +58,7 @@ struct WordBookView: View {
                                         vm.showingSheet = true
                                         vm.editingWordBook = wordBook
                                     } label: {
-                                        Label("Edit", systemImage: "pencil")
+                                        Label(Localized.Edit, systemImage: "pencil")
                                     }
                                     .tint(.orange)
                                 }
@@ -58,15 +67,13 @@ struct WordBookView: View {
                     }
                     .listStyle(.plain)
                     .sheet(isPresented: $vm.showingSheet) {
-                        changingWordBookSheetView
+                        changingWordBookSheetView(createWordbookTip: createWordbookTip, swipeActionTip: swipeActionTip)
                     }
-//                    BannerView()
-//                        .frame(height: 60)
                 }
                 .navigationDestination(for: WordBook.self) { wordBook in
                     SavedWordsListView(wordBook: wordBook)
                 }
-                .navigationTitle("Word Book")
+                .navigationTitle(Localized.Word_Book)
                 .toolbar {
                     
                     Button {
@@ -76,22 +83,24 @@ struct WordBookView: View {
                             .scaleEffect(1.2)
                     }
                     .tint(.red)
+                    .popoverTip(createWordbookTip, arrowEdge: .top)
                 }
             }
         }
         .onAppear {
             vm.fetchWordBookList(modelContext: modelContext)
+            AnalyticsManager.shared.logEvent(name: "WordBookView_Appear")
         }
     }
 }
 
 extension WordBookView {
-    private var changingWordBookSheetView: some View {
+    private func changingWordBookSheetView(createWordbookTip: CreateWordBookTip, swipeActionTip: SwipeActionInWordBookTip) -> some View {
         VStack(alignment: .leading) {
-            Text(vm.editingWordBook == nil ? "Add your word book title" : "Update your word book title")
+            Text(vm.editingWordBook == nil ? Localized.Add_your_word_book_title : Localized.Update_your_word_book_title)
                 .font(Font.custom("DIN Condensed", size: 25))
                 .padding()
-            TextField("", text: $vm.title, prompt: Text("Eg. Harry Potter").foregroundColor(.white.opacity(0.7))).padding(6)
+            TextField("", text: $vm.title, prompt: Text(Localized.Eg_Harry_Potter).foregroundColor(.white.opacity(0.7))).padding(6)
                 .onChange(of: vm.title) { oldValue, newValue in
                     // Should validate textfield before submitting
                     vm.goodTitle = vm.validateTitle(title: newValue.trimmingCharacters(in: .whitespacesAndNewlines))
@@ -116,7 +125,7 @@ extension WordBookView {
                 if let editingWordBook = vm.editingWordBook {
                     let filtered = vm.listWordBook.filter({$0.name != editingWordBook.name })
                     if filtered.contains(where: {$0.name == vm.title.trimmingCharacters(in: .whitespacesAndNewlines)}) {
-                        Text("Sorry. This title is already taken.")
+                        Text(Localized.Sorry_This_title_is_already_taken)
                             .font(Font.custom("DIN Condensed", size: 20))
                             .foregroundColor(.red)
                             .frame(height: 18)
@@ -129,9 +138,13 @@ extension WordBookView {
                 Spacer()
                 Button {
                     vm.handleWordBook(wordBook: WordBook(name: vm.title), modelContext: modelContext)
+                    createWordbookTip.invalidate(reason: .actionPerformed)
+                    Task {
+                        await SwipeActionInWordBookTip.swipeActionInWordBookEvent.donate()
+                    }
                     vm.showingSheet = false
                 } label: {
-                    Text(vm.editingWordBook == nil ? "Create" : "Update")
+                    Text(vm.editingWordBook == nil ? Localized.Create : Localized.Update)
                         .foregroundColor(.white)
                         .frame(width: 100, height: 40)
                         .background(RoundedRectangle(cornerRadius: 5).fill(vm.goodTitle ? .orange.opacity(0.8) : .orange.opacity(0.2)))

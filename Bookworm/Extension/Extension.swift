@@ -118,3 +118,17 @@ struct OnLoadModifier: ViewModifier {
         }
     }
 }
+
+extension Font {
+    static func customFont(for language: String) -> Font {
+        switch language {
+        case "JP":
+            return .custom("DIN Condensed", size: 14)
+        
+            
+        default:
+            return .custom("DIN Condensed", size: 20)
+        }
+        
+    }
+}

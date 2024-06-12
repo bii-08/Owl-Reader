@@ -14,30 +14,54 @@ struct StoryReadingView: View {
             print(flowLayoutHeight)
         }
     }
-    
+    @Binding var showingDefinition: Bool 
+    var deviceType = DeviceInfo.shared.getDeviceType()
     var body: some View {
+        VStack {
             ScrollView {
-                VStack(alignment: .leading) {
-                    if let content = storyReadingVM.content {
-                        let words = slitWords(content: content)
-                        FlowLayout(items: words, selectedWord: $storyReadingVM.selectedWord)
-                            .onPreferenceChange(FlowLayoutHeightKey.self) { newHeight in
-                                flowLayoutHeight = newHeight
-                            }
-                    } else {
-                        Text("Loading content...")
-                            .padding()
+                    VStack(alignment: .leading) {
+                        if let content = storyReadingVM.content {
+                            let words = slitWords(content: content)
+                            FlowLayout(items: words, selectedWord: $storyReadingVM.selectedWord, showingDefinition: $showingDefinition)
+                                .onPreferenceChange(FlowLayoutHeightKey.self) { newHeight in
+                                    flowLayoutHeight = newHeight
+                                }
+                        } else {
+                            Text(Localized.Loading_content)
+                                .padding()
+                        }
+                    }
+                    .popover(isPresented: $showingDefinition, attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))), arrowEdge: .bottom) {
+                        if let word = storyReadingVM.selectedWord {
+                            DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
+                                .presentationBackground(.thinMaterial)
+                                .presentationCornerRadius(15)
+                                .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
+                                .presentationDetents([.large, .height(300)])
+                        }
+                    }
+                    .padding()
+                    .frame(height: flowLayoutHeight)
+                }
+                .navigationTitle("\(storyReadingVM.book.title)")
+                .navigationBarTitleDisplayMode(.inline)
+                .onAppear {
+                    storyReadingVM.loadTextFile(named: storyReadingVM.book.title)
+                    AnalyticsManager.shared.logEvent(name: "StoryReadingView_Appear")
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        WordRequestCounterView()
                     }
                 }
-                .padding()
-                .frame(height: flowLayoutHeight)
+                .onDisappear {
+                    AnalyticsManager.shared.logEvent(name: "StoryReadingView_Disappear")
             }
-            .navigationTitle("\(storyReadingVM.book.title)")
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                storyReadingVM.loadTextFile(named: storyReadingVM.book.title)
-            }
-       
+            
+            BannerView()
+                .frame(height: 60)
+                .clipShape(RoundedRectangle(cornerRadius: 5))
+        }
     }
     
     func slitWords(content: String) -> [String] {
@@ -62,7 +86,7 @@ class FlowViewModel: ObservableObject {
 struct FlowLayout: View {
     var items: [String]
     @Binding var selectedWord: String?
-    
+    @Binding var showingDefinition: Bool
     @ObservedObject var vm = FlowViewModel()
     
     var body: some View {
@@ -97,11 +121,11 @@ struct FlowLayout: View {
                                     print(vm.height)
                                 }
                                 height = 0
-                                print("-----> setting height = 0, word is \(items[index])")
+//                                print("-----> setting height = 0, word is \(items[index])")
                             } else if items[index] == "<break>" {
                                 height -= 60
                             }
-                            print("-----> setting height \(result)")
+//                            print("-----> setting height \(result)")
                             return CGFloat(result)
                         }
                 }
@@ -120,10 +144,10 @@ struct FlowLayout: View {
                 .background(selectedWord == lettersOnlyWord ? Color.yellow : Color.clear)
                 .onTapGesture {
                     selectedWord = lettersOnlyWord
+                    showingDefinition = true
                     print("\(String(describing: selectedWord))")
                 })
         }
-        
     }
 }
 

@@ -41,8 +41,8 @@ class RequestManager: ObservableObject {
         if lastFetchDate != today || lastFetchDate == nil {
             UserDefaults.standard.set(0, forKey: requestCountKey)
             requestCount = 0
-            UserDefaults.standard.set(1, forKey: requestRemaningKey)
-           requestRemaning = 1
+            UserDefaults.standard.set(25, forKey: requestRemaningKey)
+            requestRemaning = 25
             UserDefaults.standard.set(today, forKey: "lastFetchDateForDefinition")
         }
     }

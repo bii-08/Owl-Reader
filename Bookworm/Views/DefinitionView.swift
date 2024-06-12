@@ -20,12 +20,16 @@ struct DefinitionView: View {
     @State var title = ""
     @State private var thisWordIsEmpty = false
     var initialWordBook: String
-    
+    var width: CGFloat?
+    var height: CGFloat?
     let synthesizer = AVSpeechSynthesizer()
-    
-    init(vm: DefinitionVM, initialWordBook: String = "Default") {
+    var deviceType: DeviceType
+    init(vm: DefinitionVM, initialWordBook: String = "Default", width: CGFloat? = nil, height: CGFloat? = nil) {
         _vm = StateObject(wrappedValue: vm)
         self.initialWordBook = initialWordBook
+        self.width = width
+        self.height = height
+        self.deviceType = DeviceInfo.shared.getDeviceType()
     }
     var body: some View {
         
@@ -34,7 +38,11 @@ struct DefinitionView: View {
             
             switch vm.loadingState {
             case .loading:
-                ProgressView("Loading...")
+                ProgressView(Localized.Loading)
+                    .frame(width: deviceType == .pad ? width : nil, height: deviceType == .pad ? height : nil)
+                    .onAppear {
+                        AnalyticsManager.shared.logEvent(name: "DifinitionView_LoadingView Appear")
+                    }
             case .success:
                 VStack(alignment: .leading) {
                     
@@ -53,6 +61,7 @@ struct DefinitionView: View {
                         Button {
                             if let word = vm.word {
                                 wordBookVM.didTapOnStar(word: word, wordBookName: wordBookVM.selectedWordbook, modelContext: modelContext)
+                                AnalyticsManager.shared.logEvent(name: "DifinitionView_StarButtonClick")
                             }
                         } label: {
                             if let word = vm.word {
@@ -165,7 +174,7 @@ struct DefinitionView: View {
                                         // Synonyms
                                         if result.synonyms != nil {
                                             HStack {
-                                                Text("Synonyms:")
+                                                Text(Localized.Synonyms)
                                                     .font(.custom("Helvetica", size: 19))
                                                     .underline()
                                                 Spacer()
@@ -195,7 +204,7 @@ struct DefinitionView: View {
                                
                                 HStack {
                                     Spacer()
-                                    Text("Sorry. Could not find this word.😔")
+                                    Text(Localized.Sorry_Could_not_find_this_word)
                                         .font(Font.custom("DIN Condensed", size: 20))
                                         .foregroundColor(.red)
                                         .padding()
@@ -212,9 +221,9 @@ struct DefinitionView: View {
                     
                     // MARK: Picker
                     HStack {
-                        Text("Choose your wordbook:")
+                        Text(Localized.Choose_your_wordbook)
                             .font(.custom("Helvetica", size: 19))
-                            .frame(width: 220)
+                            .frame(width: 220, height: 60)
                             .bold()
                         Menu {
                             Picker("", selection: $wordBookVM.selectedWordbook) {
@@ -234,6 +243,10 @@ struct DefinitionView: View {
                     }
                     .padding(.horizontal)
                 }
+                .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
+                .onAppear {
+                    AnalyticsManager.shared.logEvent(name: "DifinitionView_SuccessView Appear")
+                }
                 
             case .failed:
                 ContentUnavailableView {
@@ -242,13 +255,17 @@ struct DefinitionView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50, height: 50)
-                        Text("Error loading word")
+                        Text(Localized.Error_loading_word)
                             .bold()
                     }
+                    .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
+                    .onAppear {
+                        AnalyticsManager.shared.logEvent(name: "DifinitionView_ErrorView Appear")
+                    }
                 } description: {
-                    Text("An error occurred while loading your word.")
+                    Text(Localized.An_error_occurred_while_loading_your_word)
                 } actions: {
-                    Button("Retry") {
+                    Button(Localized.Retry) {
                         wordBookVM.fetchWordBookList(modelContext: modelContext)
                         wordBookVM.selectedWordbook = initialWordBook
                         Task {
@@ -263,13 +280,13 @@ struct DefinitionView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 90, height: 90)
-                    Text("Sorry. You have reached the request limit.😰")
+                    Text(Localized.Sorry_You_have_reached_the_request_limit)
                         .font(Font.custom("DIN Condensed", size: 20))
                     Button {
                         rewardManager.showAd()
                         
                     } label: {
-                        Text("Watch AD for 10 free requests 💓")
+                        Text(Localized.Watch_AD_for_10_free_requests)
                             .font(Font.custom("DIN Condensed", size: 20))
                             .foregroundColor(.yellow)
                             .padding()
@@ -277,34 +294,27 @@ struct DefinitionView: View {
                         
                     }
                 }
+                .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
                 .onAppear {
                     
                     print("Restricted view appeared")
                     if !rewardManager.rewardLoaded {
                         rewardManager.loadAd()
                     } else {
-//                        let requestLimit = UserDefaults.standard.integer(forKey: "requestLimit")
-//                        let newLimit = requestLimit + 1
-//                        UserDefaults.standard.set(newLimit, forKey: "requestLimit")
-//                        vm.requestLimit += 1
-//                        
-//                        Task {
-//                            await vm.fetchWordFromAPI(modelContext: modelContext)
-//                        }
-                        
                         vm.loadingState = .rewarded
                     }
+                    AnalyticsManager.shared.logEvent(name: "DifinitionView_RestrictedView Appear")
                 }
                 
             case .rewarded:
                 RewardedView {
-                    let requestRemaining = UserDefaults.standard.integer(forKey: "requestLimit")
-                    let newRemaining = requestRemaining + 2
-                    UserDefaults.standard.set(newRemaining, forKey: "requestRemaining")
-                    requestManager.requestRemaning += 2
                     Task {
                         await vm.fetchWordFromAPI(modelContext: modelContext)
                     }
+                }
+                .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
+                .onAppear {
+                    AnalyticsManager.shared.logEvent(name: "DifinitionView_RewardedView Appear")
                 }
             }
         }

@@ -15,28 +15,28 @@ struct TabBar: View {
         TabView { 
             HomeView()
                 .tabItem {
-                    Label("Home", systemImage: "house")
+                    Label(Localized.Home, systemImage: "house")
                 }
                 .tag(0)
                 
             WordBookView()
                 .tabItem {
-                    Label("Word Book", systemImage: "book.pages")
+                    Label(Localized.Word_Book, systemImage: "book.pages")
                 }
                 .tag(1)
+            
+            DailyStoryListView()
+                .tabItem {
+                    Label(Localized.Daily_story, systemImage: "book.fill")
+                }
+                .tag(2)
             NavigationStack {
                 AllWordsView()
             }
             .tabItem {
-                Label("All words", systemImage: "heart")
+                Label(Localized.All_words, systemImage: "heart")
             }
-            .tag(2)
-            
-            DailyStoryListView()
-                .tabItem {
-                    Label("Daily story", systemImage: "newspaper")
-                }
-                .tag(3)
+            .tag(3)
         }
         .accentColor(.tabBarButton)
     }
