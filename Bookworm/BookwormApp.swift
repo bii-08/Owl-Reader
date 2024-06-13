@@ -39,7 +39,6 @@ struct BookwormApp: App {
                 UserDefaults.standard.removeObject(forKey: "lastFetchDateForDefinition")
                 print(UserDefaults.standard.string(forKey: "lastFetchDateForDefinition") as Any)
                 print("This is the first launch")
-                
                 isFirstTimeLaunch = false
             }
         } catch {

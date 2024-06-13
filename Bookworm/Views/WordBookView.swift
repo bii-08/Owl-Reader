@@ -12,13 +12,13 @@ import TipKit
 struct WordBookView: View {
     @EnvironmentObject var vm: WordBookVM
     @Environment(\.modelContext) var modelContext
-    
+    @Environment(\.dismiss) var dismiss
     @State private var addingWordBookTitle: String = ""
     
     var title: String?
     let createWordbookTip = CreateWordBookTip()
     let swipeActionTip = SwipeActionInWordBookTip()
-    
+    var deviceType = DeviceInfo.shared.getDeviceType()
     var body: some View {
         NavigationStack {
             ZStack {
@@ -66,8 +66,23 @@ struct WordBookView: View {
                         }
                     }
                     .listStyle(.plain)
-                    .sheet(isPresented: $vm.showingSheet) {
+                    .popover(isPresented: $vm.showingSheet,attachmentAnchor: .rect(.rect(CGRect(x: 10, y: 10, width: 700, height: 300)))) {
                         changingWordBookSheetView(createWordbookTip: createWordbookTip, swipeActionTip: swipeActionTip)
+                            .frame(minWidth: deviceType == .pad ? 400 : 300, minHeight: deviceType == .pad ? 400 : 300)
+                            .presentationDetents([.large, .height(300)])
+                            .overlay(alignment: .topTrailing) {
+                                HStack {
+                                    Spacer()
+                                    Button {
+                                        vm.showingSheet = false
+                                    } label: {
+                                        Image(systemName: "xmark")
+                                            .font(.system(size: 20, weight: .bold))
+                                            .foregroundColor(.primary)
+                                            .padding()
+                                    }
+                                }
+                            }
                     }
                 }
                 .navigationDestination(for: WordBook.self) { wordBook in

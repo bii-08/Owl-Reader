@@ -13,6 +13,7 @@ import GoogleMobileAds
 struct DefinitionView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @StateObject private var rewardManager = RewardAdsManager()
     @ObservedObject private var requestManager = RequestManager.shared
     @StateObject var vm: DefinitionVM
@@ -24,12 +25,14 @@ struct DefinitionView: View {
     var height: CGFloat?
     let synthesizer = AVSpeechSynthesizer()
     var deviceType: DeviceType
-    init(vm: DefinitionVM, initialWordBook: String = "Default", width: CGFloat? = nil, height: CGFloat? = nil) {
+    var isPopover = false
+    init(vm: DefinitionVM, initialWordBook: String = "Default", width: CGFloat? = nil, height: CGFloat? = nil, isPopover: Bool = false) {
         _vm = StateObject(wrappedValue: vm)
         self.initialWordBook = initialWordBook
         self.width = width
         self.height = height
         self.deviceType = DeviceInfo.shared.getDeviceType()
+        self.isPopover = isPopover
     }
     var body: some View {
         
@@ -201,7 +204,7 @@ struct DefinitionView: View {
                                     .padding(.vertical, 5)
                                 }
                             } else {
-                               
+                                
                                 HStack {
                                     Spacer()
                                     Text(Localized.Sorry_Could_not_find_this_word)
@@ -223,8 +226,8 @@ struct DefinitionView: View {
                     HStack {
                         Text(Localized.Choose_your_wordbook)
                             .font(.custom("Helvetica", size: 19))
-                            .frame(width: 220, height: 60)
                             .bold()
+                            .frame(minWidth: 220)
                         Menu {
                             Picker("", selection: $wordBookVM.selectedWordbook) {
                                 ForEach(wordBookVM.wordBookTitle, id: \.self) { title in
@@ -241,7 +244,7 @@ struct DefinitionView: View {
                                 .cornerRadius(8)
                         }
                     }
-                    .padding(.horizontal)
+                    .padding()
                 }
                 .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
                 .onAppear {
@@ -249,31 +252,34 @@ struct DefinitionView: View {
                 }
                 
             case .failed:
-                ContentUnavailableView {
-                    VStack {
-                        Image("error")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                        Text(Localized.Error_loading_word)
-                            .bold()
-                    }
-                    .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
-                    .onAppear {
-                        AnalyticsManager.shared.logEvent(name: "DifinitionView_ErrorView Appear")
-                    }
-                } description: {
-                    Text(Localized.An_error_occurred_while_loading_your_word)
-                } actions: {
-                    Button(Localized.Retry) {
-                        wordBookVM.fetchWordBookList(modelContext: modelContext)
-                        wordBookVM.selectedWordbook = initialWordBook
-                        Task {
-                            await vm.fetchWordFromAPI(modelContext: modelContext)
+                VStack {
+                    ContentUnavailableView {
+                        VStack {
+                            Image("error")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 50, height: 50)
+                            Text(Localized.Error_loading_word)
+                                .bold()
                         }
-                    }
-                    .buttonStyle(BorderedButtonStyle())
+                        .onAppear {
+                            AnalyticsManager.shared.logEvent(name: "DifinitionView_ErrorView Appear")
+                        }
+                    } description: {
+                        Text(Localized.An_error_occurred_while_loading_your_word)
+                    } actions: {
+                        Button(Localized.Retry) {
+                            wordBookVM.fetchWordBookList(modelContext: modelContext)
+                            wordBookVM.selectedWordbook = initialWordBook
+                            Task {
+                                await vm.fetchWordFromAPI(modelContext: modelContext)
+                            }
+                        }
+                        .buttonStyle(BorderedButtonStyle())
                 }
+                }
+                .frame(minWidth: 400, minHeight: 420)
+                
             case .restricted:
                 VStack(spacing: 20) {
                     Image("lock")
@@ -294,7 +300,8 @@ struct DefinitionView: View {
                         
                     }
                 }
-                .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
+                .frame(minWidth: 400, minHeight: 420)
+//                .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
                 .onAppear {
                     
                     print("Restricted view appeared")
@@ -314,15 +321,30 @@ struct DefinitionView: View {
                 }
                 .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
                 .onAppear {
+                    requestManager.adsWatchCount += 1
+                    UserDefaults.standard.set(requestManager.adsWatchCount, forKey: "adsWatchCount")
                     AnalyticsManager.shared.logEvent(name: "DifinitionView_RewardedView Appear")
                 }
             }
+            
         }
         .onLoad {
             wordBookVM.fetchWordBookList(modelContext: modelContext)
             wordBookVM.selectedWordbook = initialWordBook
             Task {
                 await vm.fetchWordFromAPI(modelContext: modelContext)
+            }
+        }
+        .overlay(alignment: .bottomTrailing) {
+            if deviceType == .pad && isPopover {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.primary)
+                        .padding()
+                }
             }
         }
     }

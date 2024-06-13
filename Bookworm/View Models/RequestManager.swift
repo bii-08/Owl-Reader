@@ -18,7 +18,12 @@ class RequestManager: ObservableObject {
     
     @Published var requestCount: Int {
         didSet {
-            print("---> Request remaining: \(requestCount)")
+            print("---> Request count: \(requestCount)")
+        }
+    }
+    @Published var adsWatchCount: Int {
+        didSet {
+            print("---> adsWatchCount: \(adsWatchCount)")
         }
     }
     var canMakeRequest: Bool {
@@ -27,10 +32,11 @@ class RequestManager: ObservableObject {
     private let requestCountKey = "requestCount"
     private let requestRemaningKey = "requestRemaining"
     private let lastFetchDate = "lastFetchDateForDefinition"
-    
+    private let adsWatchCountKey = "adsWatchCount"
     init() {
         self.requestRemaning = UserDefaults.standard.integer(forKey: requestRemaningKey)
         self.requestCount = UserDefaults.standard.integer(forKey: requestCountKey)
+        self.adsWatchCount = UserDefaults.standard.integer(forKey: adsWatchCountKey)
     }
     
     // FUNCTION: to reset requestCount and requestLimit if needed
@@ -41,9 +47,11 @@ class RequestManager: ObservableObject {
         if lastFetchDate != today || lastFetchDate == nil {
             UserDefaults.standard.set(0, forKey: requestCountKey)
             requestCount = 0
-            UserDefaults.standard.set(25, forKey: requestRemaningKey)
-            requestRemaning = 25
+            UserDefaults.standard.set(3, forKey: requestRemaningKey)
+            requestRemaning = 3
             UserDefaults.standard.set(today, forKey: "lastFetchDateForDefinition")
+            UserDefaults.standard.set(0, forKey: adsWatchCountKey)
+            adsWatchCount = 0
         }
     }
     

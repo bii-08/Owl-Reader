@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct BookRowView: View {
-    var book: Book = Book(title: "The Monkey’s paw", author: "The Monkey’s paw")
-    
+    var book: Book
+    @ObservedObject var markAsRead = MarkAsRead.shared
     var body: some View {
         VStack {
             HStack {
@@ -24,6 +24,11 @@ struct BookRowView: View {
                     Text("\(book.author)")
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.leading)
+                }
+                if markAsRead.contains(book) {
+                    Spacer()
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(.teal)
                 }
             }
         }

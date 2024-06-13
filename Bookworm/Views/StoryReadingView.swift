@@ -9,53 +9,68 @@ import SwiftUI
 
 struct StoryReadingView: View {
     @StateObject var storyReadingVM: StoryReadingVM
+    @ObservedObject var markAsRead = MarkAsRead.shared
     @State private var flowLayoutHeight: CGFloat = 0 {
         didSet {
             print(flowLayoutHeight)
         }
     }
-    @Binding var showingDefinition: Bool 
+    @Binding var showingDefinition: Bool
     var deviceType = DeviceInfo.shared.getDeviceType()
     var body: some View {
         VStack {
             ScrollView {
-                    VStack(alignment: .leading) {
-                        if let content = storyReadingVM.content {
-                            let words = slitWords(content: content)
-                            FlowLayout(items: words, selectedWord: $storyReadingVM.selectedWord, showingDefinition: $showingDefinition)
-                                .onPreferenceChange(FlowLayoutHeightKey.self) { newHeight in
-                                    flowLayoutHeight = newHeight
-                                }
+                VStack(alignment: .leading) {
+                    if let content = storyReadingVM.content {
+                        let words = slitWords(content: content)
+                        FlowLayout(items: words, selectedWord: $storyReadingVM.selectedWord, showingDefinition: $showingDefinition)
+                            .onPreferenceChange(FlowLayoutHeightKey.self) { newHeight in
+                                flowLayoutHeight = newHeight
+                            }
+                    } else {
+                        Text(Localized.Loading_content)
+                            .padding()
+                    }
+                }
+                .padding()
+                .frame(height: flowLayoutHeight)
+                
+                if storyReadingVM.content != nil {
+                    Button(markAsRead.contains(storyReadingVM.book) ? "Mark as Unread" : "Mark as Read") {
+                        if markAsRead.contains(storyReadingVM.book) {
+                            markAsRead.remove(storyReadingVM.book)
                         } else {
-                            Text(Localized.Loading_content)
-                                .padding()
+                            markAsRead.add(storyReadingVM.book)
                         }
                     }
-                    .popover(isPresented: $showingDefinition, attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))), arrowEdge: .bottom) {
-                        if let word = storyReadingVM.selectedWord {
-                            DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
-                                .presentationBackground(.thinMaterial)
-                                .presentationCornerRadius(15)
-                                .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
-                                .presentationDetents([.large, .height(300)])
-                        }
-                    }
+                    .buttonStyle(.borderedProminent)
                     .padding()
-                    .frame(height: flowLayoutHeight)
                 }
-                .navigationTitle("\(storyReadingVM.book.title)")
-                .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    storyReadingVM.loadTextFile(named: storyReadingVM.book.title)
-                    AnalyticsManager.shared.logEvent(name: "StoryReadingView_Appear")
+                
+                
+            }
+            .navigationTitle("\(storyReadingVM.book.title)")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                storyReadingVM.loadTextFile(named: storyReadingVM.book.title)
+                AnalyticsManager.shared.logEvent(name: "StoryReadingView_Appear")
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    WordRequestCounterView()
+                        .popover(isPresented: $showingDefinition,attachmentAnchor: .rect(.rect(CGRect(x: 10, y: 10, width: 700, height: 300)))) {
+                            if let word = storyReadingVM.selectedWord {
+                                DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil, isPopover: true)
+                                    .presentationBackground(.thinMaterial)
+                                    .presentationCornerRadius(15)
+                                    .frame(maxWidth: deviceType == .pad ? 450 : .infinity, maxHeight: deviceType == .pad ? 1000 : 800)
+                                    .presentationDetents([.large, .height(300)])
+                            }
+                        }
                 }
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        WordRequestCounterView()
-                    }
-                }
-                .onDisappear {
-                    AnalyticsManager.shared.logEvent(name: "StoryReadingView_Disappear")
+            }
+            .onDisappear {
+                AnalyticsManager.shared.logEvent(name: "StoryReadingView_Disappear")
             }
             
             BannerView()
@@ -121,11 +136,11 @@ struct FlowLayout: View {
                                     print(vm.height)
                                 }
                                 height = 0
-//                                print("-----> setting height = 0, word is \(items[index])")
+                                //                                print("-----> setting height = 0, word is \(items[index])")
                             } else if items[index] == "<break>" {
                                 height -= 60
                             }
-//                            print("-----> setting height \(result)")
+                            //                            print("-----> setting height \(result)")
                             return CGFloat(result)
                         }
                 }

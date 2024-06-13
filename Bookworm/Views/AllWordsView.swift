@@ -36,6 +36,7 @@ struct AllWordsView: View {
         }
         return filteredWords
     }
+    var deviceType = DeviceInfo.shared.getDeviceType()
     
     var body: some View {
         ZStack {
@@ -67,8 +68,23 @@ struct AllWordsView: View {
             .navigationDestination(for: Word.self) { word in
                 DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: DictionaryService()))
             }
-            .sheet(isPresented: Binding(get: { showingSheet }, set: { showingSheet = $0 })) {
+            .popover(isPresented: Binding(get: { showingSheet }, set: { showingSheet = $0 }),attachmentAnchor: .rect(.rect(CGRect(x: 10, y: 10, width: 700, height: 300)))) {
                 searchByDictionarySheet(searchForAWord: searchForAWordTip)
+                    .frame(minWidth: deviceType == .pad ? 400 : 300, minHeight: deviceType == .pad ? 400 : 300)
+                    .presentationDetents([.large, .height(300)])
+                    .overlay(alignment: .topTrailing) {
+                        HStack {
+                            Spacer()
+                            Button {
+                                showingSheet = false
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .font(.system(size: 20, weight: .bold))
+                                    .foregroundColor(.primary)
+                                    .padding()
+                            }
+                        }
+                    }
             }
         }
         .navigationDestination(isPresented: $showingDefinition, destination: {

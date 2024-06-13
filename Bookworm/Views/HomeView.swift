@@ -231,7 +231,7 @@ extension HomeView {
                             }
                             .popover(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 }),attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))),arrowEdge: .bottom) {
                                 if let word = selectedWord {
-                                    DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
+                                    DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil, isPopover: true)
                                         .presentationBackground(.thinMaterial)
                                         .presentationCornerRadius(15)
                                         .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
@@ -308,15 +308,15 @@ extension HomeView {
                             }
                             .popover(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 }), attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))), arrowEdge: .bottom) {
                                 if let word = selectedWord {
-                                    DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
+                                    DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil, isPopover: true)
                                         .presentationBackground(.thickMaterial)
                                         .presentationCornerRadius(15)
-                                        .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
+                                        .frame(maxWidth: deviceType == .pad ? 450 : .infinity, maxHeight: deviceType == .pad ? 1000 : 800)
                                         .presentationDetents([.large, .height(300)])
                                 }
                             }
                         }
-                        .toolbar{
+                        .toolbar {
                             TextField(Localized.Loading_url, text: $urlToDisplay, onCommit: {
                             })
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -446,10 +446,10 @@ extension HomeView {
                                 }
                                 .popover(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 }), attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))), arrowEdge: .bottom) {
                                     if let word = selectedWord {
-                                        DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
+                                        DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil, isPopover: true)
                                             .presentationBackground(.thickMaterial)
                                             .presentationCornerRadius(15)
-                                            .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
+                                            .frame(maxWidth: deviceType == .pad ? 450 : .infinity, maxHeight: deviceType == .pad ? 1000 : 800)
                                             .presentationDetents([.large, .height(300)])
                                     }
                                 }
@@ -574,10 +574,10 @@ extension HomeView {
                         }
                         .popover(isPresented: Binding(get: { showingDefinition }, set: { showingDefinition = $0 }), attachmentAnchor: .rect(.rect(CGRect(x: 30, y: 40, width: 320, height: 200))),arrowEdge: .bottom) {
                             if let word = selectedWord {
-                                DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil)
+                                DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil, isPopover: true)
                                     .presentationBackground(.thickMaterial)
                                     .presentationCornerRadius(15)
-                                    .frame(maxWidth: deviceType == .pad ? 450 : 300, maxHeight: deviceType == .pad ? 1000 : 800)
+                                    .frame(maxWidth: deviceType == .pad ? 450 : .infinity, maxHeight: deviceType == .pad ? 1000 : 800)
                                     .presentationDetents([.large, .height(300)])
                             }
                         }
@@ -586,8 +586,8 @@ extension HomeView {
                         TextField(Localized.Loading_url, text: $urlToDisplay, onCommit: {
                             
                         })
+                        .frame(minWidth: 300)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
                     }
                     .edgesIgnoringSafeArea(.all)
                 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		780BA77D2C1A79AD0036B08B /* MarkAsRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780BA77C2C1A79AD0036B08B /* MarkAsRead.swift */; };
 		781C5B0F2BDF2BAD00FB394B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B0E2BDF2BAD00FB394B /* AlertView.swift */; };
 		781C5B112BDF6A3000FB394B /* EditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B102BDF6A3000FB394B /* EditingView.swift */; };
 		781C5B142BE06EEB00FB394B /* Headlines.json in Resources */ = {isa = PBXBuildFile; fileRef = 781C5B132BE06EEB00FB394B /* Headlines.json */; };
@@ -76,6 +77,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		780BA77C2C1A79AD0036B08B /* MarkAsRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAsRead.swift; sourceTree = "<group>"; };
 		781C5B0E2BDF2BAD00FB394B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		781C5B102BDF6A3000FB394B /* EditingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingView.swift; sourceTree = "<group>"; };
 		781C5B132BE06EEB00FB394B /* Headlines.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Headlines.json; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				788B036C2C0DD034006338B3 /* RequestManager.swift */,
 				78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */,
 				78B99B9C2C19564300988955 /* DeviceInfo.swift */,
+				780BA77C2C1A79AD0036B08B /* MarkAsRead.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				7825C1112BEDF9130049E53D /* AllWordsView.swift in Sources */,
 				781C5B1F2BE078C700FB394B /* HeadlineView.swift in Sources */,
 				78B99B862C146FAD00988955 /* SwipeActionInWordBookTip.swift in Sources */,
+				780BA77D2C1A79AD0036B08B /* MarkAsRead.swift in Sources */,
 				781C5B112BDF6A3000FB394B /* EditingView.swift in Sources */,
 				78B99B812C1438A600988955 /* SplashView.swift in Sources */,
 				789D8AC62BE70CB8004E0EA5 /* WordBookVM.swift in Sources */,

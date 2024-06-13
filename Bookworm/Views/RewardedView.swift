@@ -31,9 +31,9 @@ struct RewardedView: View {
             }
             .onAppear {
                 let requestRemaining = UserDefaults.standard.integer(forKey: "requestLimit")
-                let newRemaining = requestRemaining + 25
+                let newRemaining = requestRemaining + 2
                 UserDefaults.standard.set(newRemaining, forKey: "requestRemaining")
-                requestManager.requestRemaning += 25
+                requestManager.requestRemaning += 2
             }
             .overlay {
                 VStack {
