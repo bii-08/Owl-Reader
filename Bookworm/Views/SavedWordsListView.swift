@@ -11,7 +11,7 @@ import SwiftData
 struct SavedWordsListView: View {
     var wordBook: WordBook
     @State private var searchQuery = ""
-    
+    @State private var showingReviewAlert = false
     var filteredWords: [Word] {
         if searchQuery.isEmpty {
             return wordBook.savedWords
@@ -45,6 +45,11 @@ struct SavedWordsListView: View {
                 .listRowSeparator(.hidden)
             }
             .searchable(text: $searchQuery, prompt: Text(Localized.Search_by_word))
+            .customDialog(isShowing: $showingReviewAlert, dialogContent: {
+                AlertView(title: Localized.Vocabulary_Review_Feature, message: Localized.The_vocabulary_review_feature_is_in_progress + "\n" + "\n" + Localized.We_are_working_hard_to_provide_it_as_soon_as_possible, primaryButtonTitle: Localized.Got_it) {
+                    showingReviewAlert = false
+                }
+            })
             .overlay {
                 if filteredWords.isEmpty && searchQuery != "" {
                     ContentUnavailableView.search(text: searchQuery)
@@ -65,6 +70,20 @@ struct SavedWordsListView: View {
         }
         .onDisappear {
             AnalyticsManager.shared.logEvent(name: "SavedWordsListView_Disappear")
+        }
+        .toolbar {
+            Button {
+                // TODO: navigate user to flashcard view
+                showingReviewAlert = true
+            } label: {
+                HStack {
+                    Image(systemName: "lock.fill")
+                    Text(Localized.Review)
+                }
+            }
+//            .disabled(true)
+            .buttonStyle(.borderedProminent)
+            .padding()
         }
     }
 }

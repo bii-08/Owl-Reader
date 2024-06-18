@@ -14,7 +14,6 @@ class MarkAsRead: ObservableObject {
     
     init() {
         load()
-        print("-->init")
     }
     
     func contains(_ shortStory: Book) -> Bool {

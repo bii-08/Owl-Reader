@@ -52,9 +52,6 @@ extension String {
     func lemmatize() -> String {
         let tagger = NLTagger(tagSchemes: [.lemma])
         tagger.string = self
-       
-//        let range = NSRange(location: 0, length: word.utf16.count)
-//        let options: NSLinguisticTagger.Options = [.omitPunctuation, .omitWhitespace]
         var result = ""
         tagger.enumerateTags(in: self.startIndex..<self.endIndex, unit: .word, scheme: .lemma) { tag, range in
            let stemForm = tag?.rawValue ?? String(self[range])
@@ -122,10 +119,8 @@ struct OnLoadModifier: ViewModifier {
 extension Font {
     static func customFont(for language: String) -> Font {
         switch language {
-        case "JP":
+        case "ja":
             return .custom("DIN Condensed", size: 14)
-        
-            
         default:
             return .custom("DIN Condensed", size: 20)
         }

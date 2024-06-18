@@ -31,6 +31,7 @@ class HomeVM: ObservableObject {
         self.webService = webService
         print(Date.distantPast)
         print(Locale.current.region?.identifier ?? "")
+        print("--> \(Bundle.main.preferredLocalizations.first as Any)")
     }
     
     // FUNCTION: to validate the given URL

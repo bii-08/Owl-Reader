@@ -20,7 +20,7 @@ struct AllWordsView: View {
     
     @State private var allowToDeleteWithoutAsking = UserDefaults.standard.bool(forKey: "allowToDeleteWithoutAsking")
     @State private var testing = false
-    
+    @State private var showingReviewAlert = false
     @State private var searchWord = ""
     @State private var showingConfirmation = false
     @State private var wordNeedToDelete: Word?
@@ -55,6 +55,11 @@ struct AllWordsView: View {
                     }
                     showingConfirmation = false
                 })
+            })
+            .customDialog(isShowing: $showingReviewAlert, dialogContent: {
+                AlertView(title: Localized.Vocabulary_Review_Feature, message: Localized.The_vocabulary_review_feature_is_in_progress + "\n" + "\n" + Localized.We_are_working_hard_to_provide_it_as_soon_as_possible, primaryButtonTitle: Localized.Got_it) {
+                    showingReviewAlert = false
+                }
             })
             .overlay {
                 if filteredWords.isEmpty && searchQuery != "" {
@@ -113,11 +118,26 @@ struct AllWordsView: View {
                 }
                 .popoverTip(searchForAWordTip, arrowEdge: .top)
                 .tint(.red)
-                .disabled(showingConfirmation)
+                .disabled(showingConfirmation || showingReviewAlert)
             }
-            
         }
         .navigationBarTitleDisplayMode(.inline)
+        .overlay(alignment: .bottomTrailing) {
+            if !showingConfirmation {
+                Button {
+                   // TODO: navigate user to flashcard view
+                    showingReviewAlert = true
+                } label: {
+                    HStack {
+                        Image(systemName: "lock.fill")
+                        Text(Localized.Review)
+                    }
+                }
+    //            .disabled(true)
+                .buttonStyle(.borderedProminent)
+                .padding()
+            }
+        }
     }
 }
 

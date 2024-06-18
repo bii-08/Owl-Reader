@@ -18,64 +18,67 @@ struct StoryReadingView: View {
     @Binding var showingDefinition: Bool
     var deviceType = DeviceInfo.shared.getDeviceType()
     var body: some View {
-        VStack {
-            ScrollView {
-                VStack(alignment: .leading) {
-                    if let content = storyReadingVM.content {
-                        let words = slitWords(content: content)
-                        FlowLayout(items: words, selectedWord: $storyReadingVM.selectedWord, showingDefinition: $showingDefinition)
-                            .onPreferenceChange(FlowLayoutHeightKey.self) { newHeight in
-                                flowLayoutHeight = newHeight
-                            }
-                    } else {
-                        Text(Localized.Loading_content)
-                            .padding()
-                    }
-                }
-                .padding()
-                .frame(height: flowLayoutHeight)
-                
-                if storyReadingVM.content != nil {
-                    Button(markAsRead.contains(storyReadingVM.book) ? "Mark as Unread" : "Mark as Read") {
-                        if markAsRead.contains(storyReadingVM.book) {
-                            markAsRead.remove(storyReadingVM.book)
+        ZStack {
+            Color("background").ignoresSafeArea()
+            VStack {
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        if let content = storyReadingVM.content {
+                            let words = slitWords(content: content)
+                            FlowLayout(items: words, selectedWord: $storyReadingVM.selectedWord, showingDefinition: $showingDefinition)
+                                .onPreferenceChange(FlowLayoutHeightKey.self) { newHeight in
+                                    flowLayoutHeight = newHeight
+                                }
                         } else {
-                            markAsRead.add(storyReadingVM.book)
+                            Text(Localized.Loading_content)
+                                .padding()
                         }
                     }
-                    .buttonStyle(.borderedProminent)
                     .padding()
-                }
-                
-                
-            }
-            .navigationTitle("\(storyReadingVM.book.title)")
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                storyReadingVM.loadTextFile(named: storyReadingVM.book.title)
-                AnalyticsManager.shared.logEvent(name: "StoryReadingView_Appear")
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    WordRequestCounterView()
-                        .popover(isPresented: $showingDefinition,attachmentAnchor: .rect(.rect(CGRect(x: 10, y: 10, width: 700, height: 300)))) {
-                            if let word = storyReadingVM.selectedWord {
-                                DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil, isPopover: true)
-                                    .presentationBackground(.thinMaterial)
-                                    .presentationCornerRadius(15)
-                                    .frame(maxWidth: deviceType == .pad ? 450 : .infinity, maxHeight: deviceType == .pad ? 1000 : 800)
-                                    .presentationDetents([.large, .height(300)])
+                    .frame(height: flowLayoutHeight)
+                    
+                    if storyReadingVM.content != nil {
+                        Button(markAsRead.contains(storyReadingVM.book) ? "Mark as Unread" : "Mark as Read") {
+                            if markAsRead.contains(storyReadingVM.book) {
+                                markAsRead.remove(storyReadingVM.book)
+                            } else {
+                                markAsRead.add(storyReadingVM.book)
                             }
                         }
+                        .buttonStyle(.borderedProminent)
+                        .padding()
+                    }
+                    
+                    
                 }
+                .navigationTitle("\(storyReadingVM.book.title)")
+                .navigationBarTitleDisplayMode(.inline)
+                .onAppear {
+                    storyReadingVM.loadTextFile(named: storyReadingVM.book.title)
+                    AnalyticsManager.shared.logEvent(name: "StoryReadingView_Appear")
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        WordRequestCounterView()
+                            .popover(isPresented: $showingDefinition,attachmentAnchor: .rect(.rect(CGRect(x: 10, y: 10, width: 700, height: 300)))) {
+                                if let word = storyReadingVM.selectedWord {
+                                    DefinitionView(vm: DefinitionVM(selectedWord: word), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil, isPopover: true)
+                                        .presentationBackground(.thinMaterial)
+                                        .presentationCornerRadius(15)
+                                        .frame(maxWidth: deviceType == .pad ? 450 : .infinity, maxHeight: deviceType == .pad ? 1000 : 800)
+                                        .presentationDetents([.large, .height(300)])
+                                }
+                            }
+                    }
+                }
+                .onDisappear {
+                    AnalyticsManager.shared.logEvent(name: "StoryReadingView_Disappear")
+                }
+                
+                BannerView()
+                    .frame(height: 60)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
             }
-            .onDisappear {
-                AnalyticsManager.shared.logEvent(name: "StoryReadingView_Disappear")
-            }
-            
-            BannerView()
-                .frame(height: 60)
-                .clipShape(RoundedRectangle(cornerRadius: 5))
         }
     }
     

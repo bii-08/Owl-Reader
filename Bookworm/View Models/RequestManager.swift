@@ -18,12 +18,13 @@ class RequestManager: ObservableObject {
     
     @Published var requestCount: Int {
         didSet {
-            print("---> Request count: \(requestCount)")
+            print("---> Request used: \(requestCount)")
         }
     }
     @Published var adsWatchCount: Int {
         didSet {
             print("---> adsWatchCount: \(adsWatchCount)")
+            AnalyticsManager.shared.logEvent(name: "ads_watch_count_updated", params: ["adsWatchCount": adsWatchCount])
         }
     }
     var canMakeRequest: Bool {
@@ -47,8 +48,8 @@ class RequestManager: ObservableObject {
         if lastFetchDate != today || lastFetchDate == nil {
             UserDefaults.standard.set(0, forKey: requestCountKey)
             requestCount = 0
-            UserDefaults.standard.set(3, forKey: requestRemaningKey)
-            requestRemaning = 3
+            UserDefaults.standard.set(25, forKey: requestRemaningKey) // 25
+            requestRemaning = 25 // 25
             UserDefaults.standard.set(today, forKey: "lastFetchDateForDefinition")
             UserDefaults.standard.set(0, forKey: adsWatchCountKey)
             adsWatchCount = 0

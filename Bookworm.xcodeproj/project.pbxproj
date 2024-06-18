@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		780BA77D2C1A79AD0036B08B /* MarkAsRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780BA77C2C1A79AD0036B08B /* MarkAsRead.swift */; };
+		780BA77F2C1C0BF90036B08B /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780BA77E2C1C0BF90036B08B /* HapticManager.swift */; };
+		780BA7822C1FF3860036B08B /* Communicating Effectively.txt in Resources */ = {isa = PBXBuildFile; fileRef = 780BA7812C1FF3860036B08B /* Communicating Effectively.txt */; };
+		780BA7842C2007890036B08B /* ReviewRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780BA7832C2007890036B08B /* ReviewRequestManager.swift */; };
 		781C5B0F2BDF2BAD00FB394B /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B0E2BDF2BAD00FB394B /* AlertView.swift */; };
 		781C5B112BDF6A3000FB394B /* EditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781C5B102BDF6A3000FB394B /* EditingView.swift */; };
 		781C5B142BE06EEB00FB394B /* Headlines.json in Resources */ = {isa = PBXBuildFile; fileRef = 781C5B132BE06EEB00FB394B /* Headlines.json */; };
@@ -51,11 +54,11 @@
 		789D8AC82BE84A6B004E0EA5 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D8AC72BE84A6B004E0EA5 /* TabBar.swift */; };
 		78B99B702C0FF04800988955 /* DailyStoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B6F2C0FF04800988955 /* DailyStoryListView.swift */; };
 		78B99B722C102EEB00988955 /* BookRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B712C102EEB00988955 /* BookRowView.swift */; };
-		78B99B752C102FA000988955 /* The Monkey’s paw.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B742C102FA000988955 /* The Monkey’s paw.txt */; };
+		78B99B752C102FA000988955 /* Excerpt from The Time Machine.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B742C102FA000988955 /* Excerpt from The Time Machine.txt */; };
 		78B99B772C1033E700988955 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B762C1033E700988955 /* Book.swift */; };
 		78B99B792C10365F00988955 /* The Gift of The Magi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B782C10365F00988955 /* The Gift of The Magi.txt */; };
-		78B99B7B2C10367000988955 /* Metamorphosis.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B7A2C10367000988955 /* Metamorphosis.txt */; };
-		78B99B7D2C10367C00988955 /* The Yellow Wallpaper.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B7C2C10367C00988955 /* The Yellow Wallpaper.txt */; };
+		78B99B7B2C10367000988955 /* That Confidence (Courage) is Not Inconsistent with Caution.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B7A2C10367000988955 /* That Confidence (Courage) is Not Inconsistent with Caution.txt */; };
+		78B99B7D2C10367C00988955 /* Friendships.txt in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B7C2C10367C00988955 /* Friendships.txt */; };
 		78B99B7F2C1129AC00988955 /* StoryReadingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */; };
 		78B99B812C1438A600988955 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B802C1438A600988955 /* SplashView.swift */; };
 		78B99B842C1464DC00988955 /* CreateWordBookTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99B832C1464DC00988955 /* CreateWordBookTip.swift */; };
@@ -78,6 +81,9 @@
 
 /* Begin PBXFileReference section */
 		780BA77C2C1A79AD0036B08B /* MarkAsRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAsRead.swift; sourceTree = "<group>"; };
+		780BA77E2C1C0BF90036B08B /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		780BA7812C1FF3860036B08B /* Communicating Effectively.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Communicating Effectively.txt"; sourceTree = "<group>"; };
+		780BA7832C2007890036B08B /* ReviewRequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRequestManager.swift; sourceTree = "<group>"; };
 		781C5B0E2BDF2BAD00FB394B /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		781C5B102BDF6A3000FB394B /* EditingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingView.swift; sourceTree = "<group>"; };
 		781C5B132BE06EEB00FB394B /* Headlines.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Headlines.json; sourceTree = "<group>"; };
@@ -122,11 +128,11 @@
 		789D8AC72BE84A6B004E0EA5 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		78B99B6F2C0FF04800988955 /* DailyStoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStoryListView.swift; sourceTree = "<group>"; };
 		78B99B712C102EEB00988955 /* BookRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRowView.swift; sourceTree = "<group>"; };
-		78B99B742C102FA000988955 /* The Monkey’s paw.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Monkey’s paw.txt"; sourceTree = "<group>"; };
+		78B99B742C102FA000988955 /* Excerpt from The Time Machine.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Excerpt from The Time Machine.txt"; sourceTree = "<group>"; };
 		78B99B762C1033E700988955 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		78B99B782C10365F00988955 /* The Gift of The Magi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Gift of The Magi.txt"; sourceTree = "<group>"; };
-		78B99B7A2C10367000988955 /* Metamorphosis.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Metamorphosis.txt; sourceTree = "<group>"; };
-		78B99B7C2C10367C00988955 /* The Yellow Wallpaper.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "The Yellow Wallpaper.txt"; sourceTree = "<group>"; };
+		78B99B7A2C10367000988955 /* That Confidence (Courage) is Not Inconsistent with Caution.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "That Confidence (Courage) is Not Inconsistent with Caution.txt"; sourceTree = "<group>"; };
+		78B99B7C2C10367C00988955 /* Friendships.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Friendships.txt; sourceTree = "<group>"; };
 		78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryReadingVM.swift; sourceTree = "<group>"; };
 		78B99B802C1438A600988955 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		78B99B832C1464DC00988955 /* CreateWordBookTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateWordBookTip.swift; sourceTree = "<group>"; };
@@ -290,6 +296,8 @@
 				78B99B7E2C1129AC00988955 /* StoryReadingVM.swift */,
 				78B99B9C2C19564300988955 /* DeviceInfo.swift */,
 				780BA77C2C1A79AD0036B08B /* MarkAsRead.swift */,
+				780BA77E2C1C0BF90036B08B /* HapticManager.swift */,
+				780BA7832C2007890036B08B /* ReviewRequestManager.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -306,10 +314,11 @@
 		78B99B732C102F5600988955 /* Book files */ = {
 			isa = PBXGroup;
 			children = (
-				78B99B742C102FA000988955 /* The Monkey’s paw.txt */,
+				78B99B742C102FA000988955 /* Excerpt from The Time Machine.txt */,
 				78B99B782C10365F00988955 /* The Gift of The Magi.txt */,
-				78B99B7A2C10367000988955 /* Metamorphosis.txt */,
-				78B99B7C2C10367C00988955 /* The Yellow Wallpaper.txt */,
+				78B99B7A2C10367000988955 /* That Confidence (Courage) is Not Inconsistent with Caution.txt */,
+				78B99B7C2C10367C00988955 /* Friendships.txt */,
+				780BA7812C1FF3860036B08B /* Communicating Effectively.txt */,
 			);
 			path = "Book files";
 			sourceTree = "<group>";
@@ -425,15 +434,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				78B99B792C10365F00988955 /* The Gift of The Magi.txt in Resources */,
-				78B99B7D2C10367C00988955 /* The Yellow Wallpaper.txt in Resources */,
+				78B99B7D2C10367C00988955 /* Friendships.txt in Resources */,
 				781C5B142BE06EEB00FB394B /* Headlines.json in Resources */,
-				78B99B7B2C10367000988955 /* Metamorphosis.txt in Resources */,
+				78B99B7B2C10367000988955 /* That Confidence (Courage) is Not Inconsistent with Caution.txt in Resources */,
 				785664CD2BD66FC1008A9EF1 /* Preview Assets.xcassets in Resources */,
 				78B99B912C168FFC00988955 /* Localizable.strings in Resources */,
 				7837A8472C06AD5900104E5E /* testing.json in Resources */,
 				785664CA2BD66FC1008A9EF1 /* Assets.xcassets in Resources */,
 				78B99B9F2C197E0A00988955 /* GoogleService-Info.plist in Resources */,
-				78B99B752C102FA000988955 /* The Monkey’s paw.txt in Resources */,
+				78B99B752C102FA000988955 /* Excerpt from The Time Machine.txt in Resources */,
+				780BA7822C1FF3860036B08B /* Communicating Effectively.txt in Resources */,
 				789D8AB72BE3694F004E0EA5 /* Word.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -482,6 +492,7 @@
 				781C5B252BE1C43A00FB394B /* PhotoPickerView.swift in Sources */,
 				78B99B8C2C148CFD00988955 /* RequestCounterTip.swift in Sources */,
 				788B037F2C0ED3E2006338B3 /* BannerAdsManager.swift in Sources */,
+				780BA77F2C1C0BF90036B08B /* HapticManager.swift in Sources */,
 				789D8AC22BE70252004E0EA5 /* WordBook.swift in Sources */,
 				788B036D2C0DD034006338B3 /* RequestManager.swift in Sources */,
 				785664DE2BD88240008A9EF1 /* Link.swift in Sources */,
@@ -497,6 +508,7 @@
 				787AD29B2C00416E00910ADD /* Shortcut.swift in Sources */,
 				788B03692C0D91AB006338B3 /* WordRequestCounterView.swift in Sources */,
 				78B99B9D2C19564300988955 /* DeviceInfo.swift in Sources */,
+				780BA7842C2007890036B08B /* ReviewRequestManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

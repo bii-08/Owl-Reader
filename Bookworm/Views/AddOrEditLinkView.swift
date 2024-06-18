@@ -20,7 +20,7 @@ struct AddOrEditLinkView: View {
     @State var selectedPage: Shortcut?
     @FocusState private var isTextFieldFocused: Bool
     let swipeActionTip = SwipeActionInAddOrEditLinkTip()
-    
+    var deviceType = DeviceInfo.shared.getDeviceType()
     var body: some View {
         ZStack {
             Color("background").ignoresSafeArea()
@@ -100,12 +100,13 @@ struct AddOrEditLinkView: View {
                         )
                     }
                     
-                    HStack {
-                        Text(Localized.Add_new_shortcut)
-                            .font(Font.custom("DIN Condensed", size: 25))
-                        Spacer()
-                    }
-                    .padding(.horizontal)
+                    VStack {
+                        HStack {
+                            Text(Localized.Add_new_shortcut)
+                                .font(Font.custom("DIN Condensed", size: 25))
+                            Spacer()
+                        }
+                        .padding(.horizontal)
                     
                     // Page title
                     TextField("", text: $webPageTitle, prompt: Text(Localized.Page_title).foregroundColor(.white.opacity(0.7))).padding(6)
@@ -141,48 +142,50 @@ struct AddOrEditLinkView: View {
                     }
                     .disabled(vm.showingAlert)
                     
-                    HStack {
-                        // Add button
-                        Button {
-                            if vm.isValidURL && !vm.isUrlAlreadyExists && vm.isTitleValid && !vm.isTitleAlreadyExists {
-                                print("valid")
-                                vm.addLink(newShortcut: Shortcut(url: URL(string: urlString)!, favicon: photoPickerVM.selectedImage?.pngData(), webPageTitle: webPageTitle), modelContext: modelContext)
-                                vm.fetchShortcuts(modelContext: modelContext)
-                                
+                        HStack {
+                            // Add button
+                            Button {
+                                if vm.isValidURL && !vm.isUrlAlreadyExists && vm.isTitleValid && !vm.isTitleAlreadyExists {
+                                    print("valid")
+                                    vm.addLink(newShortcut: Shortcut(url: URL(string: urlString)!, favicon: photoPickerVM.selectedImage?.pngData(), webPageTitle: webPageTitle), modelContext: modelContext)
+                                    vm.fetchShortcuts(modelContext: modelContext)
+                                    
+                                    urlString = ""
+                                    webPageTitle = ""
+                                    photoPickerVM.clear()
+                                    
+                                } else {
+                                    print("invalid")
+                                    withAnimation {
+                                        vm.showingAlert = true
+                                    }
+                                }
+                            } label: {
+                                Text(Localized.Add)
+                                    .foregroundColor(.white)
+                                    .frame(width: 100, height: 40)
+                                    .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .orange.opacity(0.8)))
+                            }
+                            .disabled(vm.showingAlert)
+                            .padding(.vertical, 10)
+                            
+                            // Clear button
+                            Button {
                                 urlString = ""
                                 webPageTitle = ""
                                 photoPickerVM.clear()
-                                
-                            } else {
-                                print("invalid")
-                                withAnimation {
-                                    vm.showingAlert = true
-                                }
+                                isTextFieldFocused = false
+                            } label: {
+                                Text(Localized.Clear)
+                                    .foregroundColor(.white)
+                                    .frame(width: 100, height: 40)
+                                    .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .clearButton.opacity(0.5)))
                             }
-                        } label: {
-                            Text(Localized.Add)
-                                .foregroundColor(.white)
-                                .frame(width: 100, height: 40)
-                                .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .orange.opacity(0.8)))
+                            .disabled(vm.showingAlert)
+                            .padding(.vertical, 10)
                         }
-                        .disabled(vm.showingAlert)
-                        .padding(.vertical, 10)
-                        
-                        // Clear button
-                        Button {
-                            urlString = ""
-                            webPageTitle = ""
-                            photoPickerVM.clear()
-                            isTextFieldFocused = false
-                        } label: {
-                            Text(Localized.Clear)
-                                .foregroundColor(.white)
-                                .frame(width: 100, height: 40)
-                                .background(RoundedRectangle(cornerRadius: 5).fill(vm.showingAlert ? .gray : .clearButton.opacity(0.5)))
-                        }
-                        .disabled(vm.showingAlert)
-                        .padding(.vertical, 10)
                     }
+                    .padding(.vertical, deviceType == .pad ? 80 : 30)
                     Spacer()
                 }
             }

@@ -71,6 +71,7 @@ struct BookwormApp: App {
             SplashView()
                 .environmentObject(HomeVM())
                 .environmentObject(WordBookVM())
+                .environmentObject(ReviewRequestManager())
         }
         .modelContainer(modelContainer)
     }

@@ -24,7 +24,7 @@ class WordBookVM: ObservableObject {
     @Published var goodTitle = false
     @Published var message = ""
     var editingWordBook: WordBook?
-    var noMoreReference = false
+    @Published var needToDelete = false
     
     @Published var title: String = ""
     
@@ -48,11 +48,11 @@ class WordBookVM: ObservableObject {
                 listWordBook[index].savedWords.remove(at: wordIndex)
                 print("removing word")
                 if !listWordBook.contains(where: { $0.savedWords.contains(word)}) {
-                    modelContext.delete(word)
-                    noMoreReference = true
+                    needToDelete = true
                 }
             } else {
                 listWordBook[index].savedWords.append(word)
+                needToDelete = false
                 print("appending word")
             }
         }

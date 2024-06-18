@@ -78,3 +78,7 @@
     "Please_ensure_your_link_or_title_is_correct" = "링크 또는 제목이 정확한지 확인하십시오.";
     "This_title_or_link_is_already_exists" = "이 제목 또는 링크가 이미 존재합니다.";
     "Got_it" = "알겠습니다";
+    "Vocabulary_Review_Feature" = "어휘 복습 기능";
+    "The_vocabulary_review_feature_is_in_progress" = "어휘 복습 기능이 진행 중입니다.";
+    "We_are_working_hard_to_provide_it_as_soon_as_possible" = "최대한 빨리 제공할 수 있도록 열심히 작업 중입니다. 🙂";
+    "Review" = "배우다";

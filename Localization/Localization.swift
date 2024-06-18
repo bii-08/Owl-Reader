@@ -83,4 +83,8 @@ struct Localized {
     static let Please_ensure_your_link_or_title_is_correct = NSLocalizedString("Please_ensure_your_link_or_title_is_correct", comment: "")
     static let This_title_or_link_is_already_exists = NSLocalizedString("This_title_or_link_is_already_exists", comment: "")
     static let Got_it = NSLocalizedString("Got_it", comment: "")
+    static let Vocabulary_Review_Feature = NSLocalizedString("Vocabulary_Review_Feature", comment: "")
+    static let The_vocabulary_review_feature_is_in_progress = NSLocalizedString("The_vocabulary_review_feature_is_in_progress", comment: "")
+    static let We_are_working_hard_to_provide_it_as_soon_as_possible = NSLocalizedString("We_are_working_hard_to_provide_it_as_soon_as_possible", comment: "")
+    static let Review = NSLocalizedString("Review", comment: "")
 }

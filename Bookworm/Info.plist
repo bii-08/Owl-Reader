@@ -9,7 +9,7 @@
 	<key>HEADLINE_API_KEY</key>
 	<string>$(HEADLINE_API_KEY)</string>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<string>ca-app-pub-1944868584805673~1728913744</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

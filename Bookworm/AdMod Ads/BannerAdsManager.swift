@@ -24,9 +24,13 @@ struct BannerView: UIViewControllerRepresentable{
 
 class BannerAdViewController: UIViewController, GADBannerViewDelegate{
     var bannerView: GADBannerView?
+    #if DEBUG
+    // test
     let adUnitId = "ca-app-pub-3940256099942544/2435281174"
-    
-    
+    #else
+    // real
+    let adUnitId = "ca-app-pub-1944868584805673/1915953298"
+    #endif
     // View Life Cycle
     
     override func viewDidLoad() {

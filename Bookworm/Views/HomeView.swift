@@ -8,6 +8,7 @@
 import SwiftUI
 import WebKit
 import SwiftData
+import StoreKit
 
 struct HomeView: View {
     @Environment(\.dismiss) var dismiss
@@ -67,6 +68,7 @@ struct HomeView: View {
                     await vm.handleHeadlines(modelContext: modelContext)
                 }
                 AnalyticsManager.shared.logEvent(name: "HomeView_Appear")
+                
             }
         }
         .toolbar(tabBarVisibility, for: .tabBar)
@@ -135,7 +137,7 @@ extension HomeView {
                 
                 // Request Counter
                 WordRequestCounterView()
-                    .popoverTip(requestCounterTip)
+//                    .popoverTip(requestCounterTip)
                     .onLoad {
                         requestManager.resetCountIfNeeded()
                     }
@@ -544,7 +546,7 @@ extension HomeView {
                     }
                 }
                 .listStyle(.plain)
-                .frame(height: 200)
+                .frame(height: deviceType == .pad ? 400 : 200)
             }
         }
         .navigationDestination(isPresented: $showingRecentlyReadWebPage) {
@@ -603,5 +605,6 @@ extension HomeView {
     HomeView()
         .environmentObject(HomeVM())
         .environmentObject(WordBookVM())
+        .environmentObject(ReviewRequestManager())
         .modelContainer(for: [Link.self, Shortcut.self, Headline.self, Word.self, WordBook.self])
 }

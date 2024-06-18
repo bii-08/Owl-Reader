@@ -13,6 +13,11 @@ import GoogleMobileAds
 struct DefinitionView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
+    
+    @EnvironmentObject private var reviewsManager: ReviewRequestManager
+    @Environment(\.requestReview) var requestReview
+    @Query var allWords: [Word]
+    
     @Environment(\.dismiss) var dismiss
     @StateObject private var rewardManager = RewardAdsManager()
     @ObservedObject private var requestManager = RequestManager.shared
@@ -65,7 +70,12 @@ struct DefinitionView: View {
                             if let word = vm.word {
                                 wordBookVM.didTapOnStar(word: word, wordBookName: wordBookVM.selectedWordbook, modelContext: modelContext)
                                 AnalyticsManager.shared.logEvent(name: "DifinitionView_StarButtonClick")
+                                if reviewsManager.canAskForReview(numberOfWords: allWords.count) {
+                                    requestReview()
+                                }
                             }
+                            HapticManager.shared.notification(type: .success)
+                            
                         } label: {
                             if let word = vm.word {
                                 Image(systemName: "star.fill")
@@ -73,7 +83,7 @@ struct DefinitionView: View {
                                     .foregroundColor(wordBookVM.isThisWordAlreadySaved(selectedWord: word, wordBookName: wordBookVM.selectedWordbook) ? .orange : .gray)
                             }
                         }
-                        .disabled(wordBookVM.noMoreReference || thisWordIsEmpty)
+                        .disabled(thisWordIsEmpty)
                     }
                     .padding(.horizontal)
                     
@@ -215,6 +225,9 @@ struct DefinitionView: View {
                                 }
                                 .onAppear {
                                     thisWordIsEmpty = true
+                                    let remainingAdjust = requestManager.requestRemaning + 1
+                                    UserDefaults.standard.set(remainingAdjust, forKey: "requestRemaining")
+                                    requestManager.requestRemaning += 1
                                 }
                                 
                             }
@@ -243,12 +256,21 @@ struct DefinitionView: View {
                                 .background(.white.opacity(0.4))
                                 .cornerRadius(8)
                         }
+                        Spacer()
                     }
+                    .frame(minWidth: deviceType == .pad ? 420 : nil)
                     .padding()
                 }
                 .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
                 .onAppear {
                     AnalyticsManager.shared.logEvent(name: "DifinitionView_SuccessView Appear")
+                }
+                .onDisappear {
+                    if let word = vm.word {
+                        if wordBookVM.needToDelete {
+                            modelContext.delete(word)
+                        }
+                    }
                 }
                 
             case .failed:
@@ -294,14 +316,15 @@ struct DefinitionView: View {
                     } label: {
                         Text(Localized.Watch_AD_for_10_free_requests)
                             .font(Font.custom("DIN Condensed", size: 20))
-                            .foregroundColor(.yellow)
+                            .foregroundColor(rewardManager.rewardAd == nil ? .gray.opacity(0.5) : .yellow)
                             .padding()
-                            .background(RoundedRectangle(cornerRadius: 5).fill(Color.secondary.opacity(0.5)))
+                            .background(RoundedRectangle(cornerRadius: 5).fill(rewardManager.rewardAd == nil ? .gray.opacity(0.5) : Color.teal.opacity(0.8)))
                         
                     }
+                    .disabled(rewardManager.rewardAd == nil)
+                    
                 }
                 .frame(minWidth: 400, minHeight: 420)
-//                .frame(maxWidth: deviceType == .pad ? width : nil, maxHeight: deviceType == .pad ? height : nil)
                 .onAppear {
                     
                     print("Restricted view appeared")

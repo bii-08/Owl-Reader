@@ -79,7 +79,10 @@
     "Please_ensure_your_link_or_title_is_correct" = "Vui lòng đảm bảo liên kết hoặc tiêu đề của bạn đúng.";
     "This_title_or_link_is_already_exists" = "Tiêu đề hoặc liên kết này đã tồn tại.";
     "Got_it" = "Hiểu rồi";
-
+    "Vocabulary_Review_Feature" = "Tính năng ôn lại từ vựng";
+    "The_vocabulary_review_feature_is_in_progress" = "Tính năng ôn lại từ vựng đang được phát triển.";
+    "We_are_working_hard_to_provide_it_as_soon_as_possible" = "Chúng tôi đang nỗ lực để cung cấp tính năng này sớm nhất có thể. 🙂";
+    "Review" = "Ôn tập";
 
 
 

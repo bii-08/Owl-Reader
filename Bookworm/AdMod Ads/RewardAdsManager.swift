@@ -12,7 +12,7 @@ class RewardAdsManager: NSObject, GADFullScreenContentDelegate, ObservableObject
     
     // Properties
     var rewardLoaded: Bool = false
-    var rewardAd: GADRewardedAd?
+   @Published var rewardAd: GADRewardedAd?
     
     override init() {
         super.init()
@@ -21,7 +21,15 @@ class RewardAdsManager: NSObject, GADFullScreenContentDelegate, ObservableObject
     
     // Load reward ads
     func loadAd() {
-        GADRewardedAd.load(withAdUnitID: "ca-app-pub-3940256099942544/1712485313", request: GADRequest()) { ad, error in
+        #if DEBUG
+        // test
+        let adUnitId = "ca-app-pub-3940256099942544/1712485313"
+        #else
+        // real
+        let adUnitId = "ca-app-pub-1944868584805673/4628595167"
+        #endif
+        
+        GADRewardedAd.load(withAdUnitID: adUnitId, request: GADRequest()) { ad, error in
             if let error  = error {
                 print("Failed to load rewardAd with error: \(error.localizedDescription)")
                 //self.rewardLoaded = false
