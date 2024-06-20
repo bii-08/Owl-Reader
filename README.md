@@ -9,7 +9,7 @@
 
 # 🫵 Overview
 
-Owl Reader is designed to provide an enjoyable and effortless way for you to improve your English.
+**Owl Reader** is designed to provide an enjoyable and effortless way for you to improve your English.
 Dive into news articles, short stories, and any English content you love, all while enhancing your language skills. 
 Owl Reader makes learning seamless and engaging with its instant word lookup feature—simply tap any word for a quick definition.
 
@@ -19,12 +19,12 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 
 ## 🚀 Features
 
-- **Personalized Reading:** Access any links you love to read
-- **Stay Informed:** Get breaking news updates to stay in the loop
-- **Quick Access:** Save your favorite links with shortcuts for easy access
-- **Build Your Vocabulary:** Create custom word books to save and manage your words, making it effortless to review later
-- **Offline Enjoyment:** Dive into daily short stories offline, sorted by word count or difficulty for a tailored experience
-- **Languages:** Support multiple languages
+- **Personalized Reading:**   Access any links you love to read
+- **Stay Informed:**   Get breaking news updates to stay in the loop
+- **Quick Access:**   Save your favorite links with shortcuts for easy access
+- **Build Your Vocabulary:**   Create custom word books to save and manage your words, making it effortless to review later
+- **Offline Enjoyment:**   Dive into daily short stories offline, sorted by word count or difficulty for a tailored experience
+- **Languages:**   Support multiple languages
 
 ## ⌛ Coming Soon
 
@@ -61,7 +61,7 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 
 ## 🔎 Credits
 
-- **Created by** [Tam Luu](https://github.com/bii-08)**
+- **Created by** [Tam Luu](https://github.com/bii-08)
 
 - newsapi.org
 - App icon, Logos provided by Vecteezy, Freepik
