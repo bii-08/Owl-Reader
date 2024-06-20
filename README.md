@@ -34,19 +34,19 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 ## 👩‍💻 Core Technologies
 
 - Built entirely on Swift / SwiftUI
-- Adhered to the MVVM design pattern
-- Integrated WKWebView from WebKit with SwiftUI using UIViewRepresentable and NSViewRepresentable to display web content within the app
-- Handled Network requests using URLSession with async / await
+- Adhered to the `MVVM` design pattern
+- Integrated `WKWebView` from WebKit with SwiftUI using `UIViewRepresentable` and `NSViewRepresentable` to display web content within the app
+- Handled Network requests using `URLSession` with `async` / `await`
 - Employed MockData with protocols and Dependency Injection during development
-- Persisted data using SwiftData (WWDC2023)
+- Persisted data using `SwiftData` (WWDC2023)
 - Implemented localization to support multiple languages
-- Utilized TipKit to highlight features that enhance the user experience
-- Enabled users to import their photos for Shortcut icons using PhotoPicker from PhotosUI
+- Utilized `TipKit` to highlight features that enhance the user experience
+- Enabled users to import their photos for Shortcut icons using `PhotoPicker` from `PhotosUI`
 - Added Haptic feedback for a tactile user experience
-- Used AVSpeechSynthesizer to produce synthesized speech from text (in the Dictionary Session)
-- Integrated Google AdMob for monetization
-- Incorporated Firebase Analytics to log events and understand app usage for feature improvement
-- Used StoreKit to request user reviews
+- Used `AVSpeechSynthesizer` to produce synthesized speech from text (in the Dictionary Session)
+- Integrated Google `AdMob` for monetization
+- Incorporated `Firebase` Analytics to log events and understand app usage for feature improvement
+- Used `StoreKit` to request user reviews
 - Designed the UI in Figma
 
 ## 🛠️ Dependencies
