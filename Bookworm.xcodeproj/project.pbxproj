@@ -196,6 +196,7 @@
 		785664B92BD66FBF008A9EF1 = {
 			isa = PBXGroup;
 			children = (
+				78CD1E492C239B1800EDA4AE /* README.md */,
 				78B99B992C17C43E00988955 /* Localization */,
 				785664C42BD66FBF008A9EF1 /* Bookworm */,
 				785664C32BD66FBF008A9EF1 /* Products */,
@@ -228,7 +229,6 @@
 				78B99B732C102F5600988955 /* Book files */,
 				785664C92BD66FC1008A9EF1 /* Assets.xcassets */,
 				78CD1E472C22ACE000EDA4AE /* Readme_Images.xcassets */,
-				78CD1E492C239B1800EDA4AE /* README.md */,
 				788B03652C0C69D9006338B3 /* Config.xcconfig */,
 				785664CB2BD66FC1008A9EF1 /* Preview Content */,
 			);

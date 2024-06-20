@@ -61,13 +61,13 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 
 ## 🔎 Credits
 
-- **Created by **[Tam Luu](https://github.com/bii-08)**
+- **Created by** [Tam Luu](https://github.com/bii-08)**
 
 - newsapi.org
 - App icon, Logos provided by Vecteezy, Freepik
 
 ## 📱 Contact
 
-Have an project? DM me at 👇
+Have a project? DM me at 👇
 
 Drop a mail to:- luuthithanhtam08@gmail.com
