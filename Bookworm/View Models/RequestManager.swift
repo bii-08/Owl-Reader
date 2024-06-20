@@ -46,13 +46,15 @@ class RequestManager: ObservableObject {
         let lastFetchDate = UserDefaults.standard.string(forKey: lastFetchDate)
         print("the last fetch date: \(String(describing: lastFetchDate))")
         if lastFetchDate != today || lastFetchDate == nil {
-            UserDefaults.standard.set(0, forKey: requestCountKey)
-            requestCount = 0
-            UserDefaults.standard.set(25, forKey: requestRemaningKey) // 25
-            requestRemaning = 25 // 25
-            UserDefaults.standard.set(today, forKey: "lastFetchDateForDefinition")
-            UserDefaults.standard.set(0, forKey: adsWatchCountKey)
-            adsWatchCount = 0
+            DispatchQueue.main.async { [self] in
+                UserDefaults.standard.set(0, forKey: requestCountKey)
+                requestCount = 0
+                UserDefaults.standard.set(25, forKey: requestRemaningKey) // 25
+                requestRemaning = 25 // 25
+                UserDefaults.standard.set(today, forKey: "lastFetchDateForDefinition")
+                UserDefaults.standard.set(0, forKey: adsWatchCountKey)
+                adsWatchCount = 0
+            }
         }
     }
     

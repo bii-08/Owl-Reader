@@ -54,7 +54,9 @@ struct StoryReadingView: View {
                 .navigationTitle("\(storyReadingVM.book.title)")
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
-                    storyReadingVM.loadTextFile(named: storyReadingVM.book.title)
+//                    DispatchQueue.main.async {
+//                        storyReadingVM.loadTextFile(named: storyReadingVM.book.title)
+//                    }
                     AnalyticsManager.shared.logEvent(name: "StoryReadingView_Appear")
                 }
                 .toolbar {

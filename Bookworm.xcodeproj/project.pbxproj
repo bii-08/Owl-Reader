@@ -74,6 +74,8 @@
 		78B99BA22C19801700988955 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 78B99BA12C19801700988955 /* FirebaseAnalytics */; };
 		78B99BA62C198D0000988955 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78B99BA52C198D0000988955 /* AdSupport.framework */; };
 		78B99BA82C198D7F00988955 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B99BA72C198D7F00988955 /* AnalyticsManager.swift */; };
+		78CD1E482C22ACE000EDA4AE /* Readme_Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78CD1E472C22ACE000EDA4AE /* Readme_Images.xcassets */; };
+		78CD1E4A2C239B1800EDA4AE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 78CD1E492C239B1800EDA4AE /* README.md */; };
 		78FE73022BF76DDA006A23D4 /* CustomDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */; };
 		78FE73042BF891DB006A23D4 /* LoadingStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */; };
 		78FE730A2BFBFDBC006A23D4 /* ProgressVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */; };
@@ -152,6 +154,8 @@
 		78B99B9E2C197E0A00988955 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		78B99BA52C198D0000988955 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		78B99BA72C198D7F00988955 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
+		78CD1E472C22ACE000EDA4AE /* Readme_Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Readme_Images.xcassets; sourceTree = "<group>"; };
+		78CD1E492C239B1800EDA4AE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		78FE73012BF76DDA006A23D4 /* CustomDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDialogView.swift; sourceTree = "<group>"; };
 		78FE73032BF891DB006A23D4 /* LoadingStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStateManager.swift; sourceTree = "<group>"; };
 		78FE73092BFBFDBC006A23D4 /* ProgressVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressVM.swift; sourceTree = "<group>"; };
@@ -223,6 +227,8 @@
 				78B99B822C14647D00988955 /* Tips */,
 				78B99B732C102F5600988955 /* Book files */,
 				785664C92BD66FC1008A9EF1 /* Assets.xcassets */,
+				78CD1E472C22ACE000EDA4AE /* Readme_Images.xcassets */,
+				78CD1E492C239B1800EDA4AE /* README.md */,
 				788B03652C0C69D9006338B3 /* Config.xcconfig */,
 				785664CB2BD66FC1008A9EF1 /* Preview Content */,
 			);
@@ -438,10 +444,12 @@
 				781C5B142BE06EEB00FB394B /* Headlines.json in Resources */,
 				78B99B7B2C10367000988955 /* That Confidence (Courage) is Not Inconsistent with Caution.txt in Resources */,
 				785664CD2BD66FC1008A9EF1 /* Preview Assets.xcassets in Resources */,
+				78CD1E482C22ACE000EDA4AE /* Readme_Images.xcassets in Resources */,
 				78B99B912C168FFC00988955 /* Localizable.strings in Resources */,
 				7837A8472C06AD5900104E5E /* testing.json in Resources */,
 				785664CA2BD66FC1008A9EF1 /* Assets.xcassets in Resources */,
 				78B99B9F2C197E0A00988955 /* GoogleService-Info.plist in Resources */,
+				78CD1E4A2C239B1800EDA4AE /* README.md in Resources */,
 				78B99B752C102FA000988955 /* Excerpt from The Time Machine.txt in Resources */,
 				780BA7822C1FF3860036B08B /* Communicating Effectively.txt in Resources */,
 				789D8AB72BE3694F004E0EA5 /* Word.json in Resources */,

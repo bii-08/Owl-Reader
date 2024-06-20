@@ -195,7 +195,10 @@ extension AllWordsView {
                 Button {
                     searchForAWord.invalidate(reason: .actionPerformed)
                     showingSheet = false
-                    showingDefinition = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.showingDefinition = true
+                    }
+                    //showingDefinition = true
                     AnalyticsManager.shared.logEvent(name: "AllWordsView_DictionarySearchPlusButtonClick")
                 } label: {
                     Text(Localized.Search)

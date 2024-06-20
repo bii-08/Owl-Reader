@@ -16,6 +16,7 @@ class StoryReadingVM: ObservableObject {
     
     init(book: Book) {
         self.book = book
+        loadTextFile(named: book.title)
     }
     
     func loadTextFile(named name: String) {
@@ -28,13 +29,9 @@ class StoryReadingVM: ObservableObject {
                     let endIndex = endRange.lowerBound
                     print("---> Successfully loaded text file")
                     let extractedText = String(fullText[startIndex..<endIndex]).trimmingCharacters(in: .whitespacesAndNewlines)
-                    
                     DispatchQueue.main.async {
-                        
                         var newText = extractedText.replacingOccurrences(of: "\r\n\r\n", with: " <break> ")
-                        
                         newText = newText.replacingOccurrences(of: "\r\n", with: " ")
-//                    print(newText)
                         self.content = newText
                     }
                 }
