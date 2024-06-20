@@ -6,18 +6,6 @@
 ![Data Persistence](https://img.shields.io/badge/Data_Persistence-SwiftData-blue)
 ![Languages](https://img.shields.io/badge/Languages-8-orange)
 
-<p align="center">
-  <a href="#overview">Overview</a>  |
-  <a href="#screenshots">Screenshots</a>  |
-  <a href="#features">Features</a> |
-  <a href="#coming-soon">Coming Soon</a>  |
-  <a href="#core-technologies">Core Technologies</a>  |
-  <a href="#dependencies">Dependencies</a>  |
-  <a href="#install-requirements">Install Requirements</a>  |
-  <a href="#credits">Credits</a>  |
-  <a href="#contact">Contact</a>
-  <br>
-</p>
 
 # 🫵 Overview
 
