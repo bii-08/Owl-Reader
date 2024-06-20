@@ -73,3 +73,5 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 Have a project? DM me at 👇
 
 Drop a mail to: luuthithanhtam08@gmail.com
+
+![Static Badge](https://img.shields.io/badge/Built_with_%F0%9F%92%93-blue)
