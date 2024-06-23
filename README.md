@@ -18,6 +18,21 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 
 ![Image](https://github.com/bii-08/Bookworm/blob/main/Bookworm/Readme_Images.xcassets/Screenshot.imageset/Screenshot.png)
 
+## 🌈 Demo
+
+<table style="width:100%">
+  <tr>
+    <th>Read News with instant word lookup</th>
+    <th>Create new shortcuts</th> 
+    <th>Read offline stories</th> 
+  </tr>
+  <tr>
+    <td><img src=""/></td> 
+    <td><img src=""/></td> 
+    <td><img src=""/></td> 
+  </tr>
+</table>
+
 ## 🚀 Features
 
 - **Personalized Reading:** Access any links you love to read

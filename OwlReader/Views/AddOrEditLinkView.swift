@@ -40,7 +40,6 @@ struct AddOrEditLinkView: View {
                             .padding(.horizontal)
                     }
                     
-                    
                     if vm.savedShortcuts.isEmpty {
                         Text(Localized.No_Item)
                             .font(Font.custom("Avenir Next Condensed", size: 20))
@@ -87,7 +86,7 @@ struct AddOrEditLinkView: View {
                             vm.fetchShortcuts(modelContext: modelContext)
                         }
                         .navigationDestination(item: $selectedPage, destination: { page in
-                            EditingView(link: page, photoPiker: PhotoPickerVM(),swipeActionTip: swipeActionTip)
+                            EditingView(link: page, photoPiker: PhotoPickerVM())
                         })
                         .frame(height: 250)
                         .scrollIndicators(.visible)

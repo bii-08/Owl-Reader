@@ -15,6 +15,7 @@ struct HomeView: View {
     @Environment(\.colorScheme) private var colorScheme
     @EnvironmentObject var vm: HomeVM
     @ObservedObject private var requestManager = RequestManager.shared
+    @ObservedObject var addOrEditPhotoPickerVM = PhotoPickerVM()
     @Environment(\.modelContext) var modelContext
     @StateObject var viewModel = ProgressVM()
     
@@ -137,7 +138,6 @@ extension HomeView {
                 
                 // Request Counter
                 WordRequestCounterView()
-//                    .popoverTip(requestCounterTip)
                     .onLoad {
                         requestManager.resetCountIfNeeded()
                     }
@@ -409,7 +409,7 @@ extension HomeView {
                     }
                     .padding(.vertical, 2)
                     .navigationDestination(isPresented: $showingAddLinkSheet) {
-                        AddOrEditLinkView(photoPickerVM: PhotoPickerVM())
+                        AddOrEditLinkView(photoPickerVM: addOrEditPhotoPickerVM)
                     }
                     
                     // Shortcut button
