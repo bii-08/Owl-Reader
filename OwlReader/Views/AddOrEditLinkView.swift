@@ -87,7 +87,7 @@ struct AddOrEditLinkView: View {
                             vm.fetchShortcuts(modelContext: modelContext)
                         }
                         .navigationDestination(item: $selectedPage, destination: { page in
-                            EditingView(link: page, photoPiker: PhotoPickerVM(),swipeActionTip: swipeActionTip)
+                            EditingView(link: page, photoPiker: PhotoPickerVM())
                         })
                         .frame(height: 250)
                         .scrollIndicators(.visible)
@@ -198,6 +198,9 @@ struct AddOrEditLinkView: View {
                 .zIndex(5)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
+        }
+        .onAppear {
+            print("-----> addoreditlinkview")
         }
     }
 }

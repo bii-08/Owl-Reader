@@ -8,11 +8,23 @@
 import SwiftUI
 import SwiftData
 
+struct SomeView: View {
+    var link: Shortcut
+    
+    init(link: Shortcut) {
+        self.link = link
+    }
+    
+    var body: some View {
+        Text(link.url.absoluteString)
+    }
+}
+
 struct EditingView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
     @EnvironmentObject var vm: HomeVM
-    @Bindable var link: Shortcut
+    var link: Shortcut
     
     var photoPikerVM: PhotoPickerVM
     
@@ -24,13 +36,12 @@ struct EditingView: View {
     @State private var showingAlert = false
     @State private var defaultURL: URL
     @FocusState private var isTextFieldFocused: Bool
-    let swipeActionTip: SwipeActionInAddOrEditLinkTip
+    let swipeActionTip: SwipeActionInAddOrEditLinkTip = SwipeActionInAddOrEditLinkTip()
     
-    init(link: Shortcut, photoPiker: PhotoPickerVM, swipeActionTip: SwipeActionInAddOrEditLinkTip) {
+    init(link: Shortcut, photoPiker: PhotoPickerVM) {
         self.link = link
         self.photoPikerVM = photoPiker
-        self.swipeActionTip = swipeActionTip
-        self.defaultURL = link.url
+        self._defaultURL = State(initialValue: link.url)
     }
     
     var body: some View {
@@ -139,9 +150,4 @@ struct EditingView: View {
             editingImage = UIImage(data: link.favicon ?? Data())
         }
     }
-}
-
-#Preview {
-    EditingView(link: Shortcut(url: URL(string: "https://www.investopedia.com")!, favicon: UIImage(named: "investopedia")?.pngData(), webPageTitle: "Investopedia"), photoPiker: PhotoPickerVM(), swipeActionTip: SwipeActionInAddOrEditLinkTip())
-        .environmentObject(HomeVM())
 }
