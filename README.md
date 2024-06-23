@@ -1,4 +1,4 @@
-# ![Image](https://github.com/bii-08/Bookworm/blob/main/Bookworm/Readme_Images.xcassets/Cover_OwlReader.imageset/Cover_OwlReader.png)
+# ![Image](https://github.com/bii-08/Owl-Reader/blob/main/OwlReader/Readme_Images.xcassets/Cover_OwlReader.imageset/Cover_OwlReader.png)
 
 ![Buit on](https://img.shields.io/badge/Built_on-Swift-red?logo=Swift)
 ![Interface](https://img.shields.io/badge/Interface-SwiftUI-yellow)
@@ -16,7 +16,7 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 
 ## 📸 Screenshots
 
-![Image](https://github.com/bii-08/Bookworm/blob/main/Bookworm/Readme_Images.xcassets/Screenshot.imageset/Screenshot.png)
+![Image](https://github.com/bii-08/Owl-Reader/blob/main/OwlReader/Readme_Images.xcassets/Screenshot.imageset/Screenshot.png)
 
 ## 🌈 Demo
 
