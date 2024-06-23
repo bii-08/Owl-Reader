@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "785664C12BD66FBF008A9EF1"
-               BuildableName = "Bookworm.app"
-               BlueprintName = "Bookworm"
-               ReferencedContainer = "container:Bookworm.xcodeproj">
+               BuildableName = "OwlReader.app"
+               BlueprintName = "OwlReader"
+               ReferencedContainer = "container:OwlReader.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "785664C12BD66FBF008A9EF1"
-            BuildableName = "Bookworm.app"
-            BlueprintName = "Bookworm"
-            ReferencedContainer = "container:Bookworm.xcodeproj">
+            BuildableName = "OwlReader.app"
+            BlueprintName = "OwlReader"
+            ReferencedContainer = "container:OwlReader.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -82,9 +82,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "785664C12BD66FBF008A9EF1"
-            BuildableName = "Bookworm.app"
-            BlueprintName = "Bookworm"
-            ReferencedContainer = "container:Bookworm.xcodeproj">
+            BuildableName = "OwlReader.app"
+            BlueprintName = "OwlReader"
+            ReferencedContainer = "container:OwlReader.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
