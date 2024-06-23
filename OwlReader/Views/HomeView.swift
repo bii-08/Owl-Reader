@@ -18,6 +18,8 @@ struct HomeView: View {
     @Environment(\.modelContext) var modelContext
     @StateObject var viewModel = ProgressVM()
     
+    @ObservedObject var addEditPhotoPickerVM = PhotoPickerVM()
+    
     @State var tabBarVisibility: Visibility = .visible
     @State private var selectedPage = 1
     
@@ -409,7 +411,7 @@ extension HomeView {
                     }
                     .padding(.vertical, 2)
                     .navigationDestination(isPresented: $showingAddLinkSheet) {
-                        AddOrEditLinkView(photoPickerVM: PhotoPickerVM())
+                        AddOrEditLinkView(photoPickerVM: addEditPhotoPickerVM)
                     }
                     
                     // Shortcut button

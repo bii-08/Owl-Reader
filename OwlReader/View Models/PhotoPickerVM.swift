@@ -10,13 +10,21 @@ import PhotosUI
 
 @MainActor
 final class PhotoPickerVM: ObservableObject {
-    @Published var selectedImage: UIImage? = nil
+    @Published var selectedImage: UIImage? = nil {
+        didSet {
+            print(selectedImage)
+            print("setting image")
+        }
+    }
     @Published var imageSelection: PhotosPickerItem? = nil {
         didSet {
             setImage(from: imageSelection)
         }
     }
     
+    init() {
+        print("-----> init photopickervm")
+    }
     // FUNCTION: to covert the image from PhothoPicker with the type of 'PhotosPickerItem' to UIImage and set it into selectedImage to display
     private func setImage(from selection: PhotosPickerItem?) {
         guard let selection else { return }
