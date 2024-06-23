@@ -23,8 +23,8 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 <table style="width:100%">
   <tr>
     <th>News with instant word lookup</th>
-    <th>Create new shortcuts</th> 
     <th>Read offline stories</th> 
+    <th>Create new shortcuts</th> 
   </tr>
   <tr>
     <td><img src="https://github.com/bii-08/Owl-Reader/blob/main/OwlReader/Readme_Images.xcassets/OwlReader_Demo1.dataset/OwlReader_Demo1.gif"/></td> 
