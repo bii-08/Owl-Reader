@@ -22,14 +22,14 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 
 <table style="width:100%">
   <tr>
-    <th>Read News with instant word lookup</th>
+    <th>News with instant word lookup</th>
     <th>Create new shortcuts</th> 
     <th>Read offline stories</th> 
   </tr>
   <tr>
-    <td><img src=""/></td> 
-    <td><img src=""/></td> 
-    <td><img src=""/></td> 
+    <td><img src="https://github.com/bii-08/Owl-Reader/blob/main/OwlReader/Readme_Images.xcassets/OwlReader_Demo1.dataset/OwlReader_Demo1.gif"/></td> 
+    <td><img src="https://github.com/bii-08/Owl-Reader/blob/main/OwlReader/Readme_Images.xcassets/OwlReader_Demo2.dataset/OwlReader_Demo2.gif"/></td> 
+    <td><img src="https://github.com/bii-08/Owl-Reader/blob/main/OwlReader/Readme_Images.xcassets/OwlReader_Demo3.dataset/OwlReader_Demo3.gif"/></td> 
   </tr>
 </table>
 
