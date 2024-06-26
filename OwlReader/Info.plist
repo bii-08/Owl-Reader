@@ -2,14 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>X_RapidAPI_Host</key>
-	<string>$(X_RapidAPI_Host)</string>
-	<key>X_RapidAPI_Key</key>
-	<string>$(X_RapidAPI_Key)</string>
-	<key>HEADLINE_API_KEY</key>
-	<string>$(HEADLINE_API_KEY)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict/>
+	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-1944868584805673~1728913744</string>
+	<key>HEADLINE_API_KEY</key>
+	<string>$(HEADLINE_API_KEY)</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
@@ -209,9 +209,9 @@
 			<string>3qcr597p9d.skadnetwork</string>
 		</dict>
 	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict/>
-	</array>
+	<key>X_RapidAPI_Host</key>
+	<string>$(X_RapidAPI_Host)</string>
+	<key>X_RapidAPI_Key</key>
+	<string>$(X_RapidAPI_Key)</string>
 </dict>
 </plist>

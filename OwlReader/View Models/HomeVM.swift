@@ -26,8 +26,7 @@ class HomeVM: ObservableObject {
     @Published var showingEditingView = false
     var testing = false // true: api, false: database
     
-    // NOTE: Replace MockdataWebService() with WebService() to fetch headlines data from real API
-    init(webService: WebServiceDelegate = MockdataWebService()) {
+    init(webService: WebServiceDelegate = HomeVM.defaultWebService()) {
         self.webService = webService
         print(Date.distantPast)
         print(Locale.current.region?.identifier ?? "")
@@ -222,4 +221,13 @@ class HomeVM: ObservableObject {
             fetchHeadlinesFromDataBase(modelContext: modelContext)
         }
     }
+    
+    // NOTE: Replace MockdataWebService() with WebService() to fetch headlines data from real API
+    static func defaultWebService() -> WebServiceDelegate {
+            #if DEBUG
+            return MockdataWebService()
+            #else
+            return WebService()
+            #endif
+        }
 }

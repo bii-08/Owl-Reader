@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AdSupport
+import AppTrackingTransparency
 
 struct SplashView: View {
     @Environment(\.colorScheme) var colorScheme
