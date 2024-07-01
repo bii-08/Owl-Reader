@@ -13,7 +13,7 @@ import NaturalLanguage
 @MainActor
 class DefinitionVM: ObservableObject {
     @ObservedObject private var requestManager = RequestManager.shared
-    private let dictionaryService: DictionaryServiceDelegate
+    private let webService: WebServiceDelegate
     @Published var word: Word?
     var selectedWord: String
     var isNewWord = false
@@ -22,9 +22,9 @@ class DefinitionVM: ObservableObject {
     @Published var loadingState = LoadingStateManager.loading
     
     // NOTE: Replace MockdataForWord() with DictionaryService() to fetch data from real API
-    init(selectedWord: String, dictionaryService: DictionaryServiceDelegate = DictionaryService()) {
+    init(selectedWord: String, webService: WebServiceDelegate = WebService()) {
         self.selectedWord = selectedWord
-        self.dictionaryService = dictionaryService
+        self.webService = webService
         requestManager.resetCountIfNeeded()
     }
     
@@ -38,7 +38,7 @@ class DefinitionVM: ObservableObject {
             }
             loadingState = LoadingStateManager.loading
             
-            if let targetWord: Word = await dictionaryService.downloadWord(word: selectedWord.lemmatize()) {
+            if let targetWord: Word = await webService.downloadWord(word: selectedWord.lemmatize()) {
                 word = targetWord
                 loadingState = LoadingStateManager.success
                 requestManager.calculateRequestCountAndRequestLimit()

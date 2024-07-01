@@ -71,7 +71,7 @@ struct AllWordsView: View {
             .listStyle(.plain)
             .listRowSpacing(10)
             .navigationDestination(for: Word.self) { word in
-                DefinitionView(vm: DefinitionVM(selectedWord: word.word, dictionaryService: DictionaryService()))
+                DefinitionView(vm: DefinitionVM(selectedWord: word.word, webService: WebService()))
             }
             .popover(isPresented: Binding(get: { showingSheet }, set: { showingSheet = $0 }),attachmentAnchor: .rect(.rect(CGRect(x: 10, y: 10, width: 700, height: 300)))) {
                 searchByDictionarySheet(searchForAWord: searchForAWordTip)
@@ -93,7 +93,7 @@ struct AllWordsView: View {
             }
         }
         .navigationDestination(isPresented: $showingDefinition, destination: {
-            DefinitionView(vm: DefinitionVM(selectedWord: searchWord.lowercased(), dictionaryService: DictionaryService()))
+            DefinitionView(vm: DefinitionVM(selectedWord: searchWord.lowercased(), webService: WebService()))
         })
         .onAppear {
             searchWord = ""

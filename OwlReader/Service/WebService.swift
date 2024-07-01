@@ -18,13 +18,10 @@ enum NetworkError: Error {
 }
 protocol WebServiceDelegate {
     func downloadData<T: Codable>(fromURL: String) async -> T?
-}
-
-protocol DictionaryServiceDelegate {
     func downloadWord<T: Codable>(word: String) async -> T?
 }
 
-// For downloading data (in this case: headlines data) from the Internet
+// For downloading data from the Internet
 class WebService: WebServiceDelegate {
     func downloadData<T: Codable>(fromURL: String) async -> T? {
         do {
@@ -50,10 +47,7 @@ class WebService: WebServiceDelegate {
         }
         return nil
     }
-}
-
-// For downloading word from the Internet 
-class DictionaryService: DictionaryServiceDelegate {
+    
     func downloadWord<T: Codable>(word: String) async -> T? {
         do {
             guard let apiKey = Bundle.main.infoDictionary?["X_RapidAPI_Key"] as? String else { return nil }
