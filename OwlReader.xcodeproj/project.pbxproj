@@ -221,14 +221,14 @@
 				7815828A2C27E85100ED15CC /* Book.swift */,
 				7815828B2C27E85100ED15CC /* DeviceType.swift */,
 				7815828C2C27E85100ED15CC /* Headline.swift */,
-				7815828D2C27E85100ED15CC /* Headlines.json */,
 				7815828E2C27E85100ED15CC /* Link.swift */,
 				7815828F2C27E85100ED15CC /* LoadingStateManager.swift */,
 				781582902C27E85100ED15CC /* Shortcut.swift */,
-				781582912C27E85100ED15CC /* testing.json */,
-				781582922C27E85100ED15CC /* Word.json */,
 				781582932C27E85100ED15CC /* Word.swift */,
 				781582942C27E85100ED15CC /* WordBook.swift */,
+				7815828D2C27E85100ED15CC /* Headlines.json */,
+				781582912C27E85100ED15CC /* testing.json */,
+				781582922C27E85100ED15CC /* Word.json */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -323,11 +323,10 @@
 				781582AC2C27E85100ED15CC /* View Models */,
 				781582C32C27E85100ED15CC /* Views */,
 				781582C42C27E85100ED15CC /* .gitignore */,
-				781582C52C27E85100ED15CC /* Assets.xcassets */,
-				781582C62C27E85100ED15CC /* BookwormApp.swift */,
 				781582C72C27E85100ED15CC /* GoogleService-Info.plist */,
 				7820EBB42C2BEC0100D1F10E /* Config.xcconfig */,
 				781582C82C27E85100ED15CC /* Info.plist */,
+				781582C52C27E85100ED15CC /* Assets.xcassets */,
 				781582C92C27E85100ED15CC /* Readme_Images.xcassets */,
 			);
 			path = OwlReader;
@@ -336,6 +335,7 @@
 		785664B92BD66FBF008A9EF1 = {
 			isa = PBXGroup;
 			children = (
+				781582C62C27E85100ED15CC /* BookwormApp.swift */,
 				78CD1E492C239B1800EDA4AE /* README.md */,
 				78B99B992C17C43E00988955 /* Localization */,
 				781582CA2C27E85100ED15CC /* OwlReader */,
@@ -664,6 +664,7 @@
 		};
 		785664D12BD66FC1008A9EF1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7820EBB42C2BEC0100D1F10E /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -697,6 +698,7 @@
 		};
 		785664D22BD66FC1008A9EF1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7820EBB42C2BEC0100D1F10E /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

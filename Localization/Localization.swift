@@ -87,4 +87,5 @@ struct Localized {
     static let The_vocabulary_review_feature_is_in_progress = NSLocalizedString("The_vocabulary_review_feature_is_in_progress", comment: "")
     static let We_are_working_hard_to_provide_it_as_soon_as_possible = NSLocalizedString("We_are_working_hard_to_provide_it_as_soon_as_possible", comment: "")
     static let Review = NSLocalizedString("Review", comment: "")
+    static let Please_try_again_tomorrow = NSLocalizedString("Please try again tomorrow!", comment: "")
 }
