@@ -73,28 +73,11 @@ struct AllWordsView: View {
             .navigationDestination(for: Word.self) { word in
                 DefinitionView(vm: DefinitionVM(selectedWord: word.word, webService: WebService()))
             }
-            .popover(isPresented: Binding(get: { showingSheet }, set: { showingSheet = $0 }),attachmentAnchor: .rect(.rect(CGRect(x: 10, y: 10, width: 700, height: 300)))) {
+            .popover(isPresented: $showingSheet,attachmentAnchor: .rect(.rect(CGRect(x: 10, y: 10, width: 700, height: 300)))) {
                 searchByDictionarySheet(searchForAWord: searchForAWordTip)
                     .frame(minWidth: deviceType == .pad ? 400 : 300, minHeight: deviceType == .pad ? 400 : 300)
-                    .presentationDetents([.large, .height(300)])
-                    .overlay(alignment: .topTrailing) {
-                        HStack {
-                            Spacer()
-                            Button {
-                                showingSheet = false
-                            } label: {
-                                Image(systemName: "xmark")
-                                    .font(.system(size: 20, weight: .bold))
-                                    .foregroundColor(.primary)
-                                    .padding()
-                            }
-                        }
-                    }
             }
         }
-        .navigationDestination(isPresented: $showingDefinition, destination: {
-            DefinitionView(vm: DefinitionVM(selectedWord: searchWord.lowercased(), webService: WebService()))
-        })
         .onAppear {
             searchWord = ""
             if testing {
@@ -133,7 +116,6 @@ struct AllWordsView: View {
                         Text(Localized.Review)
                     }
                 }
-    //            .disabled(true)
                 .buttonStyle(.borderedProminent)
                 .padding()
             }
@@ -176,44 +158,50 @@ extension AllWordsView {
         }
         .searchable(text: $searchQuery, prompt: Text(Localized.Search_by_word)).disabled(showingConfirmation)
     }
-    private func searchByDictionarySheet(searchForAWord: DictionaryTip) -> some View {
-        VStack(alignment: .leading) {
-            Text(Localized.Add_new_word)
-                .font(Font.custom("DIN Condensed", size: 25))
-                .padding()
-            TextField("", text: $searchWord, prompt: Text(Localized.Type_any_word).foregroundColor(.white.opacity(0.7))).padding(6)
-                .foregroundColor(.white)
-                .submitLabel(.done)
-                .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
-                .padding(.horizontal)
-                .presentationBackground(.thinMaterial)
-                .presentationCornerRadius(15)
-                .presentationDetents([.height(225)])
-            
-            HStack {
-                Spacer()
-                Button {
-                    searchForAWord.invalidate(reason: .actionPerformed)
-                    showingSheet = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        self.showingDefinition = true
+    @MainActor @ViewBuilder private func searchByDictionarySheet(searchForAWord: DictionaryTip) -> some View {
+            VStack(alignment: .leading) {
+                Text(Localized.Add_new_word)
+                    .font(Font.custom("DIN Condensed", size: 25))
+                    .padding()
+                TextField("", text: $searchWord, prompt: Text(Localized.Type_any_word).foregroundColor(.white.opacity(0.7))).padding(6)
+                    .foregroundColor(.white)
+                    .submitLabel(.done)
+                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("SearchBar").opacity(0.35)))
+                    .padding(.horizontal)
+                    .presentationBackground(.thinMaterial)
+                    .presentationCornerRadius(15)
+                    .presentationDetents([.height(225)])
+                    .disabled(showingDefinition)
+                
+                HStack {
+                    Spacer()
+                    Button {
+                        searchForAWord.invalidate(reason: .actionPerformed)
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            self.showingDefinition = true
+//                        }
+                        AnalyticsManager.shared.logEvent(name: "AllWordsView_DictionarySearchPlusButtonClick")
+                    } label: {
+                        Text(Localized.Search)
+                            .foregroundColor(.white)
+                            .frame(width: 100, height: 40)
+                            .background(RoundedRectangle(cornerRadius: 5).fill(!HomeVM.isTitleValid(title: searchWord) || showingDefinition ? Color.orange.opacity(0.2) : Color.orange))
                     }
-                    //showingDefinition = true
-                    AnalyticsManager.shared.logEvent(name: "AllWordsView_DictionarySearchPlusButtonClick")
-                } label: {
-                    Text(Localized.Search)
-                        .foregroundColor(.white)
-                        .frame(width: 100, height: 40)
-                        .background(RoundedRectangle(cornerRadius: 5).fill(!HomeVM.isTitleValid(title: searchWord) ? Color.orange.opacity(0.2) : Color.orange))
+                    .disabled(!HomeVM.isTitleValid(title: searchWord) || showingDefinition)
                 }
-                .disabled(!HomeVM.isTitleValid(title: searchWord))
+                .padding()
+            }
+            .onAppear {
+                searchWord = ""
             }
             .padding()
+            .popover(isPresented: $showingDefinition) {
+            DefinitionView(vm: DefinitionVM(selectedWord: searchWord.lowercased()), width: deviceType == .pad ? 500 : nil, height: deviceType == .pad ? 450 : nil, isPopover: true)
+                .presentationBackground(.thickMaterial)
+                .presentationCornerRadius(15)
+                .frame(maxWidth: deviceType == .pad ? 450 : .infinity, maxHeight: deviceType == .pad ? 1000 : 800)
+                .presentationDetents([.large, .height(300)])
         }
-        .onAppear {
-            searchWord = ""
-        }
-        .padding()
     }
 }
 #Preview {
