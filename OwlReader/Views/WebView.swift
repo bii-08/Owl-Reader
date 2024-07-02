@@ -24,7 +24,22 @@ struct WebView: UIViewRepresentable, Equatable {
    func makeUIView(context: Context) -> WKWebView {
         let config = WKWebViewConfiguration()
         config.defaultWebpagePreferences.allowsContentJavaScript = true
-        
+       
+       // Load content blocker rules
+       if let rulesPath = Bundle.main.path(forResource: "contentBlockerRules", ofType: "json"),
+          let rulesData = try? Data(contentsOf: URL(fileURLWithPath: rulesPath)),
+          let rulesString = String(data: rulesData, encoding: .utf8) {
+           WKContentRuleListStore.default().compileContentRuleList(forIdentifier: "ContentBlockingRules", encodedContentRuleList: rulesString) { contentRuleList, error in
+               if let contentRuleList = contentRuleList {
+                   config.userContentController.add(contentRuleList)
+               } else if let error = error {
+                   print("Failed to compile content rule list: \(error)")
+               }
+           }
+       } else {
+           print("Failed to load content blocker rules")
+       }
+       
         let userScriptSource = """
         var currentHighlightedWord = null;
         document.addEventListener('click', function(event) {
@@ -150,13 +165,7 @@ struct WebView: UIViewRepresentable, Equatable {
    }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
-//        guard let myURL = url else { return }
-//        if uiView.url != url {
-//            if let myURL = url {
-//                let request = URLRequest(url: myURL)
-//                uiView.load(request)
-//            }
-//        }
+        
     }
     
     func makeCoordinator() -> Coordinator {
