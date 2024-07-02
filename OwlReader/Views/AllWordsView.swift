@@ -12,7 +12,7 @@ import TipKit
 struct AllWordsView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) var modelContext
-    
+    @ObservedObject private var requestManager = RequestManager.shared
     @Query var allWords: [Word]
     @State private var searchQuery = ""
     @State private var showingSheet = false
@@ -90,6 +90,9 @@ struct AllWordsView: View {
             
             ToolbarItem(placement: .topBarLeading) {
                 WordRequestCounterView()
+                    .onLoad {
+                        requestManager.resetCountIfNeeded()
+                    }
             }
             
             ToolbarItem(placement: .topBarTrailing) {
