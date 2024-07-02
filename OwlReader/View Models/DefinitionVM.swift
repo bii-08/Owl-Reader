@@ -26,6 +26,7 @@ class DefinitionVM: ObservableObject {
         self.selectedWord = selectedWord
         self.webService = webService
         requestManager.resetCountIfNeeded()
+        print("-->init DefinitionVM")
     }
     
     // FUNCTION: to fetch word from dictionary api
