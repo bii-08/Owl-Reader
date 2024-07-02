@@ -73,6 +73,7 @@
 		7815830B2C27E85100ED15CC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 781582C72C27E85100ED15CC /* GoogleService-Info.plist */; };
 		7815830D2C27E85100ED15CC /* Readme_Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 781582C92C27E85100ED15CC /* Readme_Images.xcassets */; };
 		7820EBB52C2BEC0100D1F10E /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7820EBB42C2BEC0100D1F10E /* Config.xcconfig */; };
+		78522DD92C33AD9F00686201 /* contentBlockerRules.json in Resources */ = {isa = PBXBuildFile; fileRef = 78522DD82C33AD9F00686201 /* contentBlockerRules.json */; };
 		7863F3E72C0AF5F000EE828B /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7863F3E62C0AF5F000EE828B /* GoogleMobileAds */; };
 		789D8ABE2BE4B250004E0EA5 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 789D8ABD2BE4B250004E0EA5 /* SwiftyJSON */; };
 		78B99B912C168FFC00988955 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78B99B8F2C168FFC00988955 /* Localizable.strings */; };
@@ -151,6 +152,7 @@
 		781582C82C27E85100ED15CC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		781582C92C27E85100ED15CC /* Readme_Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Readme_Images.xcassets; sourceTree = "<group>"; };
 		7820EBB42C2BEC0100D1F10E /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		78522DD82C33AD9F00686201 /* contentBlockerRules.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contentBlockerRules.json; sourceTree = "<group>"; };
 		785664C22BD66FBF008A9EF1 /* OwlReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OwlReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78B99B902C168FFC00988955 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78B99B922C16900600988955 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				7815828D2C27E85100ED15CC /* Headlines.json */,
 				781582912C27E85100ED15CC /* testing.json */,
 				781582922C27E85100ED15CC /* Word.json */,
+				78522DD82C33AD9F00686201 /* contentBlockerRules.json */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				7815830D2C27E85100ED15CC /* Readme_Images.xcassets in Resources */,
 				781582D72C27E85100ED15CC /* Headlines.json in Resources */,
 				781583092C27E85100ED15CC /* Assets.xcassets in Resources */,
+				78522DD92C33AD9F00686201 /* contentBlockerRules.json in Resources */,
 				781582DB2C27E85100ED15CC /* testing.json in Resources */,
 				781582CE2C27E85100ED15CC /* Communicating Effectively.txt in Resources */,
 				781582D12C27E85100ED15CC /* That Confidence (Courage) is Not Inconsistent with Caution.txt in Resources */,
@@ -670,7 +674,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"OwlReader/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 49H596ZHS6;
@@ -710,7 +714,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"OwlReader/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 49H596ZHS6;

@@ -1,0 +1,59 @@
+[
+    {
+        "trigger": {
+            "url-filter": ".*",
+            "if-domain": ["*"]
+        },
+        "action": {
+            "type": "block",
+            "url-filter": ".*\\.adserver\\.com/.*"
+        }
+    },
+    {
+        "trigger": {
+            "url-filter": ".*",
+            "if-domain": ["*"]
+        },
+        "action": {
+            "type": "block",
+            "url-filter": ".*doubleclick\\.net/.*"
+        }
+    }
+    ,
+    {
+        "trigger": {
+            "url-filter": "googleads.g.doubleclick.net*"
+            
+        },
+        "action": {
+            "type": "block"
+        }
+    },
+    {
+        "trigger": {
+            "url-filter": "pagead.googlesyndication.com*"
+            
+        },
+        "action": {
+            "type": "block"
+        }
+    },
+    {
+        "trigger": {
+            "url-filter": "pagead1.googlesyndication.com*"
+            
+        },
+        "action": {
+            "type": "block"
+        }
+    },
+    {
+        "trigger": {
+            "url-filter": "pagead2.googlesyndication.com*"
+            
+        },
+        "action": {
+            "type": "block"
+        }
+    }
+]

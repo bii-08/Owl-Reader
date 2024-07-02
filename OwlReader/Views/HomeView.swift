@@ -222,7 +222,7 @@ extension HomeView {
                             // Navigation bar
                             navigationBarOnWebPage
                             BannerView()
-                                .frame(height: 60)
+                                .frame(height: 40)
                             
                             WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                 urlToDisplay = link?.url.absoluteString ?? ""
@@ -298,7 +298,7 @@ extension HomeView {
                             // Navigation bar
                             navigationBarOnWebPage
                             BannerView()
-                                .frame(height: 60)
+                                .frame(height: 40)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                             
                             WebView(url: URL(string: headline.url),viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
@@ -437,7 +437,7 @@ extension HomeView {
                                 // Navigation bar
                                 navigationBarOnWebPage
                                 BannerView()
-                                    .frame(height: 60)
+                                    .frame(height: 40)
                                 
                                 WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                     urlToDisplay = link?.url.absoluteString ?? ""
@@ -565,7 +565,7 @@ extension HomeView {
                         // Navigation bar
                         navigationBarOnWebPage
                         BannerView()
-                            .frame(height: 60)
+                            .frame(height: 40)
                         
                         WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                             urlToDisplay = link?.url.absoluteString ?? ""
