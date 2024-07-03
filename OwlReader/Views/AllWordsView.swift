@@ -121,6 +121,7 @@ struct AllWordsView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .padding()
+                .disabled(allWords.isEmpty || searchQuery != "")
             }
         }
     }

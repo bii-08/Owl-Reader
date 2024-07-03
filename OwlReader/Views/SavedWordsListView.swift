@@ -81,7 +81,7 @@ struct SavedWordsListView: View {
                     Text(Localized.Review)
                 }
             }
-//            .disabled(true)
+            .disabled(wordBook.savedWords.isEmpty || searchQuery != "")
             .buttonStyle(.borderedProminent)
             .padding()
         }
