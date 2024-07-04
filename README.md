@@ -6,7 +6,7 @@
 ![Data Persistence](https://img.shields.io/badge/Data_Persistence-SwiftData-blue)
 ![Languages](https://img.shields.io/badge/Languages-8-orange)
 ![Supported Divices](https://img.shields.io/badge/Supported_Divices-iPhone%2C_iPad-orange?color=violet)
-
+[![OwlReader app link](https://github.com/bii-08/Portfolio/blob/main/Images/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg)](https://apps.apple.com/app/owl-reader/id6505064532)
 
 # 🫵 Overview
 
