@@ -62,6 +62,7 @@ class RequestManager: ObservableObject {
     func calculateRequestCountAndRequestLimit() {
         requestCount += 1
         requestRemaning -= 1
+        AnalyticsManager.shared.logEvent(name: "API_call", params: ["totalRequest" : requestCount])
         UserDefaults.standard.set(requestCount, forKey: requestCountKey)
         UserDefaults.standard.set(requestRemaning, forKey: requestRemaningKey)
     }
