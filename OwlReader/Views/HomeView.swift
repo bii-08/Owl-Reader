@@ -223,6 +223,7 @@ extension HomeView {
                             navigationBarOnWebPage
                             BannerView()
                                 .frame(height: 40)
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
                             
                             WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                 urlToDisplay = link?.url.absoluteString ?? ""
@@ -438,6 +439,7 @@ extension HomeView {
                                 navigationBarOnWebPage
                                 BannerView()
                                     .frame(height: 40)
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
                                 
                                 WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                                     urlToDisplay = link?.url.absoluteString ?? ""
@@ -566,6 +568,7 @@ extension HomeView {
                         navigationBarOnWebPage
                         BannerView()
                             .frame(height: 40)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
                         
                         WebView(url: url, viewModel: viewModel, webView: $webView, didFinishLoadingThisURL: { link in vm.addURL(link: link, modelContext: modelContext)
                             urlToDisplay = link?.url.absoluteString ?? ""

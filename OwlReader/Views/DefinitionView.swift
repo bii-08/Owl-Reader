@@ -310,41 +310,43 @@ struct DefinitionView: View {
                         .frame(width: 90, height: 90)
                     Text(Localized.Sorry_You_have_reached_the_request_limit)
                         .font(Font.custom("DIN Condensed", size: 20))
-                    Text(Localized.Please_try_again_tomorrow)
-                        .font(Font.custom("DIN Condensed", size: 20))
-                    
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text(Localized.Got_it)
-                            .font(Font.custom("DIN Condensed", size: 20))
-                    }
-                    .buttonStyle(.borderedProminent)
+                    ///
+//                    Text(Localized.Please_try_again_tomorrow)
+//                        .font(Font.custom("DIN Condensed", size: 20))
+//                    
 //                    Button {
-//                        rewardManager.showAd()
-//                        
+//                        dismiss()
 //                    } label: {
-//                        Text(Localized.Watch_AD_for_10_free_requests)
+//                        Text(Localized.Got_it)
 //                            .font(Font.custom("DIN Condensed", size: 20))
-//                            .foregroundColor(rewardManager.rewardAd == nil ? .gray.opacity(0.5) : .yellow)
-//                            .padding()
-//                            .background(RoundedRectangle(cornerRadius: 5).fill(rewardManager.rewardAd == nil ? .gray.opacity(0.5) : Color.teal.opacity(0.8)))
-//                        
 //                    }
-//                    .disabled(rewardManager.rewardAd == nil)
+//                    .buttonStyle(.borderedProminent)
+                    ///
+                    Button {
+                        rewardManager.showAd()
+                        
+                    } label: {
+                        Text(Localized.Watch_AD_for_10_free_requests)
+                            .font(Font.custom("DIN Condensed", size: 20))
+                            .foregroundColor(rewardManager.rewardAd == nil ? .gray.opacity(0.5) : .yellow)
+                            .padding()
+                            .background(RoundedRectangle(cornerRadius: 5).fill(rewardManager.rewardAd == nil ? .gray.opacity(0.5) : Color.teal.opacity(0.8)))
+                        
+                    }
+                    .disabled(rewardManager.rewardAd == nil)
                 }
                 .frame(minWidth: 400, minHeight: 420)
                 
-//                .onAppear {
-//                    
-//                    print("Restricted view appeared")
-//                    if !rewardManager.rewardLoaded {
-//                        rewardManager.loadAd()
-//                    } else {
-//                        vm.loadingState = .rewarded
-//                    }
-//                    AnalyticsManager.shared.logEvent(name: "DifinitionView_RestrictedView Appear")
-//                }
+                .onAppear {
+                    
+                    print("Restricted view appeared")
+                    if !rewardManager.rewardLoaded {
+                        rewardManager.loadAd()
+                    } else {
+                        vm.loadingState = .rewarded
+                    }
+                    AnalyticsManager.shared.logEvent(name: "DifinitionView_RestrictedView Appear")
+                }
                 
             case .rewarded:
                 RewardedView {
