@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCUhGHrXaMfyUnkLA39ql-uUHL2xV5C0dg</string>
+	<string>AIzaSyDJRKw271gkESjx1rVjJPBbetTwBcVzhLc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>897493842293</string>
+	<string>953493233747</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.bii.Bookworm</string>
+	<string>com.tamluu.owlreader</string>
 	<key>PROJECT_ID</key>
-	<string>owlreader-3c2d8</string>
+	<string>owlreader-new-29fdf</string>
 	<key>STORAGE_BUCKET</key>
-	<string>owlreader-3c2d8.appspot.com</string>
+	<string>owlreader-new-29fdf.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:897493842293:ios:19b7e3007f31fcf64fbb3c</string>
+	<string>1:953493233747:ios:92269cfd4052d248f0e6a6</string>
 </dict>
 </plist>

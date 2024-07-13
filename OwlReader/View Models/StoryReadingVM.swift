@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 @MainActor
 class StoryReadingVM: ObservableObject {
@@ -16,7 +17,8 @@ class StoryReadingVM: ObservableObject {
     
     init(book: Book) {
         self.book = book
-        loadTextFile(named: book.title)
+        self.content = book.content
+//        loadTextFile(named: book.title)
     }
     
     func loadTextFile(named name: String) {
@@ -43,4 +45,6 @@ class StoryReadingVM: ObservableObject {
             print("---> File not found")
         }
     }
+    
+    
 }

@@ -59,6 +59,8 @@ Owl Reader makes learning seamless and engaging with its instant word lookup fea
 - Enabled users to import their photos for Shortcut icons using `PhotoPicker` from `PhotosUI`
 - Added Haptic feedback for a tactile user experience
 - Used `AVSpeechSynthesizer` to produce synthesized speech from text (in the Dictionary Session)
+- Implemented `Firebase Firestore` for real-time data storage and synchronization
+- Integrated `push notifications` to inform users of new updates and features
 - Integrated Google `AdMob` for monetization
 - Incorporated `Firebase` Analytics to log events and understand app usage for feature improvement
 - Used `StoreKit` to request user reviews

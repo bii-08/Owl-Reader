@@ -13,10 +13,33 @@ struct BookRowView: View {
     var body: some View {
         VStack {
             HStack {
-                Image(book.hasImage ? "\(book.title)" : "bookreading")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 45, height: 60)
+                VStack {
+                    if let dateAdded = book.dateAdded {
+                        if isNew(date: dateAdded) {
+                            Text("New")
+                                .font(Font.custom("Palatino", size: 15))
+                                .padding(4)
+                                .foregroundColor(.white)
+                                .background(.red.opacity(0.8))
+                                .clipShape(Capsule())
+                        }
+                    }
+                    AsyncImage(url: URL(string: book.image)) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 50, height: 60)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        } else {
+                            Image("bookreading")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 45, height: 60)
+                        }
+                    }
+                }
+                
                 VStack(alignment: .leading) {
                     Text("\(book.title)")
                         .font(Font.custom("Palatino", size: 18))
@@ -41,7 +64,7 @@ struct BookRowView: View {
                         }
                         .padding(.vertical, 2)
                         if let genre = book.genre {
-                            Text(genre.rawValue)
+                            Text(genre)
                                 .font(Font.custom("Palatino", size: 15))
                                 .frame(minWidth: 80, minHeight: 20)
                                 .background(.mint.opacity(0.5))
@@ -61,6 +84,18 @@ struct BookRowView: View {
             
         }
         .padding(.horizontal, 10)
+    }
+    
+    func isNew(date: String) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let todayString = dateFormatter.string(from: Date())
+//        print("--today: \(todayString)")
+        if date == todayString {
+            return true
+        } else {
+            return false
+        }
     }
 }
 

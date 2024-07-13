@@ -10,9 +10,11 @@ import SwiftData
 
 struct TabBar: View {
     @EnvironmentObject var vm: HomeVM
+    @State private var flashcardOff = true
+    @ObservedObject var navigationManager = NavigationManager.shared
     var body: some View {
         
-        TabView { 
+        TabView(selection: $navigationManager.selectedTab) {
             HomeView()
                 .tabItem {
                     Label(Localized.Home, systemImage: "house")
@@ -37,6 +39,14 @@ struct TabBar: View {
                 Label(Localized.All_words, systemImage: "heart")
             }
             .tag(3)
+            
+            if !flashcardOff {
+                ReviewingWordView()
+                    .tabItem {
+                        Label("Flashcard", systemImage: "lanyardcard.fill")
+                    }
+                    .tag(4)
+            }
         }
         .accentColor(.tabBarButton)
     }
