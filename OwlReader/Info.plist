@@ -209,6 +209,12 @@
 			<string>3qcr597p9d.skadnetwork</string>
 		</dict>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>remote-notification</string>
+	</array>
 	<key>X_RapidAPI_Host</key>
 	<string>$(X_RapidAPI_Host)</string>
 	<key>X_RapidAPI_Key</key>

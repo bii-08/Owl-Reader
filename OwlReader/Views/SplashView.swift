@@ -8,6 +8,9 @@
 import SwiftUI
 import AdSupport
 import AppTrackingTransparency
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct SplashView: View {
     @Environment(\.colorScheme) var colorScheme
